@@ -1,6 +1,9 @@
 import React from 'react';
 import './App.css';
+
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import Home from './react-components/Home';
 import CourseCreation from './react-components/CourseCreation';
 
