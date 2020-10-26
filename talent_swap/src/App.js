@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import Home from './react-components/Home';
+import CourseCreation from './react-components/CourseCreation';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+  // a 'global' state that you can pass through to any child componenets of App.
+  //   In the Routes below they are passed to both the Home and Queue states.
+  state = {
+    term: "Fall 2020"
+  }
+
+  render() {
+    return (
+        <div>
+        <BrowserRouter>
+          <Switch>
+            { /* Didn't delete the state passing function since we may need it. */ }
+            <Route exact path='/' render={() => 
+                            (<Home appState={this.state}/>)}/>
+            <Route exact path='/CourseCreation' render={() => 
+                            (<CourseCreation appState={this.state}/>)}/>
+          </Switch>
+        </BrowserRouter>
+      </div>
+    );  
+  }
 }
 
 export default App;
