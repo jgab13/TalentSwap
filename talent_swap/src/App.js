@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from './react-components/Home';
 import CourseCreation from './react-components/CourseCreation';
+import DetailedCoursePage from './react-components/DetailedCoursePage';
 
 class App extends React.Component {
 
@@ -25,6 +26,8 @@ class App extends React.Component {
                             (<Home appState={this.state}/>)}/>
             <Route exact path='/CourseCreation' render={() => 
                             (<CourseCreation appState={this.state}/>)}/>
+            <Route exact path='/DetailedCoursePage' render={() => 
+                            (<DetailedCoursePage appState={this.state}/>)}/>
           </Switch>
         </BrowserRouter>
       </div>
