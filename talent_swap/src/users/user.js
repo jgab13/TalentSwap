@@ -1,13 +1,13 @@
 import Message from "./message";
 hardCodedMessages = [
     Message({
-        timeStamp: 1000,
+        timestamp: 1000,
         senderId: 1,
         receiverId: 2,
         contents: "Hi User 2!!!"
     }),
     Message({
-        timeStamp: 9000,
+        timestamp: 9000,
         senderId: 2,
         receiverId: 1,
         contents: "Hello!!!"
@@ -59,10 +59,10 @@ class User {
         const sortedMessages = hardCodedMessages
             .sort(
                 (message1, message2) => {
-                    if (message1.timeStamp > message2.timeStamp) {
+                    if (message1.timestamp > message2.timestamp) {
                         return -1;
                     }
-                    if (message1.timeStamp < message2.timeStamp) {
+                    if (message1.timestamp < message2.timestamp) {
                         return 1;
                     }
                     return 0;
