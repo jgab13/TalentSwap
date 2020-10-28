@@ -1,11 +1,10 @@
 .courseDescrip {
-	background-color: #6495ED;
+	background-color: #4CAF50;
 	color: white;
 }
 
 h1 {
 	margin-left: 25px;
-	margin-top: 50px;
 }
 
 #desc {
@@ -15,7 +14,16 @@ h1 {
 }
 
 #last {
-	margin-left: 25px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	position: absolute;
+	top: 230px;
+	right: 209px;
 }
+
+.button {
+	position: absolute;
+	top: 125px;
+	width: 150px;
+	height: 100px;
+	right: 200px;
+}
+

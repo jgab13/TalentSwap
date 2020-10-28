@@ -1,6 +1,7 @@
 .rating {
 	display: inline-block;
 	list-style: none;
+	padding-right: 10px;
 }
 
 /*.checked {

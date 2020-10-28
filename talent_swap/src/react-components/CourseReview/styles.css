@@ -1,0 +1,19 @@
+.userImg {
+	border-radius: 50%;
+	width: 30px;
+	margin-right: 10px;
+}
+
+li {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.starRating {
+	margin-left: 55px;
+	margin-top: 5px;
+}
+
+.ratingDesc {
+	float: right;
+}

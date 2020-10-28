@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from './react-components/Home';
 import CourseCreation from './react-components/CourseCreation';
 import DetailedCoursePage from './react-components/DetailedCoursePage';
+import AuthSystem from './react-components/AuthSystem';
 
 class App extends React.Component {
 
@@ -28,6 +29,8 @@ class App extends React.Component {
                             (<CourseCreation appState={this.state}/>)}/>
             <Route exact path='/DetailedCoursePage' render={() => 
                             (<DetailedCoursePage appState={this.state}/>)}/>
+            <Route exact path='/AuthSystem' render={() => 
+                            (<AuthSystem appState={this.state}/>)}/>
           </Switch>
         </BrowserRouter>
       </div>
