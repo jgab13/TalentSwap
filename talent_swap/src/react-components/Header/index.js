@@ -3,13 +3,7 @@ import React from "react";
 import "./styles.css";
 import AuthSystem from "./../AuthSystem"
 
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from "react-bootstrap/Nav";
-import Button from "react-bootstrap/Button";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-
+import { Navbar, Nav, Button, NavDropdown, Form, FormControl } from 'react-bootstrap';
 
 /* The Header Component */
 class Header extends React.Component {
@@ -50,7 +44,7 @@ class Header extends React.Component {
 		      <Button variant="outline-success">Message</Button>
 		      <NavDropdown title="User" id="basic-nav-dropdown">
 		        <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
-		        <NavDropdown.Item href="/Home">Log Out</NavDropdown.Item>
+		        <NavDropdown.Item href="/">Log Out</NavDropdown.Item>
 		      </NavDropdown>
 		      <Button variant="success" onClick={this.togglePopup.bind(this)}>Join Now</Button>
 		    </Nav>

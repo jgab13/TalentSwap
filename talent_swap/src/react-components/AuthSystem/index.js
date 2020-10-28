@@ -1,61 +1,8 @@
 import React from 'react';
 import './styles.css';
-
+import Login from './Login'
+import Signup from './Signup'
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-
-class Login extends React.Component {
-	render() {
-  	return (
-  	<div>
-			<Form>
-			  <Form.Group controlId="formBasicEmail">
-			    <Form.Label>Username</Form.Label>
-			    <Form.Control type="email" placeholder="Enter your username" />
-			  </Form.Group>
-
-			  <Form.Group controlId="formBasicPassword">
-			    <Form.Label>Password</Form.Label>
-			    <Form.Control type="password" placeholder="Enter your password" />
-			  </Form.Group>
-
-			  <Button variant="success" type="submit">
-			    Log In
-			  </Button>
-			</Form>
-		</div>  
-		);
-	}  
-}
-
-class Signup extends React.Component {
-	render() {
-  	return (
-  	<div>
-			<Form>
-			  <Form.Group controlId="formBasicEmail">
-			    <Form.Label>Username</Form.Label>
-			    <Form.Control type="email" placeholder="Enter your username" />
-			  </Form.Group>
-
-			  <Form.Group controlId="formBasicPassword">
-			    <Form.Label>Password</Form.Label>
-			    <Form.Control type="password" placeholder="Enter your password" />
-			  </Form.Group>
-
-			  <Form.Group controlId="formBasicPassword">
-			    <Form.Label>Confirm Password</Form.Label>
-			    <Form.Control type="password" placeholder="Enter your password" />
-			  </Form.Group>
-
-			  <Button variant="success" type="submit">
-			    Sign Up
-			  </Button>
-			</Form>
-		</div>  
-		);
-	}
-}
 
 class AuthSystem extends React.Component {
 	constructor() {
