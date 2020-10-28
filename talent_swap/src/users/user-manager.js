@@ -1,20 +1,34 @@
 import User from "./user";
 
-const hardCodedUser = new User({
-    id: 1,
-    name: "User One",
-    credits: 0,
-    bio: "Empty Bio",
-    expertise: "",
-    development: "",
-    coursesTeaching: [],
-    coursesLearning: []
-});
+hardCodedUsers = [
+    new User({
+        id: 1,
+        name: "User One",
+        credits: 0,
+        bio: "Empty Bio",
+        expertise: "",
+        development: "",
+        coursesTeaching: [],
+        coursesLearning: []
+    }),
+    new User({
+        id: 2,
+        name: "User Two",
+        credits: 0,
+        bio: "Empty Bio",
+        expertise: "",
+        development: "",
+        coursesTeaching: [],
+        coursesLearning: []
+    })
+]
 
 class UserManager {
     static login(username, password) {
         if (username === "user" && password === "user") {
-            return hardCodedUser;
+            return hardCodedUsers[0];
+        } else if (username === "user1" && password === "user1") {
+            return hardCodedUsers[1];
         }
     }
 }

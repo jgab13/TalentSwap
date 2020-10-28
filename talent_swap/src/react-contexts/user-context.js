@@ -1,3 +1,4 @@
 import React from "react";
 import User from "./../users/user";
-export const UserContext = React.createContext(new User({name: "TEST USER"}));
+import UserManager from "./../users/user-manager"
+export const UserContext = React.createContext(UserManager.login("user", "user"));
