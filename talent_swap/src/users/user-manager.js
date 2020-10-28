@@ -25,6 +25,7 @@ hardCodedUsers = [
 
 class UserManager {
     static login(username, password) {
+        // Needs server call
         if (username === "user" && password === "user") {
             return hardCodedUsers[0];
         } else if (username === "user1" && password === "user1") {

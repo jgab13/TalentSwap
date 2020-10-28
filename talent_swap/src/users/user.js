@@ -1,3 +1,19 @@
+import Message from "./message";
+hardCodedMessages = [
+    Message({
+        timeStamp: 1000,
+        senderId: 1,
+        receiverId: 2,
+        contents: "Hi User 2!!!"
+    }),
+    Message({
+        timeStamp: 9000,
+        senderId: 2,
+        receiverId: 1,
+        contents: "Hello!!!"
+    })
+]
+
 class User {
     constructor(json=null) {
         this.id = 0;
@@ -15,24 +31,51 @@ class User {
     }
 
     changeName = (newName) => {
+        // Needs server call
         this.name = newName;
         return true;
     };
 
     changeBio = (newBio) => {
+        // Needs server call
         this.bio = newBio;
         return true;
     };
 
     changeExpertise = (newExpertise) => {
+        // Needs server call
         this.expertise = newExpertise;
         return true;
     };
 
     changeDevelopment = (newDevelopment) => {
+        // Needs server call
         this.development = newDevelopment;
         return true;
     };
+
+    getContactIds = () => {
+        // Needs server call
+        const sortedMessages = hardCodedMessages
+            .sort(
+                (message1, message2) => {
+                    if (message1.timeStamp > message2.timeStamp) {
+                        return -1;
+                    }
+                    if (message1.timeStamp < message2.timeStamp) {
+                        return 1;
+                    }
+                    return 0;
+                }
+            );
+        const receivers = sortedMessages
+            .filter(message => message.senderId === this.id)
+            .map(message => message.receiverId);
+        const senders = sortedMessages
+            .filter(message => message.receiverId === this.id)
+            .map(message => message.senderId);
+        return Array(new Set([...receivers, ...senders]));
+    }
 }
 
 export default User;
