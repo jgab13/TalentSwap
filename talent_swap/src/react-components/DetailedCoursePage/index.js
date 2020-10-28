@@ -60,19 +60,31 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   console.log(course1.title)
 
+  
+
 class DetailedCoursePage extends React.Component {
+
+
 
   state = {
       currUser: null,
       course: course1,
-      review: [review1, review2, review3]
-    }
+      review: [review1, review2, review3],
+      sign: false
+  }
+
+  signup = () => {
+    this.setState({
+      sign: !this.state.sign
+    })
+  }
 
   render() {
 
     return (
     <div>
       <Header/>
+      {this.state.sign && this.state.currUser === null ? <AuthSystem/> : null}
       <CourseList title={this.state.course.title} 
         description={this.state.course.description}
         enrolled={this.state.course.enroll} 
@@ -81,8 +93,7 @@ class DetailedCoursePage extends React.Component {
         instruct={this.state.course.instructor}
         instImg = {this.state.course.img}
         alreadyEnrolled={false}
-        link={null}
-        logged={true} />
+        link={this.signup} />
 
 
       <h3>Reviews for this course: </h3>

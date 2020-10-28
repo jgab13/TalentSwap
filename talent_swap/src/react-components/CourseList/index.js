@@ -5,17 +5,15 @@ import "./styles.css";
 import CourseRating from "./../CourseRating";
 import Button from "react-bootstrap/Button";
 
+
+
 class CourseList extends React.Component {
   render() {
-  	const {title, description, enrolled, capacity, rate, instruct, instImg, link, alreadyEnrolled, logged} = this.props;
+  	const {title, description, enrolled, capacity, rate, instruct, instImg, link, alreadyEnrolled} = this.props;
     
     const button = (enrolled === capacity ? <Button className="button" variant="light" size="lg" disabled> Class full! </Button> : 
                   (!alreadyEnrolled ? <Button className="button" variant="light" onClick={link} size="lg"> Enroll now!</Button> :
                   <Button className="button" variant="light" size="lg" disabled> Enrolled </Button>));
-
-    const notlogged = (logged ? button : <Link to={"./../AuthSystem"}>
-                <Button className="button" variant="light" onClick={link} size="lg"> Enroll now!</Button>
-              </Link>);
     
 
     return (
@@ -24,7 +22,7 @@ class CourseList extends React.Component {
   		<div id="desc">{description}</div>
 
   		<CourseRating rating={rate} instructor={instruct} instructImg={instImg}/>
-      {notlogged}
+      {button}
       
       <div id="last">Enrollment: {enrolled} of {capacity}</div>
 
