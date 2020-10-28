@@ -1,6 +1,6 @@
-import User from "user";
+import User from "./user";
 
-const hardCodedUser = User({
+const hardCodedUser = new User({
     id: 1,
     name: "User One",
     credits: 0,

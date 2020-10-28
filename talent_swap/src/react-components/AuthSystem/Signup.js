@@ -1,6 +1,8 @@
 import React from 'react';
 import './styles.css';
 
+//import User from "./../../users/user";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -32,7 +34,15 @@ class Signup extends React.Component {
 	handleSignup(event) {		
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
-			//functionality
+			/*
+			let currentUser = new User({
+				//user id could be userList length
+				//should we save list as react context too?
+				name: this.state.input.username;
+				password: 
+				credit: 10; //inital credit?
+			});
+			*/
 		}
 		else {
 			event.preventDefault();
@@ -81,7 +91,7 @@ class Signup extends React.Component {
 				    value={this.state.input.password2}/>
 				  </Form.Group>
 
-				  <Button variant="success" type="submit">
+				  <Button variant="success" type="submit" className='submit'>
 				    Sign Up
 				  </Button>
 				</Form>

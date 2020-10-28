@@ -8,7 +8,8 @@ class AuthSystem extends React.Component {
 	constructor() {
     super();
     this.state = {
-      showLogin: true
+      showLogin: true,
+      hidePopup: false
     };
   }
 
@@ -24,26 +25,41 @@ class AuthSystem extends React.Component {
     });
   }
 
+  Cancel() {
+  	this.setState({
+      hidePopup: true
+    });
+  }
+
   render() {
   	return (
-		  <div className='popup'>  
-				<div className='popup_inner'>
-					<div className='auth-system'>
-						<Button
-							variant="outline-success"
-							onClick={this.Login.bind(this)}
-						>LOG IN</Button>
-						<Button
-							variant="outline-success"
-							onClick={this.Signup.bind(this)}
-							className='signup'
-						>SIGN UP</Button>
-						{this.state.showLogin ? <Login/> : <Signup/>}
-					</div>
-				</div>  
-		  </div>  
+  		<div>
+	  		{this.state.hidePopup ? null :
+				  <div className='popup'>  
+						<div className='popup_inner'>
+							<div className='auth-system'>
+								<Button
+									variant="outline-success"
+									onClick={this.Login.bind(this)}
+									>LOG IN</Button>
+								<Button
+									variant="outline-success"
+									onClick={this.Signup.bind(this)}
+									className='signup'
+									>SIGN UP</Button>
+								<Button
+									variant="outline-success"
+									onClick={this.Cancel.bind(this)}
+									className="pull-right"
+									>Cancel</Button>
+								{this.state.showLogin ? <Login/> : <Signup/>}
+							</div>
+						</div>  
+				  </div>
+			  }
+		  </div> 
 		);
-  }  
+  }
 }
 
 export default AuthSystem;
