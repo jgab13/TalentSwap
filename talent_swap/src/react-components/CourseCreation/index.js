@@ -2,21 +2,18 @@ import React from "react";
 import Header from "./../Header";
 import "./styles.css";
 
-import Button from "react-bootstrap/Button";
-import { Row, Col, Form, Alert }from "react-bootstrap";
+import { Button, Row, Col, Form }from "react-bootstrap";
 
 /* The CourseCreation Component */
 class CourseCreation extends React.Component {
 	
 	constructor(props) {
     super(props);
-    this.state = {submitted: false};
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-	createCourse() {
-		this.setState({
-      submitted: true
-    });
+	handleSubmit() {
+    alert('Congratulations! A new course has been created!');
 	}
 
   render() {
@@ -24,40 +21,27 @@ class CourseCreation extends React.Component {
       <div>
       	<Header/>
 
-      	<Alert show={this.state.submitted} variant="success" className='alert'>
-	        <Alert.Heading>Congratulations!</Alert.Heading>
-	        <p>
-	          A new course has been created!
-	        </p>
-	        <hr />
-	        <div className="d-flex justify-content-end">
-	          <Button variant="outline-success" href="/DetailedCoursePage">
-	            Details
-	          </Button>
-	        </div>
-        </Alert>
-
 				<div className="course-form">
-      	<Form>
-			  <Form.Group as={Row} controlId="formPlaintextPassword">
+      	<Form onSubmit={this.handleSubmit}>
+			  <Form.Group as={Row}>
 			    <Form.Label column sm="2">
 			      Topic
 			    </Form.Label>
 			    <Col sm="10">
-			      <Form.Control type="text"/>
+			      <Form.Control required type="text"/>
 			    </Col>
 			  </Form.Group>
 
-			  <Form.Group as={Row} controlId="formPlaintextPassword">
+			  <Form.Group as={Row}>
 			    <Form.Label column sm="2">
 			      Time
 			    </Form.Label>
-			    <Col sm="4"><Form.Control type="time"/></Col>
+			    <Col sm="4"><Form.Control required type="time"/></Col>
 			    <Col sm="1">-</Col>
-			    <Col sm="4"><Form.Control type="time"/></Col>
+			    <Col sm="4"><Form.Control required type="time"/></Col>
 			  </Form.Group>
 
-			  <Form.Group as={Row} controlId="formPlaintextPassword">
+			  <Form.Group as={Row}>
 			    <Form.Label column sm="2">
 			      Date
 			    </Form.Label>
@@ -65,7 +49,8 @@ class CourseCreation extends React.Component {
 			    		<Form.Control type="date"/>
 			    </Col>
 			    <Col sm="3">
-			      <Form.Check 
+			      <Form.Check
+			      	defaultChecked
 			        type='radio'
 			        id='only once'
 			        label='only once'
@@ -80,7 +65,25 @@ class CourseCreation extends React.Component {
 			  	</Col>
 			  </Form.Group>
 
-			  <Form.Group as={Row} controlId="formPlaintextPassword">
+			  <Form.Group as={Row}>
+			    <Form.Label column sm="2">
+			      Capacity
+			    </Form.Label>
+			    <Col sm="10">
+			      <Form.Control required type="number"/>
+			    </Col>
+			  </Form.Group>
+
+			  <Form.Group as={Row}>
+			    <Form.Label column sm="2">
+			      Credit
+			    </Form.Label>
+			    <Col sm="10">
+			      <Form.Control required type="number"/>
+			    </Col>
+			  </Form.Group>
+
+			  <Form.Group as={Row}>
 			    <Form.Label column sm="2">
 			      Area
 			    </Form.Label>
@@ -89,16 +92,7 @@ class CourseCreation extends React.Component {
 			    </Col>
 			  </Form.Group>
 
-			  <Form.Group as={Row} controlId="formPlaintextPassword">
-			    <Form.Label column sm="2">
-			      Capacity
-			    </Form.Label>
-			    <Col sm="10">
-			      <Form.Control type="value"/>
-			    </Col>
-			  </Form.Group>
-
-			  <Form.Group as={Row} controlId="formPlaintextPassword">
+			  <Form.Group as={Row}>
 			    <Form.Label column sm="2">
 			      Description
 			    </Form.Label>
@@ -109,7 +103,7 @@ class CourseCreation extends React.Component {
 
 			  <Button
 			  	variant="success"
-			  	onClick={this.createCourse.bind(this)}
+			  	type="submit"
 			  	className="submit">
 			    Submit
 			  </Button>
