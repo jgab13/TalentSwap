@@ -64,10 +64,8 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
 class DetailedCoursePage extends React.Component {
 
-
-
   state = {
-      currUser: null,
+      currUser: "1",
       course: course1,
       review: [review1, review2, review3],
       sign: false
@@ -92,7 +90,7 @@ class DetailedCoursePage extends React.Component {
         rate={this.state.course.rating}
         instruct={this.state.course.instructor}
         instImg = {this.state.course.img}
-        alreadyEnrolled={false}
+        alreadyEnrolled={true}
         link={this.signup} />
 
 

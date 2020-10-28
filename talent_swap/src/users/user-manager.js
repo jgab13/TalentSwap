@@ -1,6 +1,6 @@
 import User from "./user";
 
-hardCodedUsers = [
+const hardCodedUsers = [
     new User({
         id: 1,
         name: "User One",

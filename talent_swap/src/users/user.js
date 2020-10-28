@@ -1,12 +1,12 @@
 import Message from "./message";
-hardCodedMessages = [
-    Message({
+const hardCodedMessages = [
+    new Message({
         timestamp: 1000,
         senderId: 1,
         receiverId: 2,
         contents: "Hi User 2!!!"
     }),
-    Message({
+    new Message({
         timestamp: 9000,
         senderId: 2,
         receiverId: 1,

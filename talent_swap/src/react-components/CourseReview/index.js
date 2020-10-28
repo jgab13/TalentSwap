@@ -8,8 +8,6 @@ import "./styles.css";
 class CourseReview extends React.Component {
   render() {
   	const {review} = this.props;
-
-
     return (
       <>
         <div >
