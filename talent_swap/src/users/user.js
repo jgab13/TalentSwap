@@ -74,7 +74,7 @@ class User {
         const senders = sortedMessages
             .filter(message => message.receiverId === this.id)
             .map(message => message.senderId);
-        return Array(new Set([...receivers, ...senders]));
+        return Array.from(new Set([...receivers, ...senders]));
     }
 }
 

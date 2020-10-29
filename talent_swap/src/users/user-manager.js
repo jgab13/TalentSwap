@@ -34,6 +34,10 @@ class UserManager {
             return "something";
         }
     }
+
+    static getUserFromId(userId) {
+        return hardCodedUsers.find(user => user.id === userId);
+    }
 }
 
 export default UserManager;
