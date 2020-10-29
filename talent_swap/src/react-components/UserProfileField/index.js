@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Card, Container, Row, Col } from 'react-bootstrap';
 
 class UserProfileField extends React.Component {
     constructor(props) {
@@ -30,21 +31,29 @@ class UserProfileField extends React.Component {
 
     render() {
         const fieldNameHeading = (
-            <div>
-                <span>{this.state.fieldName}</span>
-                <button onClick={this.toggleEdit}>
-                    {this.state.editing ? "Save" : "Edit"}
-                </button>
-            </div>
+            <Container>
+                <Row>
+                    <Col><span>{this.state.fieldName}</span></Col>
+                    <Col>
+                        <Button variant="dark" onClick={this.toggleEdit}>
+                            {this.state.editing ? "Save" : "Edit"}
+                        </Button>
+                    </Col>
+                </Row>
+            </Container>
         );
         const fieldValueText = this.state.editing 
-            ? <input type="text" value={this.state.fieldValue} onChange={this.handleInputChange} />
+            ? <textarea type="text" value={this.state.fieldValue} onChange={this.handleInputChange}></textarea>
             : <div>{this.state.fieldValue}</div>;
         return (
-            <div>
-                {fieldNameHeading}
-                {fieldValueText}
-            </div>
+            <Card>
+                <Card.Header>
+                    {fieldNameHeading}
+                </Card.Header>
+                <Card.Body>
+                    {fieldValueText}
+                </Card.Body>
+            </Card>
         )
     }
 }
