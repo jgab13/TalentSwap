@@ -3,14 +3,15 @@ import './styles.css';
 
 //import User from "./../../users/user";
 
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Button, Form } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
 
 
 class Signup extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
+    	redirect: false,
 	  	input: {
 	  		username: '',
 	  		password1: '',
@@ -31,9 +32,16 @@ class Signup extends React.Component {
   	});
   }
 
-	handleSignup(event) {		
+  renderRedirect() {
+    if (this.state.redirect) {
+      return <Redirect to='/UserDashboard' />
+    }
+  }
+
+	handleSignup(event) {	
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
+			this.setState({redirect:true});
 			/*
 			let currentUser = new User({
 				//user id could be userList length
@@ -60,6 +68,7 @@ class Signup extends React.Component {
 	render() {
 	  	return (
 	  	<div>
+	  		{this.renderRedirect()}
 				<Form onSubmit={this.handleSignup}>
 				  <Form.Group controlId="formBasicUser">
 				    <Form.Label>Username</Form.Label>

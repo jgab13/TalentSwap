@@ -3,13 +3,14 @@ import './styles.css';
 
 import UserManager from "./../../users/user-manager"
 
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
+import { Button, Form } from "react-bootstrap";
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
 	constructor(props) {
     super(props);
     this.state = {
+    	redirect: null,
     	input: {
     		username: "",
 	  		password: ""
@@ -21,9 +22,23 @@ class Login extends React.Component {
 	  this.validate = this.validate.bind(this);
   }
 
+  renderRedirect() {
+    if (this.state.redirect === 'user') {
+      return <Redirect to='/UserDashboard' />
+    } else if (this.state.redirect === 'admin') {
+    	return <Redirect to='/AdminDashboard' />
+    }
+  }
+
 	handleLogin(event) {
 		let currentUser = this.validate();
 		if (currentUser !== false) {
+			//admin validation
+			if (currentUser === 'something') { //usertype
+				this.setState({redirect:"admin"});
+			}  else {
+				this.setState({redirect:"user"});
+			}
 			//functionality
 			console.log(currentUser);
 		}
@@ -56,6 +71,7 @@ class Login extends React.Component {
 	render() {
   	return (
   	<div>
+  		{this.renderRedirect()}
 			<Form onSubmit={this.handleLogin}>
 			  <Form.Group controlId="formBasicEmail">
 			    <Form.Label>Username</Form.Label>
@@ -74,7 +90,7 @@ class Login extends React.Component {
 			    type="password"
 			    placeholder="Enter your password"
 			    onChange={this.handleChange}
-				  value={this.state.input.password}/>
+				value={this.state.input.password}/>
 			  </Form.Group>
 
 			  <Button variant="success" type="submit" className='submit'>

@@ -8,6 +8,8 @@ class Course {
 		this.credit = 0;
 		this.capacity = 0;
 
+		this.id = 0;
+		this.feedback = "";
 		this.rate = 0;
 		this.area = "";
 		this.description = "";

@@ -30,6 +30,8 @@ class UserManager {
             return hardCodedUsers[0];
         } else if (username === "user1" && password === "user1") {
             return hardCodedUsers[1];
+        } else if (username === "admin" && password === "admin") {
+            return "something";
         }
     }
 }

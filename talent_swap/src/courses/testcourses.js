@@ -4,6 +4,7 @@ import Course from "./course"
 export const hardcodedCourses = [
 	new Course(
 		{
+			id: 0,
 			topic: "React",
 			teacher: "Alice",
 			starttime: "11:00:00",
@@ -15,6 +16,7 @@ export const hardcodedCourses = [
 	),
 	new Course(
 		{
+			id: 1,
 			topic: "JS",
 			teacher: "Bob",
 			starttime: "13:00:00",

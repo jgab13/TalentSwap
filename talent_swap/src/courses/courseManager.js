@@ -7,6 +7,7 @@ export const addCourse = courseManager => {
 
 	const course = new Course(json);
 
+	course.id = courseList.length - 1;
 	courseList.push(course);
 
 	courseManager.setState({

@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "./../Header";
 import "./styles.css";
-import {hardcodedCourses} from "./../../courses/testcourses"
-import {addCourse} from "./../../courses/courseManager"
+import { hardcodedCourses } from "./../../courses/testcourses"
+import { addCourse } from "./../../courses/courseManager"
 
 import { Button, Row, Col, Form }from "react-bootstrap";
 
@@ -14,7 +14,7 @@ class CourseCreation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-			topic: "",
+		topic: "",
     	teacher: "Alice",
     	starttime: "",
     	endtime: "",
