@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./../Header";
 import "./styles.css";
+import Row from 'react-bootstrap/Row'
 
 /* Component for the Home page */
 class Home extends React.Component {
@@ -9,8 +10,25 @@ class Home extends React.Component {
       <div>
         {/* Header component(navbar). need login state check */}
         <Header/>
-      {/* Website descriptions */}
-      This is Home page.
+        <div className="mission" id="top">
+          <h1>Welcome to Talent Swap</h1>
+          <p className="mstatement"> Our mission at Talent Swap is to engage a community of teachers and learners to exchange knowledge. Teachers seeking to educate or instruct can offer courses to users on our platform.
+          Learners can take interesting courses available on our platform. We provide users the medium and tools to lifelong learn.
+          </p>
+        </div>
+        <div className="mission">
+          <p className="teach">
+            <h1>Teach</h1>
+            <p className="mstatement"> Share your wisdom with other users through one on one instruction or in a class setting with multiple
+            users.  
+            </p>
+          </p>
+          <p className="learn">
+            <h1>Learn</h1>
+            <p className="mstatement"> Continue lifelong learning by taking classes in fascinating courses from other users.  
+            </p>
+          </p>
+        </div>
       {/* Popular courses */}
       </div>
     );
