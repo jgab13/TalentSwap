@@ -76,6 +76,26 @@ class User {
             .map(message => message.senderId);
         return Array.from(new Set([...receivers, ...senders]));
     }
+
+    getMessagesFromContact = (contactId) => {
+        const sortedMessages = hardCodedMessages
+            .sort(
+                (message1, message2) => {
+                    if (message1.timestamp > message2.timestamp) {
+                        return -1;
+                    }
+                    if (message1.timestamp < message2.timestamp) {
+                        return 1;
+                    }
+                    return 0;
+                }
+            );
+        const sentMessages = sortedMessages
+            .filter(message => message.senderId === this.id);
+        const receivedMessages = sortedMessages
+            .filter(message => message.receiverId === this.id);
+        return Array.from(new Set([...sentMessages, ...receivedMessages]));
+    }
 }
 
 export default User;

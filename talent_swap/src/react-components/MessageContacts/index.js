@@ -1,10 +1,11 @@
 import React from "react";
 import { uid } from "react-uid";
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import {UserContext} from "./../../react-contexts/user-context";
 import UserManager from "./../../users/user-manager";
 
 class MessageContacts extends React.Component {
-    // static contextType = UserContext;
+    static contextType = UserContext;
     constructor(props) {
         super(props);
         this.state = {
@@ -15,13 +16,13 @@ class MessageContacts extends React.Component {
     }
     render() {
         return (
-            <ul>
+            <ListGroup>
                 {this.state.contacts
-                .map(contact => (<li key={uid(contact)}>{contact.name}</li>))}
-            </ul>
+                .map(contact => (<ListGroupItem key={uid(contact)}>{contact.name}</ListGroupItem>))}
+            </ListGroup>
         )
     }
 }
-MessageContacts.contextType = UserContext;
+
 
 export default MessageContacts;
