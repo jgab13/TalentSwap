@@ -8,6 +8,7 @@ import Home from './react-components/Home';
 import CourseCreation from './react-components/CourseCreation';
 import DetailedCoursePage from './react-components/DetailedCoursePage';
 import AuthSystem from './react-components/AuthSystem';
+import UserDashboard from './react-components/UserDashboard';
 
 class App extends React.Component {
 
@@ -31,6 +32,8 @@ class App extends React.Component {
                             (<DetailedCoursePage appState={this.state}/>)}/>
             <Route exact path='/AuthSystem' render={() => 
                             (<AuthSystem appState={this.state}/>)}/>
+            <Route exact path='/UserDashboard' render={() => 
+                            (<UserDashboard appState={this.state}/>)}/>
           </Switch>
         </BrowserRouter>
       </div>
