@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 // import { uid } from "react-uid";
 import StarRatings from 'react-star-ratings';
 import "./styles.css";
+import Button from "react-bootstrap/Button";
 
 
 class CourseReview extends React.Component {
   render() {
-  	const {review} = this.props;
+  	const {review, edit, compl, sign} = this.props;
+
+    const reviewButton = (!sign ? null :
+      (!compl ? null:
+        edit ? <Button className="starRating" variant="outline-success"> Edit</Button> :
+      <Button className="starRating" variant="outline-success"> Delete </Button>));
     return (
       <>
         <div >
@@ -30,6 +36,9 @@ class CourseReview extends React.Component {
           </p>
           <p className="starRating">
             {review.description}
+          </p>
+          <p className="StarRating">
+            {reviewButton}
           </p>
         </div>
       </>

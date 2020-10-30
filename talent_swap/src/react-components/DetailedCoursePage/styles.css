@@ -1,12 +1,21 @@
-.button {
+/*.button {
 	position: absolute;
 	top: 125px;
 	width: 150px;
 	height: 100px;
 	right: 200px;
-}
+}*/
 
 h3 {
 	margin-left: 25px;
 	border-bottom-style: solid;
 }
+
+#completed {
+ 	position: absolute;
+	top: 250px;
+	width: 160px;
+	height: 100px;
+	right: 192px;
+	color: white;
+ }

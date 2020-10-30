@@ -30,7 +30,9 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
     capacity: 11,
     rating: 4,
     instructor: "JG",
-    img: instImg
+    img: instImg,
+    credit: 10,
+    startDate: "2020-10-27"
   }
 
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
@@ -68,16 +70,53 @@ class DetailedCoursePage extends React.Component {
       currUser: "1",
       course: course1,
       review: [review1, review2, review3],
-      sign: false
+      sign: false,
+      compl: false,
+      edit: true
+  }
+
+  
+
+  checkCourseCompl = (date) => {
+  	const cur = new Date(Date.now());
+  	const courseDate = new Date(this.state.course.startDate);
+  	let compl = false;
+  	if (cur.getFullYear() > courseDate.getFullYear()){
+  		compl = true;
+
+  	} else if (cur.getFullYear() === courseDate.getFullYear() && cur.getMonth() > courseDate.getMonth()){
+  		compl = true;
+  	} else if (cur.getFullYear() === courseDate.getFullYear() && cur.getMonth() === courseDate.getMonth() 
+  				&& cur.getDate() > courseDate.getDate()){
+  		compl = true;
+  	}
+
+  	this.setState({
+      compl: compl,
+    })
+    console.log(this.state.compl);
   }
 
   signup = () => {
+
+  	this.checkCourseCompl(this.state.course.startDate);
     this.setState({
-      sign: !this.state.sign
+      sign: !this.state.sign,
     })
   }
 
+  componentDidMount() {
+  		//check if enrollement exceeded or
+  		//check if enrolled initially
+  		//check if reviewed initially
+  		//check if course completed initially;
+    	this.checkCourseCompl(this.state.course.startDate);
+    	
+    	
+    }
+
   render() {
+  	const completedCourse = this.state.compl && this.state.sign ? <span id="completed">Course completed!</span> : null;
 
     return (
     <div>
@@ -90,12 +129,15 @@ class DetailedCoursePage extends React.Component {
         rate={this.state.course.rating}
         instruct={this.state.course.instructor}
         instImg = {this.state.course.img}
-        alreadyEnrolled={true}
-        link={this.signup} />
+        alreadyEnrolled={this.state.sign}
+        link={this.signup}
+        credit = {this.state.course.credit}
+        start={this.state.course.startDate}/>
+        {completedCourse}
 
 
       <h3>Reviews for this course: </h3>
-      {this.state.review.map(rev => (<CourseReview review={rev} />) )}
+      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.sign} />) )}
     </div>
 
     );

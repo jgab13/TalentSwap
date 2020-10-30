@@ -29,7 +29,10 @@ class Home extends React.Component {
             </p>
           </p>
         </div>
-      {/* Popular courses */}
+        <div className="mission">
+          <h1 className="ltitle">Popular Courses:</h1>
+          {/* Insert grid of course thumbnails here */}
+        </div>
       </div>
     );
   }

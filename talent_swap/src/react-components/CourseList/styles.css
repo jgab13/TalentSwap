@@ -4,25 +4,28 @@
 }
 
 h1 {
+
 	margin-left: 25px;
 }
 
 #desc {
+
 	margin-left: 25px;
 	width: 50%;
 	margin-bottom: 10px;
+	padding-bottom: 20px;
 }
 
 #last {
 	position: absolute;
-	top: 230px;
+	top: 180px;
 	right: 209px;
 }
 
 .button {
 	position: absolute;
-	top: 125px;
-	width: 150px;
+	top: 75px;
+	width: 160px;
 	height: 100px;
 	right: 200px;
 }
