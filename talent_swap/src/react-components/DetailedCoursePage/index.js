@@ -11,6 +11,27 @@ import Header from "./../Header"
 
 import instImg from "./logo192.png";
 import AuthSystem from "./../AuthSystem"
+import AddCourseReview from "./../AddCourseReview"
+import Button from "react-bootstrap/Button";
+
+// Case 1: Not signed in
+// currUser == null
+// if course is full or complete - grey out button - DONE
+// if course is complete - grey out button - DONE
+// if not full & not complete - then show button and sign up - which should pop up the auth system - partial done - need to fix logic
+
+// Case 2: Signed in
+// subcase 1 - not enrolled && not completed
+// 		enrolled - modify course object and use
+// subcase 2 - enrolled && not completed
+//		nothing to do - can't click the button
+// subcase 3 - enrolled && completed
+//		check if course reviwed or not
+//		if not reviewed - add button for review
+//		if reviwed - edit/delete button for review that user gave
+//		edit - change review
+//		delete - remove review
+
 
 //Missing information about credits for the course! Need to add!
 //Case 1 --> visitor i.e. current user = null --> enrolled should pop up sign in - cannot add review
@@ -32,7 +53,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
     instructor: "JG",
     img: instImg,
     credit: 10,
-    startDate: "2020-10-27"
+    startDate: "2021-10-27"
   }
 
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
@@ -67,15 +88,14 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 class DetailedCoursePage extends React.Component {
 
   state = {
-      currUser: "1",
+      currUser: "user1",
       course: course1,
       review: [review1, review2, review3],
       sign: false,
       compl: false,
-      edit: true
+      edit: false,
+      reviewed: false
   }
-
-  
 
   checkCourseCompl = (date) => {
   	const cur = new Date(Date.now());
@@ -91,6 +111,8 @@ class DetailedCoursePage extends React.Component {
   		compl = true;
   	}
 
+
+
   	this.setState({
       compl: compl,
     })
@@ -99,10 +121,21 @@ class DetailedCoursePage extends React.Component {
 
   signup = () => {
 
-  	this.checkCourseCompl(this.state.course.startDate);
-    this.setState({
-      sign: !this.state.sign,
-    })
+
+	this.checkCourseCompl(this.state.course.startDate);
+	this.setState({
+	   	sign: !this.state.sign,
+	})
+	// Need functionality if user is logged in or not
+	// if logged in = then add user into course object
+	// if not logged in = then on click - auth system
+	
+  }
+
+  addReviewFunc = () => {
+  	this.setState({
+  		reviewed : !this.state.reviewed,
+  	})
   }
 
   componentDidMount() {
@@ -116,12 +149,16 @@ class DetailedCoursePage extends React.Component {
     }
 
   render() {
-  	const completedCourse = this.state.compl && this.state.sign ? <span id="completed">Course completed!</span> : null;
+  	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
+  	const addReview = (this.state.compl && this.state.sign && !this.state.reviewed && !this.state.edit ?
+  					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
 
     return (
+    
     <div>
       <Header/>
       {this.state.sign && this.state.currUser === null ? <AuthSystem/> : null}
+      {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={0} description={""}/> : null}
       <CourseList title={this.state.course.title} 
         description={this.state.course.description}
         enrolled={this.state.course.enroll} 
@@ -132,12 +169,18 @@ class DetailedCoursePage extends React.Component {
         alreadyEnrolled={this.state.sign}
         link={this.signup}
         credit = {this.state.course.credit}
-        start={this.state.course.startDate}/>
+        start={this.state.course.startDate}
+        completed={this.state.compl}
+        user={this.state.currUser}
+        />
         {completedCourse}
 
 
       <h3>Reviews for this course: </h3>
-      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.sign} />) )}
+  	  {addReview}
+      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.sign} user={this.state.currUser} link={this.addReviewFunc} />) 
+
+      								)}
     </div>
 
     );

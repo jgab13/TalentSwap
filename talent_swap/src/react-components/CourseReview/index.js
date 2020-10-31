@@ -8,12 +8,12 @@ import Button from "react-bootstrap/Button";
 
 class CourseReview extends React.Component {
   render() {
-  	const {review, edit, compl, sign} = this.props;
+  	const {review, edit, compl, sign, user, link} = this.props;
 
     const reviewButton = (!sign ? null :
       (!compl ? null:
-        edit ? <Button className="starRating" variant="outline-success"> Edit</Button> :
-      <Button className="starRating" variant="outline-success"> Delete </Button>));
+        edit && review.user===user ? (<div className="starRating"><Button variant="outline-success" onClick={link}> Edit</Button><Button variant="outline-success"> Delete </Button></div>)  :
+        null));
     return (
       <>
         <div >

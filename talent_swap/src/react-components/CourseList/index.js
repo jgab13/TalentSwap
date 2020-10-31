@@ -12,11 +12,13 @@ import Button from "react-bootstrap/Button";
 // console.log(cur.getDate())
 class CourseList extends React.Component {
   render() {
-  	const {title, description, enrolled, capacity, rate, instruct, instImg, link, alreadyEnrolled, credit, start} = this.props;
+  	const {title, description, enrolled, capacity, rate, instruct, instImg, link, alreadyEnrolled, credit, start, completed, user} = this.props;
     
     const button = (enrolled === capacity ? <Button className="button" variant="light" size="lg" disabled> Class full! </Button> : 
+                  (completed ? <Button className="button" variant="light" size="lg" disabled> Class completed! </Button> :
+                  (user === null? <Button className="button" variant="light" onClick={link} size="lg"> Enroll now!</Button> :
                   (!alreadyEnrolled ? <Button className="button" variant="light" onClick={link} size="lg"> Enroll now!</Button> :
-                  <Button className="button" variant="light" size="lg" disabled> Enrolled </Button>));
+                  <Button className="button" variant="light" size="lg" disabled> Enrolled </Button>))));
     
 
     return (
