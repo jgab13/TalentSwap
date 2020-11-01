@@ -2,6 +2,7 @@ import React from "react";
 
 import "./styles.css";
 import AuthSystem from "./../AuthSystem"
+import messageImg from "./message.png";
 
 import { Navbar, Nav, Button, NavDropdown, Form, FormControl } from 'react-bootstrap';
 
@@ -10,13 +11,22 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      showPopup: false
+      showPopup: false,
+      loginStatus: true
     };
+    this.logout = this.logout.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
   }
 
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup
+    });
+  }
+
+  logout() {
+  	this.setState({
+      loginStatus: false
     });
   }
 
@@ -29,8 +39,8 @@ class Header extends React.Component {
 	        <FormControl type="text" placeholder="search" className="mr-sm-2" />
 	        <Button variant="outline-success" href="/Course">search</Button>
 	      </Form>
-		  <Navbar.Collapse id="basic-navbar-nav">
-		    <Nav className="ml-auto">
+	      {this.state.loginStatus ? 
+	      <Nav className="ml-auto">
 			  <NavDropdown title="Teach" id="basic-nav-dropdown" variant="success">
 		        <NavDropdown.Item href="/CourseCreation">Create a New Course</NavDropdown.Item>
 		        <NavDropdown.Item href="/CourseList">View Past Courses</NavDropdown.Item>
@@ -41,14 +51,20 @@ class Header extends React.Component {
 		        <NavDropdown.Item href="/CourseList">View Past Courses</NavDropdown.Item>
 		        <NavDropdown.Item href="/CourseList">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
-		      <Button variant="outline-success">Message</Button>
 		      <NavDropdown title="User" id="basic-nav-dropdown">
 		        <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
-		        <NavDropdown.Item href="/">Log Out</NavDropdown.Item>
+		        <NavDropdown.Item onClick={this.logout}>Log Out</NavDropdown.Item>
 		      </NavDropdown>
-		      <Button variant="success" onClick={this.togglePopup.bind(this)}>Join Now</Button>
-		    </Nav>
-		  </Navbar.Collapse>
+		      <a href="/Message">
+		      	<img src={messageImg} className="message-icon"></img>
+		      </a>
+		      </Nav>
+		      :
+		      <Nav className="ml-auto">
+		      <Button variant="success" onClick={this.togglePopup}>Join Now</Button>
+		  	</Nav>
+		  }
+		  
 		</Navbar>
 		{this.state.showPopup ? <AuthSystem/> : null}
       </div>

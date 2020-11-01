@@ -50,7 +50,7 @@ class AuthSystem extends React.Component {
 								<Button
 									variant="outline-success"
 									onClick={this.Cancel.bind(this)}
-									className="pull-right"
+									className="float-right"
 									>Cancel</Button>
 								{this.state.showLogin ? <Login/> : <Signup/>}
 							</div>
