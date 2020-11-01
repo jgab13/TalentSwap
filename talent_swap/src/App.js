@@ -9,6 +9,7 @@ import CourseCreation from './react-components/CourseCreation';
 import DetailedCoursePage from './react-components/DetailedCoursePage';
 import AuthSystem from './react-components/AuthSystem';
 import UserDashboard from './react-components/UserDashboard';
+import AdminDashboard from './react-components/AdminDashboard';
 import MessageCenter from './react-components/MessageCenter';
 
 class App extends React.Component {
@@ -35,6 +36,8 @@ class App extends React.Component {
                             (<AuthSystem appState={this.state}/>)}/>
             <Route exact path='/UserDashboard' render={() => 
                             (<UserDashboard appState={this.state}/>)}/>
+            <Route exact path='/AdminDashboard' render={() => 
+                            (<AdminDashboard appState={this.state}/>)}/>
             <Route exact path='/MessageCenter' render={() => 
                             (<MessageCenter appState={this.state}/>)}/>
           </Switch>
