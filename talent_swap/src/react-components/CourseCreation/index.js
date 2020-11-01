@@ -14,7 +14,7 @@ class CourseCreation extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-		topic: "",
+		  topic: "",
     	teacher: "Alice",
     	starttime: "",
     	endtime: "",
@@ -51,10 +51,10 @@ class CourseCreation extends React.Component {
 				<div className="course-form">
       	<Form onSubmit={this.handleSubmit}>
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
-			      Topic
+			    <Form.Label column sm="3">
+			      Topic *
 			    </Form.Label>
-			    <Col sm="10">
+			    <Col sm="9">
 			      <Form.Control required
 			      type="text"
 			      name="topic"
@@ -64,8 +64,8 @@ class CourseCreation extends React.Component {
 			  </Form.Group>
 
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
-			      Time
+			    <Form.Label column sm="3">
+			      Time *
 			    </Form.Label>
 			    <Col sm="4"><Form.Control required
 			    type="time"
@@ -80,10 +80,10 @@ class CourseCreation extends React.Component {
 			  </Form.Group>
 
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
-			      Date
+			    <Form.Label column sm="3">
+			      Date *
 			    </Form.Label>
-			    <Col sm="7">
+			    <Col sm="6">
 			    		<Form.Control required
 			    		type="date"
 			    		name="date"
@@ -95,23 +95,30 @@ class CourseCreation extends React.Component {
 			      	defaultChecked
 			        type='radio'
 			        id='only once'
-			        label='only once'
-			        name='time type'
+			        name='recurring'
+			        label='recurring'
+			        value='false'
 			      />
 			      <Form.Check
 			        type='radio'
 			        id='recurring'
 			        label='recurring'
-			        name='time type'
+			        value='true'
+			        name='recurring'
+			        onChange={this.handleChange}
 			      />
-			  	</Col>
+			      </Col>
+			      <Form.Text id="dateBlock" className="help-date" muted>
+					    If you checked recurring, system will automatically create courses
+					    every week at the same time for you.
+					</Form.Text>  	
 			  </Form.Group>
 
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
-			      Capacity
+			    <Form.Label column sm="3">
+			      Capacity *
 			    </Form.Label>
-			    <Col sm="10">
+			    <Col sm="9">
 			      <Form.Control required
 			      type="number"
 			      name="capacity"
@@ -121,10 +128,10 @@ class CourseCreation extends React.Component {
 			  </Form.Group>
 
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
-			      Credit
+			    <Form.Label column sm="3">
+			      Credit *
 			    </Form.Label>
-			    <Col sm="10">
+			    <Col sm="9">
 			      <Form.Control required
 			      type="number"
 			      name="credit"
@@ -134,10 +141,10 @@ class CourseCreation extends React.Component {
 			  </Form.Group>
 
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
+			    <Form.Label column sm="3">
 			      Area
 			    </Form.Label>
-			    <Col sm="10">
+			    <Col sm="9">
 			      <Form.Control
 			      type="text"
 			      name="area"
@@ -147,10 +154,10 @@ class CourseCreation extends React.Component {
 			  </Form.Group>
 
 			  <Form.Group as={Row}>
-			    <Form.Label column sm="2">
+			    <Form.Label column sm="3">
 			      Description
 			    </Form.Label>
-			    <Col sm="10">
+			    <Col sm="9">
 			      <Form.Control
 			      as="textarea"
 			      rows={3}
