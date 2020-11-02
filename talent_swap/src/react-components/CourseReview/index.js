@@ -8,41 +8,37 @@ import Button from "react-bootstrap/Button";
 
 class CourseReview extends React.Component {
   render() {
-  	const {review, edit, compl, sign, user, link} = this.props;
+  	const {review, edit, compl, sign, user, editLink, deleteLink} = this.props;
 
     const reviewButton = (!sign ? null :
       (!compl ? null:
-        edit && review.user===user ? (<div className="starRating"><Button variant="outline-success" onClick={link}> Edit</Button><Button variant="outline-success"> Delete </Button></div>)  :
+        edit && review.user===user ? (<div className="starRating"><Button variant="outline-success" name={review.description} onClick={editLink}> Edit</Button><Button onClick={deleteLink} className="modify" name={review.description} variant="outline-success"> Delete </Button></div>)  :
         null));
     return (
-      <>
-        <div >
-          <ul>
-            <li>   
-              <img className="userImg" src={review.img}/>
-              <span>{review.user}</span>
-            </li>
-            <li>
-              <span>12/10/2019</span>
-            </li>
-          </ul>
-          <p className="starRating">
+        <div className="reviewContainer">
+          <div className="userContainer">  
+            <img className="userImg" src={review.img}/>
+            <span className="element">{review.user}</span>
+            <span className="element">{review.date}</span>
+
+            <p className="starRating">
               <StarRatings
               rating={review.rating}
               starRatedColor="orange"
               numberOfStars={5}
               name='rating'
               starDimension='20px'/>
-          </p>
-          <p className="starRating">
-            {review.description}
-          </p>
-          <p className="StarRating">
-            {reviewButton}
-          </p>
+            </p>
+          </div>
+          <div className="descContainer">
+            <p className="starRating">
+              {review.description}
+            </p>
+            <p className="StarRating">
+              {reviewButton}
+            </p>
+          </div>
         </div>
-      </>
-
     );
   }
 }

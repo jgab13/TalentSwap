@@ -53,7 +53,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
     instructor: "JG",
     img: instImg,
     credit: 10,
-    startDate: "2021-10-27"
+    startDate: "2020-10-27"
   }
 
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
@@ -62,6 +62,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   const review1 = {
       user: "user1",
+      date: "10-12-2019",
       img: instImg,
       description: reviewDesc,
       rating: 5
@@ -69,6 +70,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   const review2 = {
       user: "user2",
+      date: "10-12-2020",
       img: instImg,
       description: reviewDesc1,
       rating: 3
@@ -76,6 +78,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   const review3 = {
       user: "user3",
+      date: "10-13-2020",
       img: instImg,
       description: reviewDesc2,
       rating: 4
@@ -91,10 +94,11 @@ class DetailedCoursePage extends React.Component {
       currUser: "user1",
       course: course1,
       review: [review1, review2, review3],
-      sign: false,
+      sign: true,
       compl: false,
-      edit: false,
-      reviewed: false
+      edit: true,
+      reviewed: true,
+      currReview: null
   }
 
   checkCourseCompl = (date) => {
@@ -120,12 +124,10 @@ class DetailedCoursePage extends React.Component {
   }
 
   signup = () => {
-
-
-	this.checkCourseCompl(this.state.course.startDate);
-	this.setState({
+	 this.checkCourseCompl(this.state.course.startDate);
+	 this.setState({
 	   	sign: !this.state.sign,
-	})
+	 })
 	// Need functionality if user is logged in or not
 	// if logged in = then add user into course object
 	// if not logged in = then on click - auth system
@@ -138,12 +140,37 @@ class DetailedCoursePage extends React.Component {
   	})
   }
 
+
+
+  editReview = event => {
+    console.log(event.target.name);
+    const getReview = this.state.review.filter(rev => {
+      return rev.description === event.target.name;
+    });
+    this.setState({
+      currReview: getReview[0]
+    })
+  }
+
+  deleteReview = event => {
+    // console.log(event.target.name);
+    const reviewName = event.target.name;
+    const deletedReviews = this.state.review.filter(rev => {
+      return rev.description !== reviewName;
+    });
+    this.setState({
+      review: deletedReviews,
+      reviewed: false,
+      edit: false
+    })
+  }
+
   componentDidMount() {
   		//check if enrollement exceeded or
   		//check if enrolled initially
   		//check if reviewed initially
   		//check if course completed initially;
-    	this.checkCourseCompl(this.state.course.startDate);
+    this.checkCourseCompl(this.state.course.startDate);
     	
     	
     }
@@ -153,12 +180,14 @@ class DetailedCoursePage extends React.Component {
   	const addReview = (this.state.compl && this.state.sign && !this.state.reviewed && !this.state.edit ?
   					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
 
+
     return (
     
     <div>
       <Header/>
       {this.state.sign && this.state.currUser === null ? <AuthSystem/> : null}
-      {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={0} description={""}/> : null}
+      {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={""} description={""}/> : null}
+      {this.state.currReview !== null? <AddCourseReview curDate={this.state.currReview.date} stars={this.state.currReview.rating} description={this.state.currReview.description}/> : null}
       <CourseList title={this.state.course.title} 
         description={this.state.course.description}
         enrolled={this.state.course.enroll} 
@@ -178,7 +207,7 @@ class DetailedCoursePage extends React.Component {
 
       <h3>Reviews for this course: </h3>
   	  {addReview}
-      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.sign} user={this.state.currUser} link={this.addReviewFunc} />) 
+      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.sign} user={this.state.currUser} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
 
       								)}
     </div>
