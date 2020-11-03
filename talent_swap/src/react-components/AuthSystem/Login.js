@@ -1,12 +1,15 @@
 import React from 'react';
 import './styles.css';
 
-import UserManager from "./../../users/user-manager"
+import UserManager from "./../../users/user-manager";
+import {UserContext} from "./../../react-contexts/user-context";
 
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
+	static contextType = UserContext;
+	
 	constructor(props) {
     super(props);
     this.state = {
@@ -37,6 +40,8 @@ class Login extends React.Component {
 			if (currentUser === 'something') { //usertype
 				this.setState({redirect:"admin"});
 			}  else {
+				console.log(this.context);
+				this.context.changeUser(currentUser);
 				this.setState({redirect:"user"});
 			}
 			//functionality

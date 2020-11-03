@@ -9,13 +9,13 @@ class MessageCenter extends React.Component {
     render() {
         return (
             <UserContext.Consumer>
-                {(user) => (
+                {(userContext) => (
                     <div>
                         <Header />
                         <Container>
                             <Row>
-                                <Col><MessageContacts contactIds={user.getContactIds()} /></Col>
-                                <Col><MessageContents messages={user.getMessagesFromContact(1)} /></Col>
+                                <Col><MessageContacts contactIds={userContext.currentUser.getContactIds()} /></Col>
+                                <Col><MessageContents messages={userContext.currentUser.getMessagesFromContact(1)} /></Col>
                             </Row>
                         </Container>
                     </div>

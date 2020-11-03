@@ -15,6 +15,7 @@ class MessageContacts extends React.Component {
         this.state.selectedContact = this.state.contacts[0];
     }
     render() {
+        console.log(this.context);
         return (
             <ListGroup>
                 {this.state.contacts

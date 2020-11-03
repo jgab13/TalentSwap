@@ -8,7 +8,7 @@ class UserDashboard extends React.Component {
     render() {
         return (
             <UserContext.Consumer>
-                {(user) => (
+                {({currentUser}) => (
                     <div>
                         <Header />
                         <Container>
@@ -17,16 +17,16 @@ class UserDashboard extends React.Component {
                                 <Col>
                                     <ListGroup>
                                         <ListGroupItem>
-                                            <UserProfileField fieldName="Name" fieldValue={user.name} changeValue={user.changeName} />
+                                            <UserProfileField fieldName="Name" fieldValue={currentUser.name} changeValue={currentUser.changeName} />
                                         </ListGroupItem>
                                         <ListGroupItem>
-                                            <UserProfileField fieldName="Short Bio" fieldValue={user.bio} changeValue={user.changeBio} />
+                                            <UserProfileField fieldName="Short Bio" fieldValue={currentUser.bio} changeValue={currentUser.changeBio} />
                                         </ListGroupItem>
                                         <ListGroupItem>
-                                            <UserProfileField fieldName="Domain of Expertise" fieldValue={user.expertise} changeValue={user.changeExpertise} />
+                                            <UserProfileField fieldName="Domain of Expertise" fieldValue={currentUser.expertise} changeValue={currentUser.changeExpertise} />
                                         </ListGroupItem>
                                         <ListGroupItem>
-                                            <UserProfileField fieldName="Domain of Development" fieldValue={user.development} changeValue={user.changeDevelopment} />
+                                            <UserProfileField fieldName="Domain of Development" fieldValue={currentUser.development} changeValue={currentUser.changeDevelopment} />
                                         </ListGroupItem>
                                     </ListGroup>
                                 </Col>
