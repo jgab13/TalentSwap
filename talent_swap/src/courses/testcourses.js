@@ -1,6 +1,6 @@
 import Course from "./course"
 
-
+//feel free to add more courses and course properties
 export const hardcodedCourses = [
 	new Course(
 		{

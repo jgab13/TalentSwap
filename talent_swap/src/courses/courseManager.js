@@ -1,4 +1,9 @@
 import Course from "./course"
+
+//addCourse function is not required if everything is hardcoded
+//the courseList is saved to every newly created course
+//this is a bad idea, and we don't need it
+//so just ignore it and use hardcoded courses
 export const addCourse = courseManager => {
 	console.log("adding course");
 	const courseList = courseManager.state.courses;
@@ -14,3 +19,5 @@ export const addCourse = courseManager => {
 		courses: courseList
 	});
 };
+
+//add your own functions here and export them as needed
