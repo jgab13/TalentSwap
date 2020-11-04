@@ -4,6 +4,7 @@ import "./styles.css";
 import AuthSystem from "./../AuthSystem"
 import messageImg from "./message.png";
 
+import { Redirect } from 'react-router-dom';
 import { Navbar, Nav, Button, NavDropdown, Form, FormControl } from 'react-bootstrap';
 
 /* The Header Component */
@@ -12,10 +13,20 @@ class Header extends React.Component {
     super();
     this.state = {
       showPopup: false,
-      loginStatus: true
+	  loginStatus: true,
+	  redirectURL: ""
     };
     this.logout = this.logout.bind(this);
-    this.togglePopup = this.togglePopup.bind(this);
+	this.togglePopup = this.togglePopup.bind(this);
+	this.renderRedirect = this.renderRedirect.bind(this);
+  }
+
+  renderRedirect() {
+	  if (this.state.redirectURL) {
+		  return (
+			<Redirect to={this.state.redirectURL} />
+		  )
+	  }
   }
 
   togglePopup() {
@@ -33,6 +44,7 @@ class Header extends React.Component {
   render() {
     return (
       <div>
+		{this.renderRedirect()}
         <Navbar bg="light">
 		  <Navbar.Brand href="./">LOGO</Navbar.Brand>
 		  <Form inline className='search-box'>
@@ -55,9 +67,7 @@ class Header extends React.Component {
 		        <NavDropdown.Item href="/Profile">Profile</NavDropdown.Item>
 		        <NavDropdown.Item onClick={this.logout}>Log Out</NavDropdown.Item>
 		      </NavDropdown>
-		      <a href="/MessageCenter">
-		      	<img src={messageImg} className="message-icon"></img>
-		      </a>
+			  <img src={messageImg} className="message-icon" onClick={() => this.setState({redirectURL: "/MessageCenter"})} />
 		      </Nav>
 		      :
 		      <Nav className="ml-auto">

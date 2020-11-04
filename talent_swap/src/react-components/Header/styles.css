@@ -5,3 +5,7 @@
 .message-icon {
 	height: 40px;
 }
+
+.message-icon:hover {
+	cursor: pointer;
+}
