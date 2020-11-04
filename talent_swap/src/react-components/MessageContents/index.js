@@ -12,11 +12,12 @@ class MessageContents extends React.Component {
         };
     }
     render() {
+        const {currentUser} = this.context;
         return (
             <ListGroup>
                 {this.state.messages
                 .map(message => (
-                    <ListGroupItem key={uid(message)} className={message.senderId === this.context.id ? "text-right" : "text-left"} variant={message.senderId === this.context.id ? "primary" : "secondary"}>
+                    <ListGroupItem key={uid(message)} className={message.senderId === currentUser.id ? "text-right" : "text-left"} variant={message.senderId === currentUser.id ? "primary" : "secondary"}>
                         {message.contents}
                     </ListGroupItem>
                 ))}
