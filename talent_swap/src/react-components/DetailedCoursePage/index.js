@@ -16,6 +16,9 @@ import Button from "react-bootstrap/Button";
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import {UserContext} from "./../../react-contexts/user-context";
 
+//Outstanding --> Need user context to work so I can check the credits of the user when they enroll
+//if they do not have enough credits, they cannot enroll.
+
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
   const reviewDesc1 = "Test review";
   const reviewDesc2 = "Test review2";  
@@ -61,7 +64,7 @@ class DetailedCoursePage extends React.Component {
       currReview: null
   }
 
-  //On Mount component functions
+  /////On Mount component functions
 
   //Set the current user
   // setCurrentUser = () => {
@@ -118,7 +121,19 @@ class DetailedCoursePage extends React.Component {
   }
 
 
-  //On click or on change functions
+  /////On change and other functions
+
+
+  //Calculate rating for course - call this any time a review is modified, added or deleted.
+  calcReviewRating = (Review) => {
+    const count = Review.length;
+    const totalRate = Review.reduce(function(total, rev)  {
+      return total + rev.rating 
+    }, 0);
+    return parseInt(totalRate / count);
+  }
+
+  //Enroll current user in course.
   enrollCourse = () => {
    if (this.state.currUser === null){
     this.setState({
@@ -160,10 +175,15 @@ class DetailedCoursePage extends React.Component {
     const deletedReviews = this.state.review.filter(rev => {
       return rev.description !== reviewName;
     });
+    const newRating = this.calcReviewRating(deletedReviews);
+    const curCourse = this.state.course;
+    curCourse.rate = newRating;
+    console.log(currCourse);
     this.setState({
       review: deletedReviews,
       reviewed: false,
-      edit: false
+      edit: false,
+      course: curCourse //might not be necessary
     })
   }
 
@@ -175,24 +195,31 @@ class DetailedCoursePage extends React.Component {
     })
   }
 
-  //This function is not helpful for phase 1 - will use it for phase2
-  addReviewForm = (event, date, rating, desc)  => {
+  //Tadd or edit review from current user using details for addReview entry form.
+  addReviewForm = (date, rating, desc)  => {
     const newReview = {
       user: this.state.currUser,
       date: date,
       img: instImg,
       description: desc,
-      rating: rating
+      rating: parseInt(rating)
     };
     const existingReviews = this.state.review
     const getReview = existingReviews.filter(rev => {
       return rev.user !== newReview.user;
     });
     getReview.push(newReview);
+    const newRating = this.calcReviewRating(getReview);
+    const curCourse = this.state.course;
+    curCourse.rate = newRating;
     this.setState({
-      review: getReview
+      review: getReview,
+      edit: true,
+      currReview: null,
+      course: currCourse // might not be necessary
     })
   }
+
 
   componentDidMount() {
     //Check for class fullness occurs automatically.

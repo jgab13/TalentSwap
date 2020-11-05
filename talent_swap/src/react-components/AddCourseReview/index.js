@@ -8,10 +8,15 @@ import '../AuthSystem/styles.css';
 
 class AddCourseReview extends React.Component {
   //Add a cancel button
+  // state = {
+  //   date: "",
+  //   rating: "",
+  //   desc: ""
+  // }
   state = {
-    date: "",
-    rating: "",
-    desc: ""
+    date: this.props.curDate,
+    rating: this.props.stars,
+    desc: this.props.description
   }
 
 
@@ -39,16 +44,16 @@ class AddCourseReview extends React.Component {
 
   }
 
-  placeholderChecker = () =>{
-    console.log(this.props)
-    if (this.props.curDate !== "" && this.props.description !== "" && this.props.stars < 6 && this.props.stars > -1){
-      this.setState({
-        date: this.props.curDate,
-        rating: this.props.stars,
-        desc: this.props.description
-      })
-    }
-  }
+  // placeholderChecker = () =>{
+  //   console.log(this.props)
+  //   if (this.props.curDate !== "" && this.props.description !== "" && this.props.stars < 6 && this.props.stars > -1){
+  //     this.setState({
+  //       date: this.props.curDate,
+  //       rating: this.props.stars,
+  //       desc: this.props.description
+  //     })
+  //   }
+  // }
 
   render() {
 
@@ -56,7 +61,7 @@ class AddCourseReview extends React.Component {
 
     return (
       <div className='popup_inner auth-system'>
-          <Form onSubmit={(e) => addReview(this.state.date, this.state.rating, this.state.description)}>
+          <Form>
             <Form.Group controlId="date">
               <Form.Label>Review Date</Form.Label>
               <Form.Control name="date" onChange={this.handleInput} value={this.state.date} placeholder={curDate} />
@@ -72,7 +77,7 @@ class AddCourseReview extends React.Component {
               <Form.Control name="desc" onChange={this.handleInput} value={this.state.desc} placeholder={description} />
             </Form.Group>
 
-            <Button variant="success" type="submit">
+            <Button onClick={(e) => addReview(this.state.date, this.state.rating, this.state.desc)} variant="success">
               Submit
             </Button>
             <Button className="float-right" onClick={cancelForm} variant="success">Cancel</Button>    
