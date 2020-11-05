@@ -13,9 +13,10 @@ class CourseCreation extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {
+    if (this.props.location.state) {
+    	this.state = {
 		topic: this.props.location.state.course.topic,
-    	teacher: "Alice",
+    	teacher: this.props.location.state.course.teacher,
     	starttime: this.props.location.state.course.starttime,
     	endtime: this.props.location.state.course.starttime,
     	date: this.props.location.state.course.date,
@@ -24,7 +25,22 @@ class CourseCreation extends React.Component {
     	area: this.props.location.state.course.area,
     	description: this.props.location.state.course.description,
     	courses: hardcodedCourses
-    }
+    	}
+	}
+    else{
+    	this.state = {
+		topic: "",
+    	teacher: "user1",
+    	starttime: "",
+    	endtime: "",
+    	date: "",
+    	credit: 0,
+    	capacity: 0,
+    	area: "",
+    	description: "",
+    	courses: hardcodedCourses
+    	}
+    }    
   }
 
 	handleSubmit(event) {

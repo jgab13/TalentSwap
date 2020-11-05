@@ -4,6 +4,7 @@ import AdminUser from "./admin-user";
 const hardCodedUsers = [
     new User({
         id: 1,
+        userType: "user",
         name: "User One",
         credits: 0,
         bio: "Empty Bio",
@@ -14,6 +15,7 @@ const hardCodedUsers = [
     }),
     new User({
         id: 2,
+        userType: "user",
         name: "User Two",
         credits: 0,
         bio: "Empty Bio",

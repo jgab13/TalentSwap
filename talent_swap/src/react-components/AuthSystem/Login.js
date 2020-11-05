@@ -37,10 +37,9 @@ class Login extends React.Component {
 		let currentUser = this.validate();
 		if (currentUser !== false) {
 			//admin validation
-			if (currentUser === 'something') { //usertype
+			if (currentUser.userType === "admin") { //usertype
 				this.setState({redirect:"admin"});
 			}  else {
-				console.log(this.context);
 				this.context.changeUser(currentUser);
 				this.setState({redirect:"user"});
 			}

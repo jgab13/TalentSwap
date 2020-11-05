@@ -17,6 +17,7 @@ const hardCodedMessages = [
 class User {
     constructor(json=null) {
         this.id = 0;
+        this.userType = "user";
         this.name = "";
         this.credits = 0;
         this.bio = "";

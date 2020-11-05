@@ -5,6 +5,7 @@ const bannedUsers = [];
 
 class AdminUser {
     constructor(json=null) {
+        this.userType = "admin";
         Object.assign(
             this,
             typeof json === "string" ? JSON.parse(json) : json
