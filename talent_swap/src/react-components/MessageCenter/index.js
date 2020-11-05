@@ -6,21 +6,19 @@ import MessageContacts from "../MessageContacts";
 import MessageContents from "../MessageContents";
 
 class MessageCenter extends React.Component {
+    static contextType = UserContext;
     render() {
+        const {currentUser} = this.context;
         return (
-            <UserContext.Consumer>
-                {(userContext) => (
-                    <div>
-                        <Header />
-                        <Container>
-                            <Row>
-                                <Col><MessageContacts contactIds={userContext.currentUser.getContactIds()} /></Col>
-                                <Col><MessageContents messages={userContext.currentUser.getMessagesFromContact(1)} /></Col>
-                            </Row>
-                        </Container>
-                    </div>
-                )}
-            </UserContext.Consumer>
+            <div>
+                <Header />
+                <Container>
+                    <Row>
+                        <Col><MessageContacts contactIds={currentUser.getContactIds()} /></Col>
+                        <Col><MessageContents messages={currentUser.getMessagesFromContact(1)} /></Col>
+                    </Row>
+                </Container>
+            </div>
         )
     }
 }

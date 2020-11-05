@@ -7,7 +7,8 @@ class UserProfileField extends React.Component {
         this.state = {
             editing: false,
             fieldName: this.props.fieldName,
-            fieldValue: this.props.fieldValue
+            fieldValue: this.props.fieldValue,
+            canEdit: this.props.canEdit
         };
         this.changeValue = this.props.changeValue;
     }
@@ -30,14 +31,17 @@ class UserProfileField extends React.Component {
     };
 
     render() {
+        const editButton = (
+            <Button variant="dark" onClick={this.toggleEdit}>
+                {this.state.editing ? "Save" : "Edit"}
+            </Button>
+        );
         const fieldNameHeading = (
             <Container>
                 <Row>
                     <Col><span>{this.state.fieldName}</span></Col>
                     <Col>
-                        <Button variant="dark" onClick={this.toggleEdit}>
-                            {this.state.editing ? "Save" : "Edit"}
-                        </Button>
+                        {this.state.canEdit ? editButton : null}
                     </Col>
                 </Row>
             </Container>

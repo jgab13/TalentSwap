@@ -12,6 +12,7 @@ import AuthSystem from './react-components/AuthSystem';
 import UserDashboard from './react-components/UserDashboard';
 import AdminDashboard from './react-components/AdminDashboard';
 import MessageCenter from './react-components/MessageCenter';
+import UserProfile from './react-components/UserProfile';
 
 class App extends React.Component {
 
@@ -43,6 +44,8 @@ class App extends React.Component {
                               (<AdminDashboard appState={this.state}/>)}/>
               <Route exact path='/MessageCenter' render={() => 
                               (<MessageCenter appState={this.state}/>)}/>
+              <Route exact path='/UserProfile/:userId' render={(props) => 
+                              (<UserProfile appState={this.state} {...props}/>)}/>
             </Switch>
           </BrowserRouter>
         </ContextComponent>
