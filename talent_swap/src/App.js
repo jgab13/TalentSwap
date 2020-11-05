@@ -13,6 +13,7 @@ import UserDashboard from './react-components/UserDashboard';
 import AdminDashboard from './react-components/AdminDashboard';
 import MessageCenter from './react-components/MessageCenter';
 import UserProfile from './react-components/UserProfile';
+import DetailedCoursePageTeacher from './react-components/DetailedCoursePageTeacher';
 
 class App extends React.Component {
 
@@ -20,9 +21,7 @@ class App extends React.Component {
   //   In the Routes below they are passed to both the Home and Queue states.
 
   
-  state = {
-    term: "Fall 2020"
-  }
+  state = {}
 
   render() {
     return (
@@ -32,8 +31,8 @@ class App extends React.Component {
               { /* Didn't delete the state passing function since we may need it. */ }
               <Route exact path='/' render={() => 
                               (<Home appState={this.state}/>)}/>
-              <Route exact path='/CourseCreation' render={() => 
-                              (<CourseCreation appState={this.state}/>)}/>
+              <Route exact path='/CourseCreation' render={(props) => 
+                              (<CourseCreation appState={this.state} {...props}/>)}/>
               <Route exact path='/DetailedCoursePage' render={() => 
                               (<DetailedCoursePage appState={this.state}/>)}/>
               <Route exact path='/AuthSystem' render={() => 
@@ -46,6 +45,8 @@ class App extends React.Component {
                               (<MessageCenter appState={this.state}/>)}/>
               <Route exact path='/UserProfile/:userId' render={(props) => 
                               (<UserProfile appState={this.state} {...props}/>)}/>
+              <Route exact path='/DetailedCoursePageTeacher' render={() => 
+                              (<DetailedCoursePageTeacher appState={this.state}/>)}/>
             </Switch>
           </BrowserRouter>
         </ContextComponent>

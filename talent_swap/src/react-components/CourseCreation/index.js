@@ -8,21 +8,21 @@ import { Button, Row, Col, Form }from "react-bootstrap";
 
 /* The CourseCreation Component */
 class CourseCreation extends React.Component {
-	
+
 	constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-		  topic: "",
+		topic: this.props.location.state.course.topic,
     	teacher: "Alice",
-    	starttime: "",
-    	endtime: "",
-    	date:"",
-    	credit: 0,
-    	capacity: 0,
-    	area: "",
-    	description: "",
+    	starttime: this.props.location.state.course.starttime,
+    	endtime: this.props.location.state.course.starttime,
+    	date: this.props.location.state.course.date,
+    	credit: this.props.location.state.course.credit,
+    	capacity: this.props.location.state.course.capacity,
+    	area: this.props.location.state.course.area,
+    	description: this.props.location.state.course.description,
     	courses: hardcodedCourses
     }
   }
@@ -30,7 +30,11 @@ class CourseCreation extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault(); //testing
 		addCourse(this);
-    alert('Congratulations! A new course has been created!');
+		this.props.location.state ?
+		alert('Changes has been made to your course.')
+		:
+    	alert('Congratulations! A new course has been created!');
+    window.location.href='/DetailedCoursePageTeacher';
     console.log(this.state.courses);
 	}
 
@@ -47,8 +51,7 @@ class CourseCreation extends React.Component {
     return (
       <div>
       	<Header/>
-
-				<div className="course-form">
+		<div className="course-form">
       	<Form onSubmit={this.handleSubmit}>
 			  <Form.Group as={Row}>
 			    <Form.Label column sm="3">
