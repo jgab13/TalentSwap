@@ -13,48 +13,8 @@ import instImg from "./logo192.png";
 import AuthSystem from "./../AuthSystem"
 import AddCourseReview from "./../AddCourseReview"
 import Button from "react-bootstrap/Button";
-
-// Case 1: Not signed in
-// currUser == null
-// if course is full or complete - grey out button - DONE
-// if course is complete - grey out button - DONE
-// if not full & not complete - then show button and sign up - which should pop up the auth system - partial done - need to fix logic
-
-// Case 2: Signed in
-// subcase 1 - not enrolled && not completed
-// 		enrolled - modify course object and use
-// subcase 2 - enrolled && not completed
-//		nothing to do - can't click the button
-// subcase 3 - enrolled && completed
-//		check if course reviwed or not
-//		if not reviewed - add button for review
-//		if reviwed - edit/delete button for review that user gave
-//		edit - change review
-//		delete - remove review
-
-
-//Missing information about credits for the course! Need to add!
-//Case 1 --> visitor i.e. current user = null --> enrolled should pop up sign in - cannot add review
-//Case 2 --> Already enrolled or max enrollment -- instead of button, greyed out or disabled
-//  a) if already reviewed --> cannot review/can edit - need edit input
-//  b) if not already reviwed --> can review - add review button
-//Case 3 --> Not enrolled - can enroll and click on the button
-//Case 4 --> if admin user, shouldn't be able to enroll - just remove/delete
-
-
-const CourseDesc = "Welcome to introduction to cognitive science. This class explores the history and philosophy of the mind, important concepts in cognitive psychology such as intelligence, attention, memory and categorization, and important developments in the burgeoning field of artificial intelligence.";
-
-  const course1 = {
-    title: "Introduction to Cognitive Science",
-    description: CourseDesc,
-    enroll: 10,
-    capacity: 11,
-    rating: 4,
-    instructor: "JG",
-    img: instImg,
-    credit: 10,
-    startDate: "2020-10-27"
-  }
+import {hardcodedCourses} from "./../../courses/testcourses.js"
+import {UserContext} from "./../../react-contexts/user-context";
 
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
   const reviewDesc1 = "Test review";
@@ -62,7 +22,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   const review1 = {
       user: "user1",
-      date: "10-12-2019",
+      date: "11-02-2020",
       img: instImg,
       description: reviewDesc,
       rating: 5
@@ -70,7 +30,7 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   const review2 = {
       user: "user2",
-      date: "10-12-2020",
+      date: "11-03-2020",
       img: instImg,
       description: reviewDesc1,
       rating: 3
@@ -78,32 +38,57 @@ const CourseDesc = "Welcome to introduction to cognitive science. This class exp
 
   const review3 = {
       user: "user3",
-      date: "10-13-2020",
+      date: "11-04-2020",
       img: instImg,
       description: reviewDesc2,
       rating: 4
   }
-
-  console.log(course1.title)
-
+  const currCourse = hardcodedCourses[2];
+  const enrollment = ["user1", "user2", "user3", "user4"];
   
 
 class DetailedCoursePage extends React.Component {
+  //static contextType = UserContext;
 
   state = {
       currUser: "user1",
-      course: course1,
+      course: currCourse,
       review: [review1, review2, review3],
-      sign: true,
+      enrolled: false,
       compl: false,
-      edit: true,
-      reviewed: true,
+      edit: false,
+      reviewed: false,
       currReview: null
   }
 
+  //On Mount component functions
+
+  //Set the current user
+  // setCurrentUser = () => {
+   // console.log(this.context);
+   // const user = this.context;
+    // this.setState({
+      // currUser: this.context,
+    // })
+   //  console.log(this.state.currUser);
+   // console.log(this.state.enrolled);
+  // }
+
+  //check if the current user is enrolled in the course.
+  checkEnrollment = () => {
+    const enrollUser = enrollment.filter(user => {
+      return user === this.state.currUser;
+    });
+    const enrolled = enrollUser.length === 0 ? false: true;
+    this.setState({
+      enrolled: enrolled
+    })
+  }
+
+  //Check the current date to determine if the course has been completed.
   checkCourseCompl = (date) => {
   	const cur = new Date(Date.now());
-  	const courseDate = new Date(this.state.course.startDate);
+  	const courseDate = new Date(this.state.course.date);
   	let compl = false;
   	if (cur.getFullYear() > courseDate.getFullYear()){
   		compl = true;
@@ -114,26 +99,43 @@ class DetailedCoursePage extends React.Component {
   				&& cur.getDate() > courseDate.getDate()){
   		compl = true;
   	}
-
-
-
   	this.setState({
-      compl: compl,
+      compl: compl
     })
-    console.log(this.state.compl);
   }
 
-  signup = () => {
-	 this.checkCourseCompl(this.state.course.startDate);
-	 this.setState({
-	   	sign: !this.state.sign,
-	 })
-	// Need functionality if user is logged in or not
-	// if logged in = then add user into course object
-	// if not logged in = then on click - auth system
-	
+  //check if the current user has reviewed the current course.
+  checkIfReviewed = () => {
+    const checkReview = this.state.review.filter(rev => {
+      return rev.user === this.state.currUser;
+    });
+    const check = checkReview.length !== 0 ? true : false
+    console.log(check)
+    this.setState({
+      reviewed: check,
+      edit: check
+    })
   }
 
+
+  //On click or on change functions
+  enrollCourse = () => {
+   if (this.state.currUser === null){
+    this.setState({
+      enrolled: !this.state.enrolled,
+    })
+   } else {
+    let currentEnrolled = this.state.course.enrollment + 1;
+    let course = this.state.course;
+    course.enrollment = currentEnrolled;
+    this.setState({
+      enrolled: !this.state.enrolled,
+      course: course
+    })
+   }
+  }
+
+  //Changes the state of reviewed to pop up review entry form.
   addReviewFunc = () => {
   	this.setState({
   		reviewed : !this.state.reviewed,
@@ -141,7 +143,7 @@ class DetailedCoursePage extends React.Component {
   }
 
 
-
+  //Sets currReview to not null to trigger edit pop up
   editReview = event => {
     console.log(event.target.name);
     const getReview = this.state.review.filter(rev => {
@@ -152,8 +154,8 @@ class DetailedCoursePage extends React.Component {
     })
   }
 
+  //Removes review from current reviews
   deleteReview = event => {
-    // console.log(event.target.name);
     const reviewName = event.target.name;
     const deletedReviews = this.state.review.filter(rev => {
       return rev.description !== reviewName;
@@ -165,19 +167,48 @@ class DetailedCoursePage extends React.Component {
     })
   }
 
+  //Exits addReview entry form.
+  cancelForm = event =>{
+    this.setState({
+      reviewed: !this.state.reviewed,
+      currReview: null
+    })
+  }
+
+  //This function is not helpful for phase 1 - will use it for phase2
+  addReviewForm = (event, date, rating, desc)  => {
+    const newReview = {
+      user: this.state.currUser,
+      date: date,
+      img: instImg,
+      description: desc,
+      rating: rating
+    };
+    const existingReviews = this.state.review
+    const getReview = existingReviews.filter(rev => {
+      return rev.user !== newReview.user;
+    });
+    getReview.push(newReview);
+    this.setState({
+      review: getReview
+    })
+  }
+
   componentDidMount() {
-  		//check if enrollement exceeded or
-  		//check if enrolled initially
-  		//check if reviewed initially
-  		//check if course completed initially;
-    this.checkCourseCompl(this.state.course.startDate);
-    	
-    	
+    //Check for class fullness occurs automatically.
+    //sets current user of the web app from UserContext and check if signed in.
+    //this.setCurrentUser(); 
+    //Check if course completed
+    this.checkCourseCompl(this.state.course.date);
+    //Check if enrolled in course.
+    this.checkEnrollment();
+    //check if already reviewed the course.
+    this.checkIfReviewed();
     }
 
   render() {
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
-  	const addReview = (this.state.compl && this.state.sign && !this.state.reviewed && !this.state.edit ?
+  	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit ?
   					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
 
 
@@ -185,20 +216,20 @@ class DetailedCoursePage extends React.Component {
     
     <div>
       <Header/>
-      {this.state.sign && this.state.currUser === null ? <AuthSystem/> : null}
-      {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={""} description={""}/> : null}
-      {this.state.currReview !== null? <AddCourseReview curDate={this.state.currReview.date} stars={this.state.currReview.rating} description={this.state.currReview.description}/> : null}
-      <CourseList title={this.state.course.title} 
+      {this.state.enrolled && this.state.currUser === null ? <AuthSystem/> : null}
+      {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={""} cancelForm={this.cancelForm} addReview={this.addReviewForm} description={""}/> : null}
+      {this.state.currReview === null ? null : <AddCourseReview curDate={this.state.currReview.date} cancelForm={this.cancelForm} addReview={this.addReviewForm} stars={this.state.currReview.rating} description={this.state.currReview.description}/>}
+      <CourseList title={this.state.course.topic} 
         description={this.state.course.description}
-        enrolled={this.state.course.enroll} 
+        enrolled={this.state.course.enrollment} 
         capacity={this.state.course.capacity}
-        rate={this.state.course.rating}
-        instruct={this.state.course.instructor}
+        rate={this.state.course.rate}
+        instruct={this.state.course.teacher}
         instImg = {this.state.course.img}
-        alreadyEnrolled={this.state.sign}
-        link={this.signup}
+        alreadyEnrolled={this.state.enrolled}
+        link={this.enrollCourse}
         credit = {this.state.course.credit}
-        start={this.state.course.startDate}
+        start={this.state.course.date}
         completed={this.state.compl}
         user={this.state.currUser}
         />
@@ -207,7 +238,7 @@ class DetailedCoursePage extends React.Component {
 
       <h3>Reviews for this course: </h3>
   	  {addReview}
-      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.sign} user={this.state.currUser} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
+      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.enrolled} user={this.state.currUser} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
 
       								)}
     </div>

@@ -11,7 +11,8 @@ export const hardcodedCourses = [
 			endtime: "12:00:00",
 			date: "2020-10-31",
 			credit: 1,
-			capacity: 1
+			capacity: 1,
+			enrollment: 0
 		}
 	),
 	new Course(
@@ -23,7 +24,23 @@ export const hardcodedCourses = [
 			endtime: "15:00:00",
 			date: "2020-11-31",
 			credit: 1,
-			capacity: 10
+			capacity: 10,
+			enrollment: 10
+		}
+	),
+	new Course(
+		{
+			id: 2,
+			topic: "Introduction to Cognitive Science",
+			teacher: "user2",
+			starttime: "13:00:00",
+			endtime: "15:00:00",
+			date: "2020-11-01",
+			rate: 4,
+			credit: 10,
+			capacity: 10,
+			enrollment: 8,
+			description: "Welcome to introduction to cognitive science. This class explores the history and philosophy of the mind, important concepts in cognitive psychology such as intelligence, attention, memory and categorization, and important developments in the burgeoning field of artificial intelligence."
 		}
 	)
 ]

@@ -52,11 +52,11 @@ class AddCourseReview extends React.Component {
 
   render() {
 
-    const {curDate, stars, description} = this.props;
+    const {curDate, stars, description, addReview, cancelForm} = this.props;
 
     return (
       <div className='popup_inner auth-system'>
-          <Form onSubmit={this.validForm}>
+          <Form onSubmit={(e) => addReview(this.state.date, this.state.rating, this.state.description)}>
             <Form.Group controlId="date">
               <Form.Label>Review Date</Form.Label>
               <Form.Control name="date" onChange={this.handleInput} value={this.state.date} placeholder={curDate} />
@@ -75,7 +75,7 @@ class AddCourseReview extends React.Component {
             <Button variant="success" type="submit">
               Submit
             </Button>
-            <Button className="float-right" variant="success">Cancel</Button>    
+            <Button className="float-right" onClick={cancelForm} variant="success">Cancel</Button>    
             
           </Form>
       </div>
