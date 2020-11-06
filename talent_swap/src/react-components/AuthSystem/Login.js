@@ -34,6 +34,7 @@ class Login extends React.Component {
   }
 
 	handleLogin(event) {
+		event.preventDefault();
 		let currentUser = this.validate();
 		if (currentUser !== false) {
 			//admin validation
