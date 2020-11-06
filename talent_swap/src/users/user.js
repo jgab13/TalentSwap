@@ -79,23 +79,32 @@ class User {
     }
 
     getMessagesFromContact = (contactId) => {
-        const sortedMessages = hardCodedMessages
-            .sort(
-                (message1, message2) => {
-                    if (message1.timestamp > message2.timestamp) {
-                        return -1;
-                    }
-                    if (message1.timestamp < message2.timestamp) {
-                        return 1;
-                    }
-                    return 0;
-                }
-            );
-        const sentMessages = sortedMessages
+        // Needs server call
+        const sortByTimestamp = (message1, message2) => {
+            if (message1.timestamp > message2.timestamp) {
+                return 1;
+            }
+            if (message1.timestamp < message2.timestamp) {
+                return -1;
+            }
+            return 0;
+        };
+        const sentMessages = hardCodedMessages
             .filter(message => message.senderId === this.id);
-        const receivedMessages = sortedMessages
+        const receivedMessages = hardCodedMessages
             .filter(message => message.receiverId === this.id);
-        return Array.from(new Set([...sentMessages, ...receivedMessages]));
+        return Array.from(new Set([...sentMessages, ...receivedMessages])).sort(sortByTimestamp);
+    }
+
+    sendMessage = (userId, contents) => {
+        hardCodedMessages.push(
+            new Message({
+                timestamp: Date.now(),
+                senderId: this.id,
+                receiverId: userId,
+                contents: contents
+            })
+        )
     }
 }
 
