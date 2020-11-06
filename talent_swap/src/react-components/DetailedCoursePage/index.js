@@ -16,8 +16,10 @@ import Button from "react-bootstrap/Button";
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import {UserContext} from "./../../react-contexts/user-context";
 
-//Outstanding --> Need user context to work so I can check the credits of the user when they enroll
+//Outstanding --> 
+// a) Need user context to work so I can check the credits of the user when they enroll
 //if they do not have enough credits, they cannot enroll.
+// b) Need validation for add/edit review.
 
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
   const reviewDesc1 = "Test review";
@@ -195,8 +197,20 @@ class DetailedCoursePage extends React.Component {
     })
   }
 
-  //Tadd or edit review from current user using details for addReview entry form.
+  //Add or edit review from current user using details for addReview entry form.
   addReviewForm = (date, rating, desc)  => {
+
+    if (date === ""){
+      alert('Date cannot be blank. Enter a valid date.');
+      return;
+    } else if (desc === ""){
+      alert('Description cannot be blank. Enter a valid date.');
+      return;
+    } else if (rating > 5 || rating < 0){
+      alert('Rating must be a number between 0 and 5. Enter a valid rating.');
+      return;
+    }
+
     const newReview = {
       user: this.state.currUser,
       date: date,
