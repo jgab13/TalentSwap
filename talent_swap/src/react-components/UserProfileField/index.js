@@ -32,7 +32,7 @@ class UserProfileField extends React.Component {
 
     render() {
         const editButton = (
-            <Button variant="dark" onClick={this.toggleEdit}>
+            <Button variant="success" onClick={this.toggleEdit}>
                 {this.state.editing ? "Save" : "Edit"}
             </Button>
         );
