@@ -3,6 +3,8 @@ import { uid } from "react-uid";
 import AdminUser from "./../../users/admin-user";
 import Header from "./../Header";
 import BannedUser from "./../BannedUser";
+import WebsiteStatus from './WebsiteStatus'
+import './styles.css';
 import { Button, Table } from 'react-bootstrap';
 
 class AdminDashboard extends React.Component {
@@ -40,11 +42,12 @@ class AdminDashboard extends React.Component {
         return (
             <div>
                 <Header />
-                <div>
+                <div className="user-control">
+                    <h4> User Control </h4>
                     <input type="text" placeholder="User ID" value={this.state.userIdToBan} onChange={this.handleInputChange} />
                     <Button variant="danger" type="button" onClick={this.handleBan}>BAN</Button>
                 </div>
-                <Table>
+                <Table className="user-control">
                     <thead className="thead-dark">
                         <tr>
                             <th>User ID</th>
@@ -58,6 +61,8 @@ class AdminDashboard extends React.Component {
                         ))}
                     </tbody>
                 </Table>
+                <hr />
+                <WebsiteStatus id="website-status" />
             </div>
         )
     }

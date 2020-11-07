@@ -1,7 +1,7 @@
 import User from "./user";
 import AdminUser from "./admin-user";
 
-const hardCodedUsers = [
+export const hardCodedUsers = [
     new User({
         id: 1,
         userType: "user",

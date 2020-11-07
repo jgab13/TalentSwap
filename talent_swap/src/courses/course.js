@@ -7,6 +7,7 @@ class Course {
 		this.date = "";
 		this.credit = 0;
 		this.capacity = 0;
+		this.status = "upcoming"; //should check endtime to change automatically in phase2
 
 		this.id = 0;
 		this.feedback = "";
