@@ -3,6 +3,7 @@ import {UserContext} from "./../../react-contexts/user-context";
 import Header from "./../Header";
 import { ListGroup, ListGroupItem, Container, Row, Col } from 'react-bootstrap';
 import UserProfileField from "./../../react-components/UserProfileField";
+import UserProfileCourses from "./../UserProfileCourses";
 
 import UserManager from "./../../users/user-manager";
 
@@ -23,7 +24,6 @@ class UserProfile extends React.Component {
                 <Header />
                 <Container>
                     <Row>
-                        <Col>PROFILE PICTURE GOES HERE OR SOMETHING</Col>
                         <Col>
                             <ListGroup>
                                 <ListGroupItem>
@@ -39,6 +39,10 @@ class UserProfile extends React.Component {
                                     <UserProfileField fieldName="Domain of Development" fieldValue={currentUser.development} changeValue={currentUser.changeDevelopment} canEdit={canEdit} />
                                 </ListGroupItem>
                             </ListGroup>
+                        </Col>
+                        <Col>
+                            <UserProfileCourses header="Teaching Courses" />
+                            <UserProfileCourses header="Learning Courses" />
                         </Col>
                     </Row>
                 </Container>
