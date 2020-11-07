@@ -2,14 +2,23 @@ import React from "react";
 import Header from "./../Header";
 import "./styles.css";
 import Row from 'react-bootstrap/Row'
+import { Redirect, withRouter } from 'react-router-dom';
+
 
 /* Component for the Home page */
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      loginStatus: this.props.location.state === undefined ? true : false
+    };
+  }
+
   render() {
     return (
       <div>
-        {/* Header component(navbar). need login state check */}
-        <Header/>
+        {console.log(this.state.loginStatus)}
+        <Header loginStatus={this.state.loginStatus}/>
         <div className="mission" id="top">
           <h1 className="ltitle">Welcome to Talent Swap</h1>
           <p className="mstatement"> Our mission at Talent Swap is to engage a community of teachers and learners to exchange knowledge. Teachers seeking to educate or instruct can offer courses to users on our platform.
@@ -38,4 +47,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

@@ -65,12 +65,18 @@ class Login extends React.Component {
 	validate() {
 		//validation
 		let input = this.state.input;
-		let currentUser = UserManager.login(input.username, input.password);
-		console.log(currentUser);
-		if (currentUser === undefined) {
+		try{
+			let currentUser = UserManager.login(input.username, input.password);
+			console.log(currentUser);
+			if (currentUser === undefined) {
+			return false;
+			}
+			return currentUser;
+		}
+		catch(error) {
+			alert(error.message);
 			return false;
 		}
-		return currentUser;
 	}
 
 	render() {

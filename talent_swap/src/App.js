@@ -29,8 +29,8 @@ class App extends React.Component {
           <BrowserRouter>
             <Switch>
               { /* Didn't delete the state passing function since we may need it. */ }
-              <Route exact path='/' render={() => 
-                              (<Home appState={this.state}/>)}/>
+              <Route exact path='/' render={(props) => 
+                              (<Home appState={this.state} {...props}/>)}/>
               <Route exact path='/CourseCreation' render={(props) => 
                               (<CourseCreation appState={this.state} {...props}/>)}/>
               <Route exact path='/DetailedCoursePage' render={() => 

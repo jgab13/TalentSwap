@@ -4,16 +4,16 @@ import "./styles.css";
 import AuthSystem from "./../AuthSystem"
 import messageImg from "./message.png";
 
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { Navbar, Nav, Button, NavDropdown, Form, FormControl } from 'react-bootstrap';
 
 /* The Header Component */
 class Header extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      showPopup: false,
-	  loginStatus: true,
+    showPopup: false,
+	  loginStatus: this.props.loginStatus === false ? false : true,
 	  redirectURL: ""
     };
     this.logout = this.logout.bind(this);
@@ -23,6 +23,13 @@ class Header extends React.Component {
 
   renderRedirect() {
 	  if (this.state.redirectURL) {
+	  	if (this.state.redirectURL === "/") {
+	  		return <Redirect to=
+		      {{
+		        pathname: '/',
+		        state: {loginStatus: false}
+		      }} />
+	  	}
 		  return (
 			<Redirect to={this.state.redirectURL} />
 		  )
@@ -37,7 +44,8 @@ class Header extends React.Component {
 
   logout() {
   	this.setState({
-      loginStatus: false
+      loginStatus: false,
+      redirectURL: "/"
     });
   }
 
@@ -45,6 +53,7 @@ class Header extends React.Component {
     return (
       <div>
 		{this.renderRedirect()}
+		{console.log(this.props.loginStatus)}
         <Navbar bg="light">
 		  <Navbar.Brand href="./">LOGO</Navbar.Brand>
 		  <Form inline className='search-box'>
@@ -82,4 +91,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
