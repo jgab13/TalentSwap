@@ -14,6 +14,7 @@ import AdminDashboard from './react-components/AdminDashboard';
 import MessageCenter from './react-components/MessageCenter';
 import UserProfile from './react-components/UserProfile';
 import DetailedCoursePageTeacher from './react-components/DetailedCoursePageTeacher';
+import SearchPage from './react-components/SearchPage';
 
 class App extends React.Component {
 
@@ -47,6 +48,8 @@ class App extends React.Component {
                               (<UserProfile appState={this.state} {...props}/>)}/>
               <Route exact path='/DetailedCoursePageTeacher' render={() => 
                               (<DetailedCoursePageTeacher appState={this.state}/>)}/>
+              <Route exact path='/SearchPage' render={() => 
+                             (<SearchPage appState={this.state}/>)}/>
             </Switch>
           </BrowserRouter>
         </ContextComponent>

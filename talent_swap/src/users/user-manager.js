@@ -1,5 +1,7 @@
 import User from "./user";
 import AdminUser from "./admin-user";
+import pic0 from "./profile.jpg";
+import pic1 from "./profile1.jpg";
 
 const hardCodedUsers = [
     new User({
@@ -11,7 +13,8 @@ const hardCodedUsers = [
         expertise: "",
         development: "",
         coursesTeaching: [],
-        coursesLearning: []
+        coursesLearning: [],
+        pic: pic0
     }),
     new User({
         id: 2,
@@ -22,7 +25,8 @@ const hardCodedUsers = [
         expertise: "",
         development: "",
         coursesTeaching: [],
-        coursesLearning: []
+        coursesLearning: [],
+        pic: pic1
     })
 ]
 
