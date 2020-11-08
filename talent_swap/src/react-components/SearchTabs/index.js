@@ -1,12 +1,20 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 
-// class SearchTabs extends React.Component{
-function SearchTabs(props){
-    
-    // render(){
+class SearchTabs extends React.Component{
+// function SearchTabs(props){
+    constructor(props){
+        super(props);
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    handleSelect(ek){
+        this.props.handleTabSelect(ek);
+    }
+
+    render(){
         return(
-            <Nav variant="tabs" defaultActiveKey="courses" onClick={props.onClick}>
+            <Nav variant="tabs" defaultActiveKey="courses" onSelect={(eventKey) =>this.handleSelect(eventKey)}>
                 <Nav.Item>
                     <Nav.Link eventKey="courses" >Courses</Nav.Link>
                 </Nav.Item>
@@ -15,7 +23,7 @@ function SearchTabs(props){
                 </Nav.Item>
             </Nav>
         )
-    // }
+    }
 }
 
 export default SearchTabs;

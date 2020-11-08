@@ -21,14 +21,12 @@ class SearchPage extends React.Component{
         this.state = {
             tab : "courses"
         };
-        this.handleTabClick = this.handleTabClick.bind(this);
+        this.handleTabSelect = this.handleTabSelect.bind(this);
         
     }
 
-    handleTabClick(e){
-        e.preventDefault();
-        const curr = (e.target.eventKey === "courses") ? "courses" : "users";
-        this.setState({tab: curr});
+    handleTabSelect = (eventKey) => {
+        this.setState({tab: eventKey});
     }
 
     render(){
@@ -44,7 +42,7 @@ class SearchPage extends React.Component{
         return(
             <div className="SearchPage">
                 <Header />
-                <SearchTabs onClick={this.handleTabClick} />
+                <SearchTabs handleTabSelect = {this.handleTabSelect} />
                 <p id="filterHeader">Filter by</p>
                 {filter}
                 {results}

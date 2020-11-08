@@ -3,9 +3,10 @@ import React from "react";
 import "./styles.css";
 import AuthSystem from "./../AuthSystem"
 import messageImg from "./message.png";
+import SearchBox from "./../SearchBox";
 
 import { Redirect, withRouter } from 'react-router-dom';
-import { Navbar, Nav, Button, NavDropdown, Form, FormControl } from 'react-bootstrap';
+import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 
 /* The Header Component */
 class Header extends React.Component {
@@ -53,13 +54,10 @@ class Header extends React.Component {
     return (
       <div>
 		{this.renderRedirect()}
-		{console.log(this.props.loginStatus)}
+		{/* {console.log(this.props.loginStatus)} */}
         <Navbar bg="light">
 		  <Navbar.Brand href="./">LOGO</Navbar.Brand>
-		  <Form inline className='search-box'>
-	        <FormControl type="text" placeholder="search" className="mr-sm-2" />
-	        <Button variant="outline-success" href="/Course">search</Button>
-	      </Form>
+		  <SearchBox />
 	      {this.state.loginStatus ? 
 	      <Nav className="ml-auto">
 			  <NavDropdown title="Teach" id="basic-nav-dropdown" variant="success">
@@ -76,7 +74,7 @@ class Header extends React.Component {
 		        <NavDropdown.Item href="/UserDashboard">Profile</NavDropdown.Item>
 		        <NavDropdown.Item onClick={this.logout}>Log Out</NavDropdown.Item>
 		      </NavDropdown>
-			  <img src={messageImg} className="message-icon" onClick={() => this.setState({redirectURL: "/MessageCenter"})} />
+			  <img alt="message icon" src={messageImg} className="message-icon" onClick={() => this.setState({redirectURL: "/MessageCenter"})} />
 		      </Nav>
 		      :
 		      <Nav className="ml-auto">
