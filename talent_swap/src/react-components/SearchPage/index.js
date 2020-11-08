@@ -19,29 +19,62 @@ class SearchPage extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            tab : "courses"
+            tab : "courses", 
+            keyword: "",
+            users: hardcodedUsers,      // Hardcoded users
+            courses: hardcodedCourses,   // Hardcoded courses
+            // course_results: [], 
+            // user_results: []
         };
         this.handleTabSelect = this.handleTabSelect.bind(this);
-        
+        this.handleSearch = this.handleSearch.bind(this);
+        // this.handleLevelFilter = this.handleLevelFilter.bind(this);
+        // this.handleDateFilter = this.handleDateFilter.bind(this);
+        // this.handleSizeFilter = this.handleSizeFilter.bind(this);
     }
 
     handleTabSelect = (eventKey) => {
         this.setState({tab: eventKey});
     }
+    handleSearch = (input) => {
+        if (!input) return;
+        this.setState({
+            keyword: input,
+            courses: this.state.courses.filter((course) => 
+               course.topic.toLowerCase() === input.toLowerCase()
+            ),
+            users: this.state.users.filter((user) => 
+                user.name.toLowerCase() === input.toLowerCase()
+            )
+        });
+    } 
+    // handleLevelFilter(eventKey){
+    //     this.setState({
+    //         courses: this.state.courses.filter( (course) =>
+    //             course.level === eventKey
+    //         )
+    //     })
+    // }
+    // handleDateFilter(eventKey){
+  	//     const cur = new Date(Date.now());
+    //     this.setState({
+    //         courses: this.state.courses.filter( (course) =>
+    //             (eventKey === "upcoming") ? course.date >= 
+    //         )
+    //     })
+    // }
 
     render(){
-        // Hardcoded users
-        const users = hardcodedUsers;
-        // Hardcoded courses
-        const courses = hardcodedCourses;
-
+        const users = this.state.users;
+        const courses = this.state.courses;
         const tab = this.state.tab;
+
         let filter, results;
         filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
-                <Header />
+                <Header handleSearch = {this.handleSearch}/>
                 <SearchTabs handleTabSelect = {this.handleTabSelect} />
                 <p id="filterHeader">Filter by</p>
                 {filter}

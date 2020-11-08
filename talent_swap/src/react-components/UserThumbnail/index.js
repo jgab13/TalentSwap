@@ -26,7 +26,7 @@ function UserThumbnail(props){
                             <span id="doeContents">{user.development}</span>
                         </Card.Text>
                         <Button variant="success" className="userButton" href={`/UserProfile/${user.id}`} >
-                            complete profile
+                            view complete profile
                         </Button>
                     </Card.Body>
                 </Card>
