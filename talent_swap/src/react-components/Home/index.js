@@ -43,7 +43,7 @@ class Home extends React.Component {
         <div className="mission">
           <h1 className="ltitle">Popular Courses</h1>
           {/* Insert grid of course thumbnails here */}
-          <CourseResutls courses = {hardcodedCourses} />
+          <CourseResutls courses = {hardcodedCourses} loginStatus={this.state.loginStatus}/>
         </div>
       </div>
     );
