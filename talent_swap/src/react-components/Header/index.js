@@ -3,6 +3,7 @@ import React from "react";
 import "./styles.css";
 import AuthSystem from "./../AuthSystem"
 import messageImg from "./message.png";
+import logoImg from "./logo.png";
 import SearchBox from "./../SearchBox";
 
 import { Redirect, withRouter } from 'react-router-dom';
@@ -30,6 +31,13 @@ class Header extends React.Component {
 		      {{
 		        pathname: '/',
 		        state: {loginStatus: false}
+		      }} />
+	  	}
+	  	if (this.state.redirectURL === "/Home") {
+	  		return <Redirect to=
+		      {{
+		        pathname: '/',
+		        state: {loginStatus: true}
 		      }} />
 	  	}
 		  return (
@@ -60,8 +68,8 @@ class Header extends React.Component {
 		{this.renderRedirect()}
 		{/* {console.log(this.props.loginStatus)} */}
         <Navbar bg="light">
-		  <Navbar.Brand href="./">LOGO</Navbar.Brand>
-		  {/* <SearchBox handleSearch={this.handleSearch}/> */}?
+		  <img alt="logo" src={logoImg} className="message-icon" onClick={() => this.setState({redirectURL: "/Home"})} />
+		  {/* <SearchBox handleSearch={this.handleSearch}/> */}
 		  <SearchBox />
 	      {this.state.loginStatus ? 
 	      <Nav className="ml-auto">

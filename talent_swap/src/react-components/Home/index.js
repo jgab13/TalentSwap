@@ -11,15 +11,21 @@ import {hardcodedCourses} from "./../../courses/testcourses.js"
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      loginStatus: this.props.location.state === undefined ? true : false
+    if(this.props.location.state === undefined) {
+      this.state = { 
+      loginStatus: false
     };
+    }
+    else{
+      this.state = { 
+      loginStatus: this.props.location.state.loginStatus
+    };
+    }
   }
 
   render() {
     return (
       <div>
-        {console.log(this.state.loginStatus)}
         <Header loginStatus={this.state.loginStatus}/>
         <div className="mission" id="top">
           <h1 className="ltitle">Welcome to Talent Swap</h1>
@@ -43,7 +49,8 @@ class Home extends React.Component {
         <div className="mission">
           <h1 className="ltitle">Popular Courses</h1>
           {/* Insert grid of course thumbnails here */}
-          <CourseResutls courses = {hardcodedCourses} loginStatus={this.state.loginStatus}/>
+          <CourseResutls courses = {hardcodedCourses}
+          loginStatus={this.props.location.state === undefined ? false : this.props.location.state.loginStatus}/>
         </div>
       </div>
     );
