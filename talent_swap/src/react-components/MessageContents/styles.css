@@ -1,0 +1,41 @@
+.message-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 90vh;
+}
+
+.message-container > .message-contents {
+    overflow-y: scroll;
+}
+
+.message-container > .message-contents > .self {
+    text-align: right;
+}
+
+.message-container > .message-contents > .self > span {
+    background-color: lightgray;
+}
+
+.message-container > .message-contents > .other {
+    text-align: left;
+}
+
+.message-container > .message-contents > .other > span {
+    background-color: lightgreen;
+}
+
+.message-container > .message-contents div, .message-container > .message-contents span {
+    padding: 1em;
+    border-radius: 30%;
+}
+
+.message-container > .message-input {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1em;
+}
+
+.message-container > .message-input > input {
+    flex: auto;
+}
