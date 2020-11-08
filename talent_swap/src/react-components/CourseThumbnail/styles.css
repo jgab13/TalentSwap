@@ -1,0 +1,37 @@
+#courseCard {
+    padding: 30px;
+    max-width: 650px;
+    max-height: 420px;
+}
+
+#body{
+    padding: 10px;
+    text-align: center;
+}
+#coursePic {
+    padding: 10px;
+    margin: auto;
+    height: 220px;
+    max-width: 550px;
+    max-height: 220px;
+}
+
+#courseButton {
+    background-color: #28A745;
+    color: white;
+    border: white;
+    opacity: 1;
+    /* padding: 10px; */
+    margin-top: 20px;
+}
+
+#courseButton:hover{
+    background-color:  #71ee8e;
+}
+
+.text {
+    /* font-weight: lighter; */
+    font-size: small;
+    font-style: italic;
+    padding: 10px;
+}

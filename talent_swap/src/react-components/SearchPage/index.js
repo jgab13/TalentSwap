@@ -6,8 +6,7 @@ import Header from "./../Header"
 import SearchTabs from "./../SearchTabs"
 import CourseFilter from "./../SearchCourseFilter"
 import UserFilter from "./../SearchUserFilter"
-// import UserThumbnail from "./../UserThumbnail";
-// import CourseResults from "./../SearchCourseResults"
+import CourseResults from "./../SearchCourseResults"
 import UserResults from "./../SearchUserResults"
 
 // prepare hardcoded user and course data to render on the search page
@@ -41,7 +40,7 @@ class SearchPage extends React.Component{
         const tab = this.state.tab;
         let filter, results;
         filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
-        results = (tab === "courses") ? <UserResults users = {users}/> : <UserResults users = {users}/>;
+        results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
                 <Header />
