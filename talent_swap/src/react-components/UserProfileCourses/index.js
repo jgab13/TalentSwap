@@ -1,7 +1,10 @@
 import React from "react";
 import "./styles.css";
-import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+
+import CourseThumbnail from "./../CourseThumbnail";
+import {hardcodedCourses} from "./../../courses/testcourses.js";
 
 class UserProfileCourses extends React.Component {
     constructor(props) {
@@ -20,16 +23,14 @@ class UserProfileCourses extends React.Component {
         return (
             <div>
                 {this.renderRedirect()}
-                <Card>
-                    <Card.Header>
-                        {this.props.header}
-                    </Card.Header>
-                    <Card.Body>
-                        <ListGroup>
-                            <ListGroupItem className="courseLink" onClick={() => this.setState({redirectURL: "/DetailedCoursePage"})}>Introduction to Cognitive Science</ListGroupItem>
-                        </ListGroup>
-                    </Card.Body>
-                </Card>
+                <h1>{this.props.header}</h1>
+                <ListGroup>
+                    {hardcodedCourses.map( course => 
+                        <ListGroupItem>
+                            <CourseThumbnail key={course.id.toString()} course = {course} />
+                        </ListGroupItem>
+                    )}
+                </ListGroup>
             </div>
         )
     }

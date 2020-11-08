@@ -48,8 +48,8 @@ class App extends React.Component {
                               (<UserProfile appState={this.state} {...props}/>)}/>
               <Route exact path='/DetailedCoursePageTeacher' render={() => 
                               (<DetailedCoursePageTeacher appState={this.state}/>)}/>
-              <Route exact path='/Search' render={() => 
-                             (<SearchPage appState={this.state}/>)}/>
+              <Route exact path='/Search' render={(props) => 
+                             (<SearchPage appState={this.state} {...props}/>)}/>
             </Switch>
           </BrowserRouter>
         </ContextComponent>

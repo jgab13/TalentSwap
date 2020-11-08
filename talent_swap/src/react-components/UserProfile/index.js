@@ -1,7 +1,7 @@
 import React from "react";
 import {UserContext} from "./../../react-contexts/user-context";
 import Header from "./../Header";
-import { ListGroup, ListGroupItem, Container, Row, Col } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Container, Row, Col, Image } from 'react-bootstrap';
 import UserProfileField from "./../../react-components/UserProfileField";
 import UserProfileCourses from "./../UserProfileCourses";
 
@@ -27,6 +27,9 @@ class UserProfile extends React.Component {
                         <Col>
                             <ListGroup>
                                 <ListGroupItem>
+                                    <Image src={currentUser.pic} thumbnail />
+                                </ListGroupItem>
+                                <ListGroupItem>
                                     <UserProfileField fieldName="Name" fieldValue={currentUser.name} changeValue={currentUser.changeName} canEdit={canEdit} />
                                 </ListGroupItem>
                                 <ListGroupItem>
@@ -38,10 +41,15 @@ class UserProfile extends React.Component {
                                 <ListGroupItem>
                                     <UserProfileField fieldName="Domain of Development" fieldValue={currentUser.development} changeValue={currentUser.changeDevelopment} canEdit={canEdit} />
                                 </ListGroupItem>
+                                <ListGroupItem>
+                                    <UserProfileField fieldName="Credits" fieldValue={currentUser.credits} canEdit={false} />
+                                </ListGroupItem>
                             </ListGroup>
                         </Col>
                         <Col>
                             <UserProfileCourses header="Teaching Courses" />
+                        </Col>
+                        <Col>
                             <UserProfileCourses header="Learning Courses" />
                         </Col>
                     </Row>

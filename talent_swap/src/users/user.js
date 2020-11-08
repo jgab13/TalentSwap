@@ -25,6 +25,7 @@ class User {
         this.development = "";
         this.coursesTeaching = [];
         this.coursesLearning = [];
+        this.pic = "";
         Object.assign(
             this,
             typeof json === "string" ? JSON.parse(json) : json

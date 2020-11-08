@@ -5,6 +5,8 @@ import CourseThumbnail from "./../CourseThumbnail"
 class CourseResults extends React.Component{
     render(){
         const courses = this.props.courses;
+        const loginStatus = this.props.loginStatus;
+        console.log(loginStatus);
         return(
             <CardDeck>
                 {courses.map( course => 

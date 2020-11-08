@@ -115,7 +115,7 @@ class CourseCreation extends React.Component {
 			        type='radio'
 			        id='only once'
 			        name='recurring'
-			        label='recurring'
+			        label='only once'
 			        value='false'
 			      />
 			      <Form.Check
