@@ -13,7 +13,7 @@ export const hardcodedCourses = [
 			// teacher_id: 1,
 			starttime: "11:00:00",
 			endtime: "12:00:00",
-			date: "2020-10-31",
+			date: "2020-11-11",
 			// duration: "1hr",
 			credit: 1,
 			capacity: 1,
@@ -32,8 +32,8 @@ export const hardcodedCourses = [
 			endtime: "15:00:00",
 			date: "2020-11-31",
 			credit: 1,
-			capacity: 10,
-			enrollment: 10, 
+			capacity: 5,
+			enrollment: 4, 
 			pic: pic1, 
 			level: "all-level"
 		}

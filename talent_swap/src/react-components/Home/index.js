@@ -1,9 +1,11 @@
 import React from "react";
 import Header from "./../Header";
+import CourseResutls from "./../SearchCourseResults";
 import "./styles.css";
 import Row from 'react-bootstrap/Row'
 import { Redirect, withRouter } from 'react-router-dom';
 
+import {hardcodedCourses} from "./../../courses/testcourses.js"
 
 /* Component for the Home page */
 class Home extends React.Component {
@@ -39,8 +41,9 @@ class Home extends React.Component {
           </p>
         </div>
         <div className="mission">
-          <h1 className="ltitle">Popular Courses:</h1>
+          <h1 className="ltitle">Popular Courses</h1>
           {/* Insert grid of course thumbnails here */}
+          <CourseResutls courses = {hardcodedCourses} />
         </div>
       </div>
     );

@@ -17,16 +17,15 @@ class CourseFilter extends React.Component{
                     <Dropdown.Item href="#/action-4">all-level</Dropdown.Item>
                 </DropdownButton>
                 <DropdownButton variant = "light" id="dropdown-availability" title="Availability">
-                    <Dropdown.Item href="#/action-1">upcoming, enroll now</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">upcoming, waitlist</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Past</Dropdown.Item>
+                    <Dropdown.Item href="#/action-1">upcoming </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">past</Dropdown.Item>
                 </DropdownButton> 
 
                 <DropdownButton variant = "light" id="dropdown-class-size" title="Class Size">
                     <Dropdown.Item href="#/action-1">one-on-one</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">small (2-10)</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">medium (11-20)</Dropdown.Item>
-                    <Dropdown.Item href="#/action-4">large (30+)</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">small (2-8)</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">medium (9-20)</Dropdown.Item>
+                    <Dropdown.Item href="#/action-4">large (20+)</Dropdown.Item>
                 </DropdownButton> 
             </div>
         );
