@@ -1,5 +1,7 @@
 import User from "./user";
 import AdminUser from "./admin-user";
+import pic0 from "./profile.jpg";
+import pic1 from "./profile1.jpg";
 
 export const hardCodedUsers = [
     new User({
@@ -8,10 +10,11 @@ export const hardCodedUsers = [
         name: "User One",
         credits: 0,
         bio: "Empty Bio",
-        expertise: "",
-        development: "",
+        expertise: "JavaScript",
+        development: "writing film reviews",
         coursesTeaching: [],
-        coursesLearning: []
+        coursesLearning: [],
+        pic: pic0
     }),
     new User({
         id: 2,
@@ -19,10 +22,11 @@ export const hardCodedUsers = [
         name: "User Two",
         credits: 0,
         bio: "Empty Bio",
-        expertise: "",
-        development: "",
+        expertise: "Cognitive Science",
+        development: "yoga",
         coursesTeaching: [],
-        coursesLearning: []
+        coursesLearning: [],
+        pic: pic1
     })
 ]
 
