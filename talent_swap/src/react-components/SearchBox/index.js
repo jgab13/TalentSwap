@@ -11,16 +11,16 @@ class SearchBox extends React.Component{
         input: ""
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleClick(e){
         console.log("searching the database...")
         e.preventDefault();
-        this.props.handleSearch(document.querySelector("#keyword").value);
         return <Redirect to=
               {{
                 pathname: '/Search',
-                state: {searchInput: this.state.input}
+                state: {searchInput: this.state.input} //{stateVar: stateValue}
               }} />
     }
 
@@ -39,7 +39,7 @@ class SearchBox extends React.Component{
                 placeholder="search courses or users"
                 className="mr-sm-2"
                 value={this.state.input}
-                onChange={this.handleChange.bind(this)} />
+                onChange={this.handleChange} />
 	            <Button variant="outline-success" onClick={this.handleClick}>search</Button>
 	        </Form>
         );

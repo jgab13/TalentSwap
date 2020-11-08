@@ -20,7 +20,8 @@ class SearchPage extends React.Component{
         super(props);
         this.state = {
             tab : "courses", 
-            keyword: "",
+            // keyword: "",
+            keyword: this.props.location.state.searchInput,
             users: hardcodedUsers,      // Hardcoded users
             courses: hardcodedCourses,   // Hardcoded courses
             // course_results: [], 
@@ -36,15 +37,16 @@ class SearchPage extends React.Component{
     handleTabSelect = (eventKey) => {
         this.setState({tab: eventKey});
     }
-    handleSearch = (input) => {
-        if (!input) return;
+    handleSearch = () => {
+        const keyword = this.state.keyword;
+        if (!keyword) return;
         this.setState({
-            keyword: input,
+            // keyword: input,
             courses: this.state.courses.filter((course) => 
-               course.topic.toLowerCase() === input.toLowerCase()
+               course.topic.toLowerCase() === keyword.toLowerCase()
             ),
             users: this.state.users.filter((user) => 
-                user.name.toLowerCase() === input.toLowerCase()
+                user.name.toLowerCase() === keyword.toLowerCase()
             )
         });
     } 
@@ -65,16 +67,19 @@ class SearchPage extends React.Component{
     // }
 
     render(){
+        console.log(this.props.location.state.stateInput);
+        // {this.handleSearch}
+
+
         const users = this.state.users;
         const courses = this.state.courses;
         const tab = this.state.tab;
-
         let filter, results;
         filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
-                <Header handleSearch = {this.handleSearch}/>
+                <Header />
                 <SearchTabs handleTabSelect = {this.handleTabSelect} />
                 <p id="filterHeader">Filter by</p>
                 {filter}

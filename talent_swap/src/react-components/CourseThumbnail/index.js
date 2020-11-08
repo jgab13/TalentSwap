@@ -20,7 +20,8 @@ function CourseThumbnail(props){
                         {course.level} | {course.enrollment}/{course.capacity} enrolled
                     </span> <br></br>
                     <span className="text">
-                        {course.starttime} - {course.endtime} {course.date}
+                        {course.starttime.toLocaleTimeString("en-US")} - 
+                            {course.endtime.toLocaleTimeString("en-US")} {course.starttime.toLocaleDateString("en-US")}
                     </span> <br></br>
                     <Button id="courseButton" variant="success" href={`/DetailedCoursePage`}>
                         view course details
