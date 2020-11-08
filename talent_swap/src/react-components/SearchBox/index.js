@@ -8,8 +8,9 @@ class SearchBox extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(){
+    handleClick(e){
         console.log("searching the database...")
+        e.preventDefault();
         this.props.handleSearch(document.querySelector("#keyword").value);
     }
 
