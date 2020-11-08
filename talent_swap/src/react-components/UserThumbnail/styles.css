@@ -1,0 +1,48 @@
+#card {
+    padding: 30px;
+    max-width: 280px;
+    max-height: 430px;
+}
+
+#body{
+    padding: 10px;
+    text-align: center;
+}
+#userPic {
+    padding: 10px;
+    margin: auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    /* border: 1px solid #28A745; */
+}
+
+#doeHeader {
+    font-size: small;
+    color: #28A745;
+}
+
+#doeContent {
+    font-size: large;
+}
+
+.userButton {
+    background-color: #28A745;
+    ;
+    color: white;
+    border: white;
+    opacity: 1;
+    
+    /* transform: translate(-50%, -50%); */
+    /* margin-top: auto;
+    margin-left: auto; */
+}
+/* 
+#card:hover{
+    opacity: 0.3;
+} */
+
+.userButton:hover{
+    background-color:  #71ee8e;
+}
+
