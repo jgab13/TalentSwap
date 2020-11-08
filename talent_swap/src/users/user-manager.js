@@ -10,8 +10,8 @@ const hardCodedUsers = [
         name: "User One",
         credits: 0,
         bio: "Empty Bio",
-        expertise: "",
-        development: "",
+        expertise: "JavaScript",
+        development: "writing film reviews",
         coursesTeaching: [],
         coursesLearning: [],
         pic: pic0
@@ -22,8 +22,8 @@ const hardCodedUsers = [
         name: "User Two",
         credits: 0,
         bio: "Empty Bio",
-        expertise: "",
-        development: "",
+        expertise: "Cognitive Science",
+        development: "yoga",
         coursesTeaching: [],
         coursesLearning: [],
         pic: pic1
