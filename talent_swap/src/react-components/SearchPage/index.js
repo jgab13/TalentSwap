@@ -67,7 +67,7 @@ class SearchPage extends React.Component{
     // }
 
     render(){
-        console.log(this.props.location.state.stateInput);
+        console.log(this.props.location.state.searchInput);
         // {this.handleSearch}
 
 
