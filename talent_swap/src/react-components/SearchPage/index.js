@@ -5,7 +5,7 @@ import "./styles.css";
 import Header from "./../Header"
 import SearchTabs from "./../SearchTabs"
 import CourseFilter from "./../SearchCourseFilter"
-import UserFilter from "./../SearchUserFilter"
+// import UserFilter from "./../SearchUserFilter"
 import CourseResults from "./../SearchCourseResults"
 import UserResults from "./../SearchUserResults"
 
@@ -41,7 +41,6 @@ function FiltersCourseSizes(curr_courses, filters){
         r_courses = r_courses.concat(curr_courses.filter(course =>
             {switch(f){
                 case 'one': 
-                    // console.log(typeof(course.capacity))
                     return course.capacity === 1
                 case 'small':
                     return 1 < course.capacity && course.capacity < 9
@@ -65,6 +64,7 @@ class SearchPage extends React.Component{
             tab : "courses",
             // filtered: false
             cfilters: []
+            // newFilters: false
             // f_levels: [],
             // f_dates: [],
             // f_sizes: [],
@@ -98,8 +98,10 @@ class SearchPage extends React.Component{
         if ( !prevState.cfilters
             || newCourseFilterState.cfilters.length !== prevState.cfilters.length
             || !newCourseFilterState.cfilters.every( (val, ind) => val === prevState.cfilters[ind]))
+        // if (this.state.newFiltersApplicable)
             {
                 this.setState(newCourseFilterState)
+                // this.setState({newFiltersApplicable: false})
         }
     }
 
@@ -129,6 +131,7 @@ class SearchPage extends React.Component{
     }
 
     updateOnCourseFiltersChange = () => {
+        // this.setState({newFiltersApplicable:true});
         let courses = this.state.keyword
             ? this.state.courses
             : hardcodedCourses;
@@ -192,14 +195,16 @@ class SearchPage extends React.Component{
 
         console.log(this.state)
         let filter, results;
-        filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
+        // filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
+        filter = (tab === "courses") ? <CourseFilter /> : undefined;
+
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
                 <Header />
                 <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} />
                 <p id="filterHeader">
-                    <span> Filter by </span> <br></br>
+                    <span> Filter Courses by </span> <br></br>
                     {filters.map( (filter) =>
                         <Badge id="filterLabel" variant="success" key={filter}>{filter}</Badge>
                     )}
