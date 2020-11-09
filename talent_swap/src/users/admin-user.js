@@ -13,6 +13,7 @@ class AdminUser {
     }
 
     banUser = (userId) => {
+        // Needs server call
         const userToBan = UserManager.getUserFromId(userId);
         if (userToBan) {
             bannedUsers.push(userToBan);
@@ -20,6 +21,7 @@ class AdminUser {
     }
 
     unbanUser = (userId) => {
+        // Needs server call
         bannedUsers.splice(
             bannedUsers.indexOf(
                 UserManager.getUserFromId(userId)
@@ -29,6 +31,7 @@ class AdminUser {
     }
 
     getBannedUsers = () => {
+        // Needs server call
         return bannedUsers;
     }
 }

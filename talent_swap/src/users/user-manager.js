@@ -50,6 +50,7 @@ class UserManager {
     }
 
     static getUserFromId(userId) {
+        // Needs server call
         return hardCodedUsers.find(user => user.id === userId);
     }
 }
