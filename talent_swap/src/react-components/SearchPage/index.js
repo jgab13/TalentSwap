@@ -38,7 +38,7 @@ function FiltersCourseSizes(curr_courses, filters){
     let r_courses = [];
     for (let f of filters){
         r_courses = r_courses.concat(curr_courses.filter(course =>
-            {switch(key){
+            {switch(f){
                 case 'one': 
                     return course.capacity === 1
                 case 'small':
