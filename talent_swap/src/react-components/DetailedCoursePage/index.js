@@ -1,32 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./styles.css";
-// import { uid } from "react-uid";
-import CourseList from "./../CourseList";
-import CourseReview from "./../CourseReview"
-// import img from ....;
-
-import Container from "react-bootstrap/Container";
-import Header from "./../Header"
-
+import CourseContainer from "./../CourseContainer";
 import instImg from "./logo192.png";
-import AuthSystem from "./../AuthSystem"
-import AddCourseReview from "./../AddCourseReview"
-import Button from "react-bootstrap/Button";
-import {hardcodedCourses} from "./../../courses/testcourses.js"
-import {UserContext} from "./../../react-contexts/user-context";
+import {hardcodedCourses} from "./../../courses/testcourses.js";
+import {hardCodedUsers} from "./../../users/user-manager.js";
 
-//Outstanding --> 
-// a) Need user context to work so I can check the credits of the user when they enroll
-//if they do not have enough credits, they cannot enroll.
-// b) Need validation for add/edit review.
 
   const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
   const reviewDesc1 = "Test review";
   const reviewDesc2 = "Test review2";  
 
   const review1 = {
-      user: "user1",
+      user: hardCodedUsers[0].name,
       date: "11-02-2020",
       img: instImg,
       description: reviewDesc,
@@ -48,244 +32,37 @@ import {UserContext} from "./../../react-contexts/user-context";
       description: reviewDesc2,
       rating: 4
   }
-  const currCourse = hardcodedCourses[2];
-  const enrollment = ["user1", "user2", "user3", "user4"];
-  
+
+  const reviews = [review1, review2, review3];
 
 class DetailedCoursePage extends React.Component {
-  //static contextType = UserContext;
-
-  state = {
-      currUser: "user1",
-      course: currCourse,
-      review: [review1, review2, review3],
-      enrolled: false,
-      compl: false,
-      edit: false,
-      reviewed: false,
-      currReview: null
-  }
-
-  /////On Mount component functions
-
-  //Set the current user
-  // setCurrentUser = () => {
-   // console.log(this.context);
-   // const user = this.context;
-    // this.setState({
-      // currUser: this.context,
-    // })
-   //  console.log(this.state.currUser);
-   // console.log(this.state.enrolled);
-  // }
-
-  //check if the current user is enrolled in the course.
-  checkEnrollment = () => {
-    const enrollUser = enrollment.filter(user => {
-      return user === this.state.currUser;
-    });
-    const enrolled = enrollUser.length === 0 ? false: true;
-    this.setState({
-      enrolled: enrolled
-    })
-  }
-
-  //Check the current date to determine if the course has been completed.
-  checkCourseCompl = (date) => {
-  	const cur = new Date(Date.now());
-  	const courseDate = new Date(this.state.course.date);
-  	let compl = false;
-  	if (cur.getFullYear() > courseDate.getFullYear()){
-  		compl = true;
-
-  	} else if (cur.getFullYear() === courseDate.getFullYear() && cur.getMonth() > courseDate.getMonth()){
-  		compl = true;
-  	} else if (cur.getFullYear() === courseDate.getFullYear() && cur.getMonth() === courseDate.getMonth() 
-  				&& cur.getDate() > courseDate.getDate()){
-  		compl = true;
-  	}
-  	this.setState({
-      compl: compl
-    })
-  }
-
-  //check if the current user has reviewed the current course.
-  checkIfReviewed = () => {
-    const checkReview = this.state.review.filter(rev => {
-      return rev.user === this.state.currUser;
-    });
-    const check = checkReview.length !== 0 ? true : false
-    console.log(check)
-    this.setState({
-      reviewed: check,
-      edit: check
-    })
-  }
+      state = {
+        courseID: this.props.location.state.course.id
+      }
 
 
-  /////On change and other functions
 
+  	render() {
+    console.log(this.state.courseID);  
+    const course0 = this.state.courseID === 0 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={null}/> : null ;
+    const course1 = this.state.courseID === 1 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={null}/> : null ;
+    const course2 = this.state.courseID === 2 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={reviews} admin={null}/> : null ;
+    const course3 = this.state.courseID === 3 ? <CourseContainer courseID={this.state.courseID} userID={-1} reviews={[]} admin={null}/> : null ;
+    const course4 = this.state.courseID === 4 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={hardCodedUsers[1]}/> : null ;
+		
+		return (
+      <div>
+       {course0} 
+       {course1}
+			 {course2}
+       {course3}
+       {course4}
 
-  //Calculate rating for course - call this any time a review is modified, added or deleted.
-  calcReviewRating = (Review) => {
-    const count = Review.length;
-    const totalRate = Review.reduce(function(total, rev)  {
-      return total + rev.rating 
-    }, 0);
-    return parseInt(totalRate / count);
-  }
+      </div>
+			);
 
-  //Enroll current user in course.
-  enrollCourse = () => {
-   if (this.state.currUser === null){
-    this.setState({
-      enrolled: !this.state.enrolled,
-    })
-   } else {
-    let currentEnrolled = this.state.course.enrollment + 1;
-    let course = this.state.course;
-    course.enrollment = currentEnrolled;
-    this.setState({
-      enrolled: !this.state.enrolled,
-      course: course
-    })
-   }
-  }
+	}
 
-  //Changes the state of reviewed to pop up review entry form.
-  addReviewFunc = () => {
-  	this.setState({
-  		reviewed : !this.state.reviewed,
-  	})
-  }
-
-
-  //Sets currReview to not null to trigger edit pop up
-  editReview = event => {
-    console.log(event.target.name);
-    const getReview = this.state.review.filter(rev => {
-      return rev.description === event.target.name;
-    });
-    this.setState({
-      currReview: getReview[0]
-    })
-  }
-
-  //Removes review from current reviews
-  deleteReview = event => {
-    const reviewName = event.target.name;
-    const deletedReviews = this.state.review.filter(rev => {
-      return rev.description !== reviewName;
-    });
-    const newRating = this.calcReviewRating(deletedReviews);
-    const curCourse = this.state.course;
-    curCourse.rate = newRating;
-    console.log(currCourse);
-    this.setState({
-      review: deletedReviews,
-      reviewed: false,
-      edit: false,
-      course: curCourse //might not be necessary
-    })
-  }
-
-  //Exits addReview entry form.
-  cancelForm = event =>{
-    this.setState({
-      reviewed: !this.state.reviewed,
-      currReview: null
-    })
-  }
-
-  //Add or edit review from current user using details for addReview entry form.
-  addReviewForm = (date, rating, desc)  => {
-
-    if (date === ""){
-      alert('Date cannot be blank. Enter a valid date.');
-      return;
-    } else if (desc === ""){
-      alert('Description cannot be blank. Enter a valid date.');
-      return;
-    } else if (rating > 5 || rating < 0){
-      alert('Rating must be a number between 0 and 5. Enter a valid rating.');
-      return;
-    }
-
-    const newReview = {
-      user: this.state.currUser,
-      date: date,
-      img: instImg,
-      description: desc,
-      rating: parseInt(rating)
-    };
-    const existingReviews = this.state.review
-    const getReview = existingReviews.filter(rev => {
-      return rev.user !== newReview.user;
-    });
-    getReview.push(newReview);
-    const newRating = this.calcReviewRating(getReview);
-    const curCourse = this.state.course;
-    curCourse.rate = newRating;
-    this.setState({
-      review: getReview,
-      edit: true,
-      currReview: null,
-      course: currCourse // might not be necessary
-    })
-  }
-
-
-  componentDidMount() {
-    //Check for class fullness occurs automatically.
-    //sets current user of the web app from UserContext and check if signed in.
-    //this.setCurrentUser(); 
-    //Check if course completed
-    this.checkCourseCompl(this.state.course.date);
-    //Check if enrolled in course.
-    this.checkEnrollment();
-    //check if already reviewed the course.
-    this.checkIfReviewed();
-    }
-
-  render() {
-  	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
-  	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit ?
-  					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
-
-
-    return (
-    
-    <div>
-      <Header/>
-      {this.state.enrolled && this.state.currUser === null ? <AuthSystem/> : null}
-      {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={""} cancelForm={this.cancelForm} addReview={this.addReviewForm} description={""}/> : null}
-      {this.state.currReview === null ? null : <AddCourseReview curDate={this.state.currReview.date} cancelForm={this.cancelForm} addReview={this.addReviewForm} stars={this.state.currReview.rating} description={this.state.currReview.description}/>}
-      <CourseList title={this.state.course.topic} 
-        description={this.state.course.description}
-        enrolled={this.state.course.enrollment} 
-        capacity={this.state.course.capacity}
-        rate={this.state.course.rate}
-        instruct={this.state.course.teacher}
-        instImg = {this.state.course.img}
-        alreadyEnrolled={this.state.enrolled}
-        link={this.enrollCourse}
-        credit = {this.state.course.credit}
-        start={this.state.course.date}
-        completed={this.state.compl}
-        user={this.state.currUser}
-        />
-        {completedCourse}
-
-
-      <h3>Reviews for this course: </h3>
-  	  {addReview}
-      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.enrolled} user={this.state.currUser} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
-
-      								)}
-    </div>
-
-    );
-  }
 }
 
 export default DetailedCoursePage;

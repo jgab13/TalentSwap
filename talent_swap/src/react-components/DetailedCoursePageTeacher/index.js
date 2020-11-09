@@ -54,17 +54,16 @@ class DetailedCoursePageTeacher extends React.Component {
     return (
       <div>
       {this.renderRedirect()}
-      <div className="courseDescrip">
       <Header/>
+      <div className="courseDescrip">
       <h1 className="title">{topic}</h1>
       <div id="desc">{description}</div>
       <div id="detail">
         <h5>Course Details:</h5>
         <span>Enrollment: {enrollment}/{capacity}</span><br/>
         <span>Teacher: {teacher}</span><br/>
-        <span>Start: {starttime}</span><br/>
-        <span>End: {endtime}</span><br/>
-        <span>Date: {date}</span><br/>
+        <span>Start: {starttime.toLocaleString("en-US")}</span><br/>
+        <span>End: {endtime.toLocaleString("en-US")}</span><br/>
         <span>Credit: {credit}</span><br/>
         <span>Status: Upcoming</span><br/>
         <Button className="edit" onClick={this.setRedirect} variant="success"> Edit</Button>

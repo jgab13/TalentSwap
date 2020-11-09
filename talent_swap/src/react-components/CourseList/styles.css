@@ -1,6 +1,8 @@
 .courseDescrip {
 	background-color: #4CAF50;
 	color: white;
+	min-height: 325px;
+	padding: 10px;
 }
 
 h1 {
@@ -18,13 +20,13 @@ h1 {
 
 #last {
 	position: absolute;
-	top: 180px;
+	top: 225px;
 	right: 209px;
 }
 
 .button {
 	position: absolute;
-	top: 75px;
+	top: 125px;
 	width: 160px;
 	height: 100px;
 	right: 200px;

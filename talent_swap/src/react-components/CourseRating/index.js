@@ -10,25 +10,14 @@ class CourseRating extends React.Component {
   render() {
   	const {rating, instructor, instructImg} = this.props;
     return (
-      <div>
-        <ul>
-          <li className="rating">
+          <div className="rating">
             <StarRatings
             rating={rating}
             starRatedColor="orange"
             numberOfStars={5}
             name='rating'
             starDimension='20px'/>
-          </li>
-        </ul>
-        <ul>
-          <li className="instruct">
-            <img className="instructImage" src={instructImg}/>
-          </li>
-          <li className="instruct">Instructor: {instructor}</li>
-        </ul>
-      </div>
-
+          </div>
     );
   }
 }
