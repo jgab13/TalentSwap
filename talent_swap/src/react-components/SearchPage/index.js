@@ -28,15 +28,33 @@ function FilterCourses(curr_courses, cfilters){
                     course.level === key))
                 break;
             case 'date':
-                // filter based on starttime
+                r_courses = r_courses.concat(curr_courses.filter(course =>
+                    key === "upcoming"
+                    ? course.starttime > Date.now()
+                    : course.starttime < Date.now()))
                 break;
             case 'size':
-                // filter based on capacity
+                r_courses = r_courses.concat(curr_courses.filter(course =>
+                    {switch(key){
+                        case 'one': 
+                            return course.capacity === 1
+                            break
+                        case 'small':
+                            return 1 < course.capacity < 9
+                            break
+                        case 'medium':
+                            return 8 < course.capacity < 21
+                            break
+                        case 'large':
+                            return course.capacity > 20
+                            break
+                    }}))
                 break;
             default:
                 break;
           }
     }
+    console.log("done filtering, return courses ", r_courses)
     return r_courses;
 }
 
@@ -84,6 +102,7 @@ class SearchPage extends React.Component{
         courses = cfilters
             ? FilterCourses(courses, cfilters)
             : courses;
+        console.log(courses);
         return {
             keyword: keyword,
             users: users,
