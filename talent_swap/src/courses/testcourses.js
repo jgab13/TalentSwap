@@ -72,8 +72,8 @@ export const hardcodedCourses = [
 			endtime: new Date('November 21, 2020 15:00:00'),
 			// date: "2020-10-31",
 			credit: 1,
-			capacity: 1,
-			enrollment: 0, 
+			capacity: 2,
+			enrollment: 1, 
 			pic: pic3, 
 			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
 			level: "beginner"
@@ -89,8 +89,8 @@ export const hardcodedCourses = [
 			endtime: new Date('November 15, 2020 15:00:00'),
 			// date: "2020-10-31",
 			credit: 1,
-			capacity: 1,
-			enrollment: 0, 
+			capacity: 2,
+			enrollment: 1, 
 			pic: pic4, 
 			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
 			level: "all-level"
