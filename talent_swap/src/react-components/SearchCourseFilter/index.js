@@ -11,6 +11,9 @@ class CourseFilter extends React.Component{
             levels: [],
             dates: [],
             sizes: [],
+            // levels: this.props.f_levels,
+            // dates: this.props.f_datas,
+            // sizes: this.props.f_sizes,
             redirectObject: undefined
         }
 
@@ -34,10 +37,8 @@ class CourseFilter extends React.Component{
 
     handleLevelFilter = (e) => {
         const ek = e.target.id
-    // handleLevelFilter = (ek) => {
-    //     console.log("ek is of type", typeof(ek), ek)
         if (!this.state.levels.includes(ek)) {
-            const newFilters = this.state.levels.concat([ek]);
+            const newFilters = [].concat(this.state.levels).concat([ek]);
             this.setState({
                 levels: newFilters,
                 redirectObject: {
@@ -51,7 +52,7 @@ class CourseFilter extends React.Component{
     handleDateFilter = (e) => {
         const ek = e.target.id
         if (!this.state.dates.includes(ek)){ 
-            const newFilters = this.state.dates.concat([ek]);
+            const newFilters = [].concat(this.state.dates).concat([ek]);
             this.setState({
                 dates: newFilters,
                 redirectObject: {
@@ -66,7 +67,7 @@ class CourseFilter extends React.Component{
     handleSizeFilter = (e) => {
         const ek = e.target.id
         if (!this.state.sizes.includes(ek)){ 
-            const newFilters = this.state.sizes.concat([ek]);
+            const newFilters = [].concat(this.state.sizes).concat([ek]);
             this.setState({
                 sizes: newFilters,
                 redirectObject: {
@@ -85,10 +86,10 @@ class CourseFilter extends React.Component{
     }
 
     render(){
+        // console.log(this.state)
         return(
             <div className="filterForm">
                 {this.renderRedirect()}
-            
                 <DropdownButton variant = "light" id="dropdown-level" title="Level">
                     <Dropdown.Item id="beginner" onClick = {this.handleLevelFilter}>
                         beginner</Dropdown.Item>
@@ -119,7 +120,8 @@ class CourseFilter extends React.Component{
                 </DropdownButton> 
                 {/* <br></br> */}
                 
-                <Button variant="success" id="clear-filter" onClick={this.handleClick}>Clear filters</Button>
+                <Button variant="success" id="clear-filter" onClick={this.handleClick}>
+                    Clear Filters</Button>
             </div>
         );
     }
