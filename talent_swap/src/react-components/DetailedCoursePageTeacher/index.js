@@ -16,12 +16,8 @@ import {Button, Tooltip, OverlayTrigger} from "react-bootstrap";
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import {UserContext} from "./../../react-contexts/user-context";
 
-const currCourse = hardcodedCourses[2];
 //should be fetched from database
-
-//currCourse.starttime = currCourse.starttime.toLocaleTimeString("en-US", {timeStyle: 'short'});
-//currCourse.endtime = currCourse.endtime.toLocaleTimeString("en-US", {timeStyle: 'short'});
-//currCourse.date = currCourse.endtime.toLocaleDateString("en-US")
+const currCourse = hardcodedCourses[2];
 
 const enrollment = ["user2", "user3", "user4"];
   
@@ -56,7 +52,7 @@ class DetailedCoursePageTeacher extends React.Component {
   }
 
   render() {
-    const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime, date} = this.state.course;
+    const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime} = this.state.course;
     return (
       <div>
       {console.log(currCourse)}

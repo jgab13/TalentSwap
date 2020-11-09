@@ -75,13 +75,13 @@ class Header extends React.Component {
 	      <Nav className="ml-auto">
 			  <NavDropdown title="Teach" id="basic-nav-dropdown" variant="success">
 		        <NavDropdown.Item href="/CourseCreation">Create a New Course</NavDropdown.Item>
-		        <NavDropdown.Item href="/CourseList">View Past Courses</NavDropdown.Item>
-		        <NavDropdown.Item href="/CourseList">View Upcoming Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/Search">View Past Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/Search">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
 		      <NavDropdown title="Learn" id="basic-nav-dropdown">
-		        <NavDropdown.Item href="/CourseList">Find a Course</NavDropdown.Item>
-		        <NavDropdown.Item href="/CourseList">View Past Courses</NavDropdown.Item>
-		        <NavDropdown.Item href="/CourseList">View Upcoming Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/Search">Find a Course</NavDropdown.Item>
+		        <NavDropdown.Item href="/Search">View Past Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/Search">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
 		      <NavDropdown title="User" id="basic-nav-dropdown">
 		        <NavDropdown.Item href="/UserDashboard">Profile</NavDropdown.Item>
