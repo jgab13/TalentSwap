@@ -25,4 +25,15 @@ export const getCourse = courseId => {
 	return hardcodedCourses.find(course => course.id === courseId);
 }
 
+export const getUpcoming = () => {
+	let now = Date.now();
+	return hardcodedCourses.filter(course => course.endtime >= now);
+}
+
+export const getPast = () => {
+	let now = Date.now();
+	return hardcodedCourses.filter(course => course.endtime < now);
+}
+
+
 //add your own functions here and export them as needed

@@ -1,0 +1,17 @@
+/* 
+#tab {
+    position: relative;
+    left: 50px;
+} */
+#filterHeader{
+    padding: 1em;
+    font-size: small;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    left: 50px;
+    /* top: 40px; */
+}
+
+#alert {
+	margin: 30px;
+}

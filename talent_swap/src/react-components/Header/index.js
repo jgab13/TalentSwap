@@ -75,13 +75,13 @@ class Header extends React.Component {
 	      <Nav className="ml-auto">
 			  <NavDropdown title="Teach" id="basic-nav-dropdown" variant="success">
 		        <NavDropdown.Item href="/CourseCreation">Create a New Course</NavDropdown.Item>
-		        <NavDropdown.Item href="/Search">View Past Courses</NavDropdown.Item>
-		        <NavDropdown.Item href="/Search">View Upcoming Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/PersonalCourses/tp">View Past Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/PersonalCourses/tf">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
 		      <NavDropdown title="Learn" id="basic-nav-dropdown">
 		        <NavDropdown.Item href="/Search">Find a Course</NavDropdown.Item>
-		        <NavDropdown.Item href="/Search">View Past Courses</NavDropdown.Item>
-		        <NavDropdown.Item href="/Search">View Upcoming Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/PersonalCourses/sp">View Past Courses</NavDropdown.Item>
+		        <NavDropdown.Item href="/PersonalCourses/sf">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
 		      <NavDropdown title="User" id="basic-nav-dropdown">
 		        <NavDropdown.Item onClick={() => this.setState({redirectURL: "/UserDashboard"})}>Profile</NavDropdown.Item>

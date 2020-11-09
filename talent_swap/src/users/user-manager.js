@@ -12,8 +12,8 @@ export const hardCodedUsers = [
         bio: "Empty Bio",
         expertise: "JavaScript",
         development: "writing film reviews",
-        coursesTeaching: [],
-        coursesLearning: [],
+        coursesTeaching: [1, 2, 4],
+        coursesLearning: [0, 3],
         pic: pic0
     }),
     new User({
@@ -24,8 +24,8 @@ export const hardCodedUsers = [
         bio: "Empty Bio",
         expertise: "Cognitive Science",
         development: "yoga",
-        coursesTeaching: [],
-        coursesLearning: [],
+        coursesTeaching: [2],
+        coursesLearning: [1],
         pic: pic1
     })
 ]
