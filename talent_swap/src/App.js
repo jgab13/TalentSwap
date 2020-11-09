@@ -15,6 +15,8 @@ import MessageCenter from './react-components/MessageCenter';
 import UserProfile from './react-components/UserProfile';
 import DetailedCoursePageTeacher from './react-components/DetailedCoursePageTeacher';
 import SearchPage from './react-components/SearchPage';
+import PersonalCourses from './react-components/PersonalCourses';
+
 
 class App extends React.Component {
 
@@ -50,6 +52,8 @@ class App extends React.Component {
                               (<DetailedCoursePageTeacher appState={this.state}/>)}/>
               <Route exact path='/Search' render={(props) => 
                              (<SearchPage appState={this.state} {...props}/>)}/>
+               <Route exact path='/PersonalCourses/:filter' render={(props) => 
+                             (<PersonalCourses appState={this.state} {...props}/>)}/>
             </Switch>
           </BrowserRouter>
         </ContextComponent>

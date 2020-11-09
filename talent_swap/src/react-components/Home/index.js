@@ -11,15 +11,8 @@ import {hardcodedCourses} from "./../../courses/testcourses.js"
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    if(this.props.location.state === undefined) {
-      this.state = { 
-      loginStatus: false
-    };
-    }
-    else{
-      this.state = { 
-      loginStatus: this.props.location.state.loginStatus
-    };
+    this.state = {
+      loginStatus: this.props.location.state === undefined ? true : false
     }
   }
 
@@ -50,8 +43,7 @@ class Home extends React.Component {
           <h1 className="ltitle">Popular Courses</h1>
           {/* Insert grid of course thumbnails here */}
           <CourseResutls courses = {hardcodedCourses.sort((a, b) => 
-            a.enrollment/a.capacity - b.enrollment/b.capacity).slice(hardcodedCourses.length-3)}
-          loginStatus={this.props.location.state === undefined ? false : this.props.location.state.loginStatus}/>
+            a.enrollment/a.capacity - b.enrollment/b.capacity).slice(hardcodedCourses.length-3)}/>
         </div>
       </div>
     );
