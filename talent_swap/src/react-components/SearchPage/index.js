@@ -111,12 +111,19 @@ class SearchPage extends React.Component{
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const newState = this.updateState();
-        if (newState.keyword !== prevState.keyword) {
+        // console.log("prevState", prevState);
+        // console.log("newState", newState);
+        if (newState.keyword !== prevState.keyword 
+            || (newState.courses.length !== prevState.courses.length
+                || !newState.courses.every((value, index) => value === prevState.courses[index])
+            )
+        ) {
             this.setState(newState);
         }
     }
 
     updateState = () => {
+        console.log(this.props);
         const keyword = this.props.location.state
             ? this.props.location.state.searchInput
             : undefined;

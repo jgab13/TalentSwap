@@ -22,7 +22,7 @@ class CourseFilter extends React.Component{
         this.handleLevelFilter = this.handleLevelFilter.bind(this);
         this.handleDateFilter = this.handleDateFilter.bind(this);
         // this.handleSizeFilter = this.handleSizeFilter.bind(this);
-        // this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
         this.renderRedirect = this.renderRedirect.bind(this);
         // this.setRenderObject = this.setRenderObject.bind(this);
     }
@@ -40,49 +40,58 @@ class CourseFilter extends React.Component{
     // }
 
     handleClick(){
-        this.setState({filters: []})
-        this.setRenderObject([])
+        this.setState({
+            levels: [],
+            dates: [],
+            sizes: [],
+            redirectObject: undefined
+        })
     }
 
     handleLevelFilter = (e) => {
         const ek = e.target.id
-        console.log("ek is of type", typeof(ek))
+    //     console.log("ek is of type", typeof(ek))
+    // handleLevelFilter = (ek) => {
+    //     console.log("ek is of type", typeof(ek), ek)
         if (!this.state.levels.includes(ek)) 
+            const newFilters = this.state.levels.concat([ek])
             this.setState({
-                levels: this.state.levels.concat([ek]),
+                levels: newFilters,
                 redirectObject: {
                     pathname: "/Search",
-                    state: {levelFilters: this.state.levels}
+                    state: {levelFilters: newFilters}
                 }
             })
         // console.log("after handling level filter selection, ", this.state)
     }
 
-    handleDateFilter = (ek) => {
-        console.log("ek is of type", typeof(ek))
+    handleDateFilter = (e) => {
+        const ek = e.target.id
+        // console.log("ek is of type", typeof(ek))
         if (!this.state.dates.includes(ek)) 
+            const newFilters = this.state.dates.concat([ek]),
             this.setState({
-                dates: this.state.dates.concat([ek]),
+                dates: newFilters,
                 redirectObject: {
                     pathname: "/Search",
-                    state: {dateFilters: this.state.dates}
+                    state: {dateFilters: newFilters}
                 }
             })
-        console.log("after handling date filter selection, ", this.state)
     }
 
 
     handleSizeFilter = (ek) => {
-        console.log("ek is of type", typeof(ek))
+        // console.log("ek is of type", typeof(ek))
+        const ek = e.target.id
         if (!this.state.sizes.includes(ek)) 
+            const newFilters = this.state.sizes.concat([ek]),
             this.setState({
-                sizes: this.state.sizes.concat([ek]),
+                sizes: newFilters,
                 redirectObject: {
                     pathname: "/Search",
-                    state: {sizeFilters: this.state.sizes}
+                    state: {sizeFilters: newFilters}
                 }
             })
-        console.log("after handling size filter selection, ", this.state)
     }
     // handleLevelFilter(ek){
     //     // SearchPage updateState will parse it based on this particular format
@@ -105,6 +114,7 @@ class CourseFilter extends React.Component{
 
     renderRedirect() {
         if (this.state.redirectObject) {
+            console.log(this.state.redirectObject);
             return <Redirect to={this.state.redirectObject} />
         }
     }
@@ -131,12 +141,12 @@ class CourseFilter extends React.Component{
                     <Dropdown.Item id ="past">past</Dropdown.Item>
                 </DropdownButton> 
 
-                <DropdownButton onSelect = {(eventKey) => this.handleSizeFilter(eventKey)}
+                <DropdownButton onClick = {this.handleSizeFilter}
                     variant = "light" id="dropdown-class-size" title="Class Size">
-                    <Dropdown.Item eventKey="one">one-on-one</Dropdown.Item>
-                    <Dropdown.Item eventKey="small">small (2-8)</Dropdown.Item>
-                    <Dropdown.Item eventKey="medium">medium (9-20)</Dropdown.Item>
-                    <Dropdown.Item eventKey="large">large (20+)</Dropdown.Item>
+                    <Dropdown.Item id="one">one-on-one</Dropdown.Item>
+                    <Dropdown.Item id="small">small (2-8)</Dropdown.Item>
+                    <Dropdown.Item id="medium">medium (9-20)</Dropdown.Item>
+                    <Dropdown.Item id="large">large (20+)</Dropdown.Item>
                 </DropdownButton> 
                 {/* <br></br> */}
                 
