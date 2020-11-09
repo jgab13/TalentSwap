@@ -11,7 +11,25 @@ const hardCodedMessages = [
         senderId: 2,
         receiverId: 1,
         contents: "Hello!!!"
-    })
+    }),
+    new Message({
+        timestamp: 9001,
+        senderId: 2,
+        receiverId: 1,
+        contents: "Yo"
+    }),
+    new Message({
+        timestamp: 9002,
+        senderId: 2,
+        receiverId: 1,
+        contents: "Wanna teach me some stuff"
+    }),
+    new Message({
+        timestamp: 9003,
+        senderId: 2,
+        receiverId: 1,
+        contents: "In exchange I will teach you some stuff"
+    }),
 ]
 
 class User {
