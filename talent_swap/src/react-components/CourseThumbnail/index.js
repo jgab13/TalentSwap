@@ -8,36 +8,38 @@ function CourseThumbnail(props){
     const course = props.course;
 
     return(
-        <Card id="courseCard">
-            <Card.Img id="coursePic" variant="top" src={course.pic}/>
-            <Card.Body id="body">
-                <Card.Title>
-                    {course.topic}
-                </Card.Title>
-                <Card.Subtitle>
-                    with {course.teacher}
-                </Card.Subtitle>
-                <Card.Text>
-                    <span className="text">
-                        {course.level} | {course.enrollment}/{course.capacity} enrolled
-                    </span> <br></br>
-                    <span className="text">
-                        {course.starttime.toLocaleTimeString("en-US")} - 
-                            {course.endtime.toLocaleTimeString("en-US")} {course.starttime.toLocaleDateString("en-US")}
-                    </span> <br></br>
-                    <Link to=
-                      {{
-                        pathname: '/DetailedCoursePage',
-                        state: {
-                          course: props.course}
-                      }} >
-                        <Button id="courseButton" variant="success">
-                            view course details
-                        </Button>
-                     </Link>
-                </Card.Text>
-            </Card.Body>
-        </Card>
+        <div className="col">
+            <Card id="courseCard">
+                <Card.Img id="coursePic" variant="top" src={course.pic}/>
+                <Card.Body id="body">
+                    <Card.Title>
+                        {course.topic}
+                    </Card.Title>
+                    <Card.Subtitle>
+                        with {course.teacher}
+                    </Card.Subtitle>
+                    <Card.Text>
+                        <span className="text">
+                            {course.level} | {course.enrollment}/{course.capacity} enrolled
+                        </span> <br></br>
+                        <span className="text">
+                            {course.starttime.toLocaleTimeString("en-US")} - 
+                                {course.endtime.toLocaleTimeString("en-US")} {course.starttime.toLocaleDateString("en-US")}
+                        </span> <br></br>
+                        <Link to=
+                        {{
+                            pathname: '/DetailedCoursePage',
+                            state: {
+                            course: props.course}
+                        }} >
+                            <Button id="courseButton" variant="success">
+                                view course details
+                            </Button>
+                        </Link>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        </div>
     );
 }
 

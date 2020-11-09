@@ -10,12 +10,12 @@ class CourseResults extends React.Component{
         const loginStatus = this.props.loginStatus;
         console.log(loginStatus);
         return(
-            <CardDeck id="cardDeck">
+            <div id="cardDeck" className="row row-cols-1 row-cols-md-3">
                 {courses.map( course => 
                     <CourseThumbnail id="card" key={course.id.toString()}
                             course = {course} />
                 )}
-            </CardDeck>
+            </div>
         );
     }
 }
