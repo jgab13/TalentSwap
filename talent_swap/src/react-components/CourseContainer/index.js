@@ -11,6 +11,8 @@ import AddCourseReview from "./../AddCourseReview";
 import Button from "react-bootstrap/Button";
 import {hardcodedCourses} from "./../../courses/testcourses.js";
 import {hardCodedUsers} from "./../../users/user-manager.js";
+import UserManager from "./../../users/user-manager.js";
+import {getCourse} from "./../../courses/courseManager.js";
 
   const enrollment = [hardCodedUsers[0].name, "user2", "user3", "user4"];
 
@@ -19,7 +21,7 @@ class CourseContainer extends React.Component {
   state = {
       //Server call needed to retrieve current user and course information from database.
       currUser: hardCodedUsers[this.props.userID],
-      course: hardcodedCourses[this.props.courseID],
+      course: getCourse(this.props.courseID),
       review: this.props.reviews,
       enrolled: false,
       compl: false,

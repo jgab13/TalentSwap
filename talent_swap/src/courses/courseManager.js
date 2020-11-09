@@ -1,4 +1,5 @@
 import Course from "./course"
+import {hardcodedCourses} from "./testcourses.js"
 
 //addCourse function is not required if everything is hardcoded
 //the courseList is saved to every newly created course
@@ -19,5 +20,9 @@ export const addCourse = courseManager => {
 		courses: courseList
 	});
 };
+
+export const getCourse = courseId => {
+	return hardcodedCourses.find(course => course.id === courseId);
+}
 
 //add your own functions here and export them as needed
