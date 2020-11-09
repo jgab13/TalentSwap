@@ -20,15 +20,8 @@ class SearchPage extends React.Component{
         super(props);
         this.state = Object.assign({
             tab : "courses", 
-            // keyword: "",
-            // keyword: keyword,
-            // users: users,      // Hardcoded users
-            // courses: courses,   // Hardcoded courses
-            // course_results: [], 
-            // user_results: []
         }, this.updateState());
         this.handleTabSelect = this.handleTabSelect.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
         // this.handleLevelFilter = this.handleLevelFilter.bind(this);
         // this.handleDateFilter = this.handleDateFilter.bind(this);
         // this.handleSizeFilter = this.handleSizeFilter.bind(this);
@@ -47,12 +40,14 @@ class SearchPage extends React.Component{
             : undefined;
         const users = keyword
             ? hardcodedUsers.filter((user) => 
-                user.name.toLowerCase() === keyword.toLowerCase()
+                 (user.name.toLowerCase().match(keyword.toLowerCase())) 
+                 || (user.development.toLowerCase().match(keyword.toLowerCase())) 
+                 || (user.expertise.toLowerCase().match(keyword.toLowerCase())) 
             )
             : hardcodedUsers;
         const courses = keyword
             ? hardcodedCourses.filter((course) => 
-                course.topic.toLowerCase() === keyword.toLowerCase()
+                course.topic.toLowerCase().match(keyword.toLowerCase()) !== null
             )
             : hardcodedCourses;
         return {
@@ -65,19 +60,7 @@ class SearchPage extends React.Component{
     handleTabSelect = (eventKey) => {
         this.setState({tab: eventKey});
     }
-    handleSearch = () => {
-        const keyword = this.state.keyword;
-        if (!keyword) return;
-        this.setState({
-            // keyword: input,
-            courses: this.state.courses.filter((course) => 
-               course.topic.toLowerCase() === keyword.toLowerCase()
-            ),
-            users: this.state.users.filter((user) => 
-                user.name.toLowerCase() === keyword.toLowerCase()
-            )
-        });
-    } 
+  
     // handleLevelFilter(eventKey){
     //     this.setState({
     //         courses: this.state.courses.filter( (course) =>
@@ -95,15 +78,6 @@ class SearchPage extends React.Component{
     // }
 
     render(){
-// <<<<<<< HEAD
-//         console.log(this.props.location.state.searchInput);
-//         {this.handleSearch()}
-// =======
-        // console.log(this.props.location.state.searchInput);
-        // {this.handleSearch}
-// >>>>>>> c4b33360f45488ea403f3f9aa491481974183396
-
-
         const users = this.state.users;
         const courses = this.state.courses;
         const tab = this.state.tab;

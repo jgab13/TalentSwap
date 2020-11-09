@@ -21,15 +21,9 @@ class SearchBox extends React.Component{
         e.preventDefault();
         this.setState({
             redirectObject: {
-// <<<<<<< HEAD
-//                 // pathname: `/Search/keyword=${this.state.input}`,
-//                 pathname: `/Search`,
-//                 state: {searchInput: this.state.input}
-// =======
                 pathname: '/Search',
                 state: {searchInput: this.state.input},
                 from: "/MessageCenter"
-// >>>>>>> c4b33360f45488ea403f3f9aa491481974183396
             }
         });
     }
@@ -42,7 +36,6 @@ class SearchBox extends React.Component{
 
     renderRedirect() {
         if (this.state.redirectObject) {
-            console.log("renderRedirect invoked")
             return <Redirect to={this.state.redirectObject} />
         }
     };

@@ -1,6 +1,6 @@
 #courseCard {
     padding: 30px;
-    max-width: 650px;
+    max-width: 430px;
     max-height: 420px;
 }
 
@@ -12,7 +12,7 @@
     padding: 10px;
     margin: auto;
     height: 220px;
-    max-width: 550px;
+    max-width: 400px;
     max-height: 220px;
 }
 
