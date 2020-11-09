@@ -42,58 +42,17 @@ function FiltersCourseSizes(curr_courses, filters){
                 case 'one': 
                     return course.capacity === 1
                 case 'small':
-                    return 1 < course.capacity < 9
+                    return 1 < course.capacity && course.capacity < 9
                 case 'medium':
-                    return 8 < course.capacity < 21
+                    return 8 < course.capacity && course.capacity < 21
                 case 'large':
                     return course.capacity > 20
+                default:
+                    return course
             }}))
     }
     return r_courses;
 }
-
-// function FilterCourses(curr_courses, cfilters){
-//     let r_courses = [];
-//     for (let f of cfilters){
-//         const filter = f.substring(0, f.indexOf(":"))
-//         const key = f.substring(f.indexOf(":") + 1);
-//         console.log(filter, key);
-//         console.log(curr_courses);
-//         switch (filter) {
-//             case 'level':
-//                 r_courses = r_courses.concat(curr_courses.filter(course =>
-//                     course.level === key))
-//                 break;
-//             case 'date':
-//                 r_courses = r_courses.concat(curr_courses.filter(course =>
-//                     key === "upcoming"
-//                     ? course.starttime > Date.now()
-//                     : course.starttime < Date.now()))
-//                 break;
-//             case 'size':
-//                 r_courses = r_courses.concat(curr_courses.filter(course =>
-//                     {switch(key){
-//                         case 'one': 
-//                             return course.capacity === 1
-//                             break
-//                         case 'small':
-//                             return 1 < course.capacity < 9
-//                             break
-//                         case 'medium':
-//                             return 8 < course.capacity < 21
-//                             break
-//                         case 'large':
-//                             return course.capacity > 20
-//                             break
-//                     }}))
-//                 break;
-//             default:
-//                 break;
-//           }
-//     }
-//     console.log("done filtering, return courses ", r_courses)
-//     return r_courses;
-// }
 
 
 class SearchPage extends React.Component{
@@ -103,10 +62,6 @@ class SearchPage extends React.Component{
             tab : "courses", 
         }, this.updateState());
         this.handleTabSelect = this.handleTabSelect.bind(this);
-        // this.handleCourseFilter = this.handleCourseFilter.bind(this);
-        // this.handleLevelFilter = this.handleLevelFilter.bind(this);
-        // this.handleDateFilter = this.handleDateFilter.bind(this);
-        // this.handleSizeFilter = this.handleSizeFilter.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -115,9 +70,10 @@ class SearchPage extends React.Component{
         // console.log("newState", newState);
         if (newState.keyword !== prevState.keyword 
             || (newState.courses.length !== prevState.courses.length
-                || !newState.courses.every((value, index) => value === prevState.courses[index])
+                || !newState.courses.every((value, index) => value === prevState.courses[index]))
+                // || newState.cfilters !== prevState.cfilters
             )
-        ) {
+        {
             this.setState(newState);
         }
     }
@@ -140,14 +96,15 @@ class SearchPage extends React.Component{
             )
             : hardcodedCourses;
         // apply course level filters, if any
+        console.log("after search input changes, courses include ", courses);
         const clfilters = this.props.location.state 
             ? this.props.location.state.levelFilters
             : undefined;
-        console.log(clfilters);
+        // console.log("level filters include ", clfilters);
         courses = clfilters
             ? FilterCourseLevels(courses, clfilters)
             : courses;
-        console.log(courses);
+        console.log("after applying level filters ", clfilters, "courses include ", courses);
         // apply course date filters, if any
         const cdfilters = this.props.location.state
             ? this.props.location.state.dateFilters
@@ -155,6 +112,7 @@ class SearchPage extends React.Component{
         courses = cdfilters
             ? FilterCourseDates(courses, cdfilters)
             : courses;
+        console.log("after applying date filters ", cdfilters, "courses include ", courses);
         // apply course size filters, if any
         const csfilters = this.props.location.state
             ? this.props.location.state.sizeFilters
@@ -162,10 +120,12 @@ class SearchPage extends React.Component{
         courses = csfilters 
             ? FiltersCourseSizes(courses, csfilters)
             : courses
+        console.log("after applying size filters ", csfilters, "courses include ", courses);
         return {
             keyword: keyword,
             users: users,
-            courses: courses
+            courses: courses,
+            cfilters: [].concat(clfilters).concat(cdfilters).concat(csfilters)
         };
     }
 
