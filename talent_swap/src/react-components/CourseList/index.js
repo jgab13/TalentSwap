@@ -17,20 +17,23 @@ class CourseList extends React.Component {
     
 
     return (
-    <div className="courseDescrip">
-  		<h1>{course.topic}</h1>
-  		<div id="desc">{course.description}</div>
+    <div className="courseDescrip"> 
+      <h1 className="title">{course.topic}</h1>
+      <div id="desc">{course.description}</div>
+      <div id="detail">
+        <h5>Course Details:</h5>
+        <span>Teacher: {course.teacher}</span><br/>
+        <span>Start: {course.starttime.toLocaleString("en-US")}</span><br/>
+        <span>End: {course.endtime.toLocaleString("en-US")}</span><br/> 
 
-  		<CourseRating rating={course.rate} instructor={course.teacher} instructImg={course.pic}/>
-      {button}
+        <CourseRating rating={course.rate}/>
+        {button}
       
-      <div id="last"><span>Enrollment: {course.enrollment} of {course.capacity}</span><br/>
-        <span>Start: {course.endtime.toLocalTimeString}</span><br/>
-        <span>Credits: {course.credit}</span><br/>
+        <div id="last"><span>Enrollment: {course.enrollment} of {course.capacity}</span><br/>
+          <span>Credits: {course.credit}</span><br/>
+        </div>
       </div>
-
     </div>
-
     );
   }
 }

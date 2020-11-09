@@ -62,9 +62,8 @@ class DetailedCoursePageTeacher extends React.Component {
         <h5>Course Details:</h5>
         <span>Enrollment: {enrollment}/{capacity}</span><br/>
         <span>Teacher: {teacher}</span><br/>
-        <span>Start: {starttime.toLocaleTimeString("en-US")}</span><br/>
-        <span>End: {endtime.toLocaleTimeString("en-US")}</span><br/>
-        {/*<span>Date: {date.toLocaleDateString("en-US")}</span><br/>*/}
+        <span>Start: {starttime.toLocaleString("en-US")}</span><br/>
+        <span>End: {endtime.toLocaleString("en-US")}</span><br/>
         <span>Credit: {credit}</span><br/>
         <span>Status: Upcoming</span><br/>
         <Button className="edit" onClick={this.setRedirect} variant="success"> Edit</Button>
