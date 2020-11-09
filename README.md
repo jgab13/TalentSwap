@@ -24,6 +24,12 @@ Also, click on "Sign Up" button besides "log in" will lead you to sign up for th
 
 ### Messaging
 
+After logging in, you can click the message icon on the nav bar in the top right. This will bring you to the messaging system. This page is divided into two columns, the left side denotes the users you have recently chatted with. The right side denotes the messages themselves. You can send messages by typing into the input box and clicking "Send".
+
+In Phase 2, the plan is to have live updates to the messaging system (possibly with Socket.io).
+
+There are messages between User One and User Two. To access these messages, you must be signed in. So, please try to access this feature right after logging in.
+
 ### Learn 
 
 A logged in user can access courses from the home page, search page or their user profile. To demonstrate this functionality, please click on the introduction to cognitive science view course details button. The user will see the course details page. The user was enrolled in the class, the class completed and the user provided a review. The user can edit/delete his or her review by clicking the appropriate buttons besider the review. Clicking delete will remove the review and the user can click the add review button to provide a new review. If the user tries to submit blank information in the review date and description input boxes in the add review pop up, or a number less than 0 or greater than 5 in the star rating input box, the user will see validation error messages. The user can click the cancel button to close the pop up. The user can add a new review by entering any text in the review description input box, a 5 star review number and a date in the format MM-DD-YYYY. Please enter a review in this format and click submit. The user will then be able to edit or delete that review.
