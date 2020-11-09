@@ -41,3 +41,12 @@ Additionally, navigating from the home page or search page, please click on the 
 A user who taught a course can view the course by clicking on the view course details thumbnail on their profile, the home page or the search page. Please click on the React view course details button to see this functionality. The user taught this course, the course completed and the user received ratings and feedback. The course detail page will basically be a read-only for the teacher user to see the information about the completed course. There will not be any buttons for the user to click to edit the course, the review and the class completed button will be disabled.
 
 A user can create a new course by clicking on the "Teach" scroll down button and choose "Create a New Course". The user will be redirected to course creation page to input basic information of new courses. After click submit, the user will be redirected to a detailed course page. This page is for course holder to view their upcoming courses specifically, where the teacher can view and edit detailed information. Notice that since data is hardcoded, this page is not the same as user input. 
+
+## Dependencies
+
+This is a list of third-party libraries we used:
+
+- "react-router-dom": "^5.2.0",
+- "react-bootstrap": "^1.4.0",
+- "bootstrap": "^4.5.3",
+- "react-star-ratings": "^2.3.0",
