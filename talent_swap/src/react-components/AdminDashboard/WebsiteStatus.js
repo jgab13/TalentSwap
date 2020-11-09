@@ -3,6 +3,7 @@ import { hardcodedCourses } from "./../../courses/testcourses.js"
 import { hardCodedUsers } from "./../../users/user-manager.js"
 
 import { Table, Tab, Tabs } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const user = hardCodedUsers;
 const course = hardcodedCourses;
@@ -14,7 +15,9 @@ export class UserTable extends React.Component {
       {user.map((user) => (
       <tr>
         <td>{user.id}</td>
-        <td>{user.name}</td>
+        <td><Link to= {{pathname:`/UserProfile/${user.id}`}} >
+                  {user.name}
+            </Link></td>
         <td>{user.credits}</td>
         <td>{user.coursesTeaching}</td>
         <td>{user.coursesLearning}</td>
@@ -25,7 +28,6 @@ export class UserTable extends React.Component {
   }
 }
 
-
 export class CourseTable extends React.Component {
   render() {
     return(
@@ -33,7 +35,13 @@ export class CourseTable extends React.Component {
       {course.map((course) => (
       <tr>
         <td>{course.id}</td>
-        <td>{course.topic}</td>
+        <td><Link to= {{
+                        pathname: '/DetailedCoursePage',
+                        state: {
+                          course: course}
+                      }} >
+                  {course.topic}
+            </Link></td>
         <td>{course.teacher}</td>
         <td>{course.credit}</td>
         <td>{course.status}</td>
