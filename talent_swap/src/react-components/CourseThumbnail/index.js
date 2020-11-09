@@ -1,10 +1,12 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import "./styles.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 function CourseThumbnail(props){
     const course = props.course;
+
     return(
         <Card id="courseCard">
             <Card.Img id="coursePic" variant="top" src={course.pic}/>
@@ -23,9 +25,16 @@ function CourseThumbnail(props){
                         {course.starttime.toLocaleTimeString("en-US")} - 
                             {course.endtime.toLocaleTimeString("en-US")} {course.starttime.toLocaleDateString("en-US")}
                     </span> <br></br>
-                    <Button id="courseButton" variant="success" href={`/DetailedCoursePage`}>
-                        view course details
-                    </Button>
+                    <Link to=
+                      {{
+                        pathname: '/DetailedCoursePage',
+                        state: {
+                          course: props.course}
+                      }} >
+                        <Button id="courseButton" variant="success">
+                            view course details
+                        </Button>
+                     </Link>
                 </Card.Text>
             </Card.Body>
         </Card>

@@ -1,6 +1,8 @@
 .courseDescrip {
 	background-color: #4CAF50;
 	color: white;
+	min-height: 325px;
+	padding: 10px;
 }
 
 h1 {

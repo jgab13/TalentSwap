@@ -34,8 +34,8 @@ class App extends React.Component {
                               (<Home appState={this.state} {...props}/>)}/>
               <Route exact path='/CourseCreation' render={(props) => 
                               (<CourseCreation appState={this.state} {...props}/>)}/>
-              <Route exact path='/DetailedCoursePage' render={() => 
-                              (<DetailedCoursePage appState={this.state}/>)}/>
+              <Route exact path='/DetailedCoursePage' render={(props) => 
+                              (<DetailedCoursePage appState={this.state} {...props}/>)}/>
               <Route exact path='/AuthSystem' render={() => 
                               (<AuthSystem appState={this.state}/>)}/>
               <Route exact path='/UserDashboard' render={() => 
