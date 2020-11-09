@@ -45,13 +45,13 @@ class CourseFilter extends React.Component{
     }
 
     handleLevelFilter = (ek) => {
-        console.log("ek is of type", typeof(ek))
+        console.log("ek is of type", typeof(ek), ek)
         if (!this.state.levels.includes(ek)) 
             this.setState({
                 levels: this.state.levels.concat([ek]),
                 redirectObject: {
                     pathname: "/Search",
-                    state: {levelFilters: this.state.levels}
+                    state: {levelFilters: this.state.levels.concat([ek])}
                 }
             })
         console.log("after handling level filter selection, ", this.state)
@@ -104,6 +104,7 @@ class CourseFilter extends React.Component{
 
     renderRedirect() {
         if (this.state.redirectObject) {
+            console.log(this.state.redirectObject);
             return <Redirect to={this.state.redirectObject} />
         }
     }
@@ -111,7 +112,7 @@ class CourseFilter extends React.Component{
     render(){
         return(
             <div className="filterForm">
-                {/* {this.renderRedirect()} */}
+                {this.renderRedirect()}
                 {/* <DropdownButton onClick = {(eventKey) => this.handleLevelFilter(eventKey)}  */}
                 {/* <Dropdown>
                     <Dropdown.Toggle variant="light" id="dropdown-level">
