@@ -14,49 +14,86 @@ import {hardcodedCourses} from "./../../courses/testcourses.js"
 import UserManager from "./../../users/user-manager.js"
 const hardcodedUsers = [UserManager.getUserFromId(1), UserManager.getUserFromId(2)]
 
-
-function FilterCourses(curr_courses, cfilters){
+function FilterCourseLevels(curr_courses, filters){
     let r_courses = [];
-    for (let f of cfilters){
-        const filter = f.substring(0, f.indexOf(":"))
-        const key = f.substring(f.indexOf(":") + 1);
-        console.log(filter, key);
-        console.log(curr_courses);
-        switch (filter) {
-            case 'level':
-                r_courses = r_courses.concat(curr_courses.filter(course =>
-                    course.level === key))
-                break;
-            case 'date':
-                r_courses = r_courses.concat(curr_courses.filter(course =>
-                    key === "upcoming"
-                    ? course.starttime > Date.now()
-                    : course.starttime < Date.now()))
-                break;
-            case 'size':
-                r_courses = r_courses.concat(curr_courses.filter(course =>
-                    {switch(key){
-                        case 'one': 
-                            return course.capacity === 1
-                            break
-                        case 'small':
-                            return 1 < course.capacity < 9
-                            break
-                        case 'medium':
-                            return 8 < course.capacity < 21
-                            break
-                        case 'large':
-                            return course.capacity > 20
-                            break
-                    }}))
-                break;
-            default:
-                break;
-          }
+    for (let f of filters){
+        r_courses = r_courses.concat(curr_courses.filter(course =>
+            course.level === f))
     }
-    console.log("done filtering, return courses ", r_courses)
     return r_courses;
 }
+
+function FilterCourseDates(curr_courses, filters){
+    let r_courses = [];
+    for (let f of filters){
+        r_courses = r_courses.concat(curr_courses.filter(course =>
+            f === "upcoming"
+            ? course.starttime > Date.now()
+            : course.starttime <= Date.now()))
+    }
+    return r_courses;
+}
+
+function FiltersCourseSizes(curr_courses, filters){
+    let r_courses = [];
+    for (let f of filters){
+        r_courses = r_courses.concat(curr_courses.filter(course =>
+            {switch(key){
+                case 'one': 
+                    return course.capacity === 1
+                case 'small':
+                    return 1 < course.capacity < 9
+                case 'medium':
+                    return 8 < course.capacity < 21
+                case 'large':
+                    return course.capacity > 20
+            }}))
+    }
+    return r_courses;
+}
+
+// function FilterCourses(curr_courses, cfilters){
+//     let r_courses = [];
+//     for (let f of cfilters){
+//         const filter = f.substring(0, f.indexOf(":"))
+//         const key = f.substring(f.indexOf(":") + 1);
+//         console.log(filter, key);
+//         console.log(curr_courses);
+//         switch (filter) {
+//             case 'level':
+//                 r_courses = r_courses.concat(curr_courses.filter(course =>
+//                     course.level === key))
+//                 break;
+//             case 'date':
+//                 r_courses = r_courses.concat(curr_courses.filter(course =>
+//                     key === "upcoming"
+//                     ? course.starttime > Date.now()
+//                     : course.starttime < Date.now()))
+//                 break;
+//             case 'size':
+//                 r_courses = r_courses.concat(curr_courses.filter(course =>
+//                     {switch(key){
+//                         case 'one': 
+//                             return course.capacity === 1
+//                             break
+//                         case 'small':
+//                             return 1 < course.capacity < 9
+//                             break
+//                         case 'medium':
+//                             return 8 < course.capacity < 21
+//                             break
+//                         case 'large':
+//                             return course.capacity > 20
+//                             break
+//                     }}))
+//                 break;
+//             default:
+//                 break;
+//           }
+//     }
+//     console.log("done filtering, return courses ", r_courses)
+//     return r_courses;
+// }
 
 
 class SearchPage extends React.Component{
@@ -95,14 +132,29 @@ class SearchPage extends React.Component{
                 course.topic.toLowerCase().match(keyword.toLowerCase())
             )
             : hardcodedCourses;
-        const cfilters = this.props.location.state 
-            ? this.props.location.state.courseFilters
+        // apply course level filters, if any
+        const clfilters = this.props.location.state 
+            ? this.props.location.state.levelFilters
             : undefined;
-        console.log(cfilters);
-        courses = cfilters
-            ? FilterCourses(courses, cfilters)
+        console.log(clfilters);
+        courses = clfilters
+            ? FilterCourseLevels(courses, clfilters)
             : courses;
         console.log(courses);
+        // apply course date filters, if any
+        const cdfilters = this.props.location.state
+            ? this.props.location.state.dateFilters
+            : undefined;
+        courses = cdfilters
+            ? FilterCourseDates(courses, cdfilters)
+            : courses;
+        // apply course size filters, if any
+        const csfilters = this.props.location.state
+            ? this.props.location.state.sizeFilters
+            : undefined;
+        courses = csfilters 
+            ? FiltersCourseSizes(courses, csfilters)
+            : courses
         return {
             keyword: keyword,
             users: users,
