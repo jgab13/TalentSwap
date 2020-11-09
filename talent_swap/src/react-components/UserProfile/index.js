@@ -24,7 +24,7 @@ class UserProfile extends React.Component {
             <div>
                 <Header />
                 <Container>
-                    <Row>
+                    <Row className="row-cols-1 row-cols-md-3">
                         <Col>
                             <ListGroup>
                                 <ListGroupItem>
