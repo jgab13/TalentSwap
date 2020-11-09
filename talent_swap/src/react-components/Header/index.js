@@ -33,13 +33,6 @@ class Header extends React.Component {
 		        state: {loginStatus: false}
 		      }} />
 	  	}
-	  	if (this.state.redirectURL === "/Home") {
-	  		return <Redirect to=
-		      {{
-		        pathname: '/',
-		        state: {loginStatus: true}
-		      }} />
-	  	}
 		  return (
 			<Redirect to={this.state.redirectURL} />
 		  )
@@ -68,7 +61,9 @@ class Header extends React.Component {
 		{this.renderRedirect()}
 		{/* {console.log(this.props.loginStatus)} */}
         <Navbar bg="light">
-		  <img alt="logo" src={logoImg} className="message-icon" onClick={() => this.setState({redirectURL: "/Home"})} />
+        	<a href="/">
+		      	<img alt="logo" src={logoImg} className="message-icon" />
+		    </a>
 		  {/* <SearchBox handleSearch={this.handleSearch}/> */}
 		  <SearchBox />
 	      {this.state.loginStatus ? 
