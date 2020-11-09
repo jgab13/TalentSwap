@@ -1,11 +1,8 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import "./../DetailedCoursePageTeacher/styles.css";
-// import { uid } from "react-uid";
 import CourseList from "./../CourseList";
 import CourseReview from "./../CourseReview"
-// import img from ....;
-
 import Container from "react-bootstrap/Container";
 import Header from "./../Header";
 import instImg from "./../DetailedCoursePage/logo192.png";
@@ -15,20 +12,12 @@ import Button from "react-bootstrap/Button";
 import {hardcodedCourses} from "./../../courses/testcourses.js";
 import {hardCodedUsers} from "./../../users/user-manager.js";
 
-
-  
-  // const currCourse = hardcodedCourses[2];
   const enrollment = [hardCodedUsers[0].name, "user2", "user3", "user4"];
-  // const adminUser = hardCodedUsers[1].name;
 
 class CourseContainer extends React.Component {
-  //static contextType = UserContext;
 
-  
   state = {
-      // currUser: hardCodedUsers[1].name,
-      // course: currCourse,
-      // review: [review1, review2, review3],
+      //Server call needed to retrieve current user and course information from database.
       currUser: hardCodedUsers[this.props.userID],
       course: hardcodedCourses[this.props.courseID],
       review: this.props.reviews,
@@ -41,17 +30,6 @@ class CourseContainer extends React.Component {
   }
 
   /////On Mount component functions
-
-  //Set the current user
-  // setCurrentUser = () => {
-   // console.log(this.context);
-   // const user = this.context;
-    // this.setState({
-      // currUser: this.context,
-    // })
-   //  console.log(this.state.currUser);
-   // console.log(this.state.enrolled);
-  // }
 
   //check if the current user is enrolled in the course.
   checkEnrollment = () => {
@@ -76,15 +54,6 @@ class CourseContainer extends React.Component {
       if (courseDate < cur){
         compl = true;
       }
-      // if (cur.getFullYear() > courseDate.getFullYear()){
-      //   compl = true;
-
-      // } else if (cur.getFullYear() === courseDate.getFullYear() && cur.getMonth() > courseDate.getMonth()){
-      //   compl = true;
-      // } else if (cur.getFullYear() === courseDate.getFullYear() && cur.getMonth() === courseDate.getMonth() 
-      //       && cur.getDate() > courseDate.getDate()){
-      //   compl = true;
-      // }
       this.setState({
         compl: compl
       })
@@ -109,9 +78,7 @@ class CourseContainer extends React.Component {
     }
   }
 
-
   /////On change and other functions
-
 
   //Calculate rating for course - call this any time a review is modified, added or deleted.
   calcReviewRating = (Review) => {
@@ -132,6 +99,7 @@ class CourseContainer extends React.Component {
     let currentEnrolled = this.state.course.enrollment + 1;
     let course = this.state.course;
     course.enrollment = currentEnrolled;
+    //Server call needed to increase enrollment in course in database.
     this.setState({
       enrolled: !this.state.enrolled,
       course: course
@@ -168,11 +136,12 @@ class CourseContainer extends React.Component {
     const curCourse = this.state.course;
     curCourse.rate = newRating;
     console.log(curCourse);
+    //Server call needed to delete review from course in database.
     this.setState({
       review: deletedReviews,
       reviewed: false,
       edit: false,
-      course: curCourse //might not be necessary
+      course: curCourse 
     })
   }
 
@@ -210,6 +179,7 @@ class CourseContainer extends React.Component {
       return rev.user !== newReview.user;
     });
     getReview.push(newReview);
+    //Server call needed to add review to the course in the database.
     const newRating = this.calcReviewRating(getReview);
     const curCourse = this.state.course;
     curCourse.rate = newRating;
@@ -217,7 +187,7 @@ class CourseContainer extends React.Component {
       review: getReview,
       edit: true,
       currReview: null,
-      course: curCourse // might not be necessary
+      course: curCourse 
     })
   }
 
@@ -225,15 +195,12 @@ class CourseContainer extends React.Component {
     const deleteCourse = hardcodedCourses.filter(course => {
       return course !== this.state.course;
     });
+    //Server call needed to delte course from database.
     alert("Course successfully deleted");
-
   }
 
 
   componentDidMount() {
-    //Check for class fullness occurs automatically.
-    //sets current user of the web app from UserContext and check if signed in.
-    //this.setCurrentUser(); 
     //Check if course completed
     this.checkCourseCompl(this.state.course.date);
     //Check if enrolled in course.
@@ -270,14 +237,10 @@ class CourseContainer extends React.Component {
         />
         {completedCourse}
         
-        
-
-
       <h3>Reviews for this course: </h3>
   	  {addReview}
       {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.enrolled} user={this.state.currUser.name} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
-
-      								)}
+      )}
     </div>
 
     );

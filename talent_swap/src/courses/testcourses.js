@@ -2,6 +2,8 @@ import Course from "./course"
 import pic0 from "./course0pic.jpg"
 import pic1 from "./course1pic.jpg"
 import pic2 from "./course2pic.jpg"
+import pic3 from "./course3pic.jpg"
+import pic4 from "./course4pic.jpg"
 
 //feel free to add more courses and course properties
 export const hardcodedCourses = [
@@ -16,8 +18,9 @@ export const hardcodedCourses = [
 			// date: "2020-11-11",
 			// duration: "1hr",
 			credit: 1,
-			capacity: 2,
-			enrollment: 1,
+			capacity: 4,
+			enrollment: 3,
+			rate: 4,
 			pic: pic0,
 			description: "Introduction to the react framework for building single page web applications. A great course for users who are already familiar with javascript.",
 			level: "intermediate"
@@ -71,7 +74,7 @@ export const hardcodedCourses = [
 			credit: 1,
 			capacity: 1,
 			enrollment: 0, 
-			pic: pic1, 
+			pic: pic3, 
 			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
 			level: "beginner"
 		}
@@ -88,7 +91,7 @@ export const hardcodedCourses = [
 			credit: 1,
 			capacity: 1,
 			enrollment: 0, 
-			pic: pic1, 
+			pic: pic4, 
 			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
 			level: "all-level"
 		}
