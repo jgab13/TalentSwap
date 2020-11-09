@@ -17,6 +17,12 @@ import {hardcodedCourses} from "./../../courses/testcourses.js"
 import {UserContext} from "./../../react-contexts/user-context";
 
 const currCourse = hardcodedCourses[2];
+//should be fetched from database
+
+//currCourse.starttime = currCourse.starttime.toLocaleTimeString("en-US", {timeStyle: 'short'});
+//currCourse.endtime = currCourse.endtime.toLocaleTimeString("en-US", {timeStyle: 'short'});
+//currCourse.date = currCourse.endtime.toLocaleDateString("en-US")
+
 const enrollment = ["user2", "user3", "user4"];
   
 
@@ -53,6 +59,7 @@ class DetailedCoursePageTeacher extends React.Component {
     const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime, date} = this.state.course;
     return (
       <div>
+      {console.log(currCourse)}
       {this.renderRedirect()}
       <Header/>
       <div className="courseDescrip">

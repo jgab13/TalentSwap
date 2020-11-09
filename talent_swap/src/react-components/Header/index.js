@@ -15,7 +15,7 @@ class Header extends React.Component {
     super(props);
     this.state = {
     showPopup: false,
-	  loginStatus: this.props.loginStatus === false ? false : true,
+	  loginStatus: this.props.loginStatus === false ? false : true, //should be fetched from cookies
 	  redirectURL: ""
     };
     this.logout = this.logout.bind(this);

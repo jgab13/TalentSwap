@@ -14,6 +14,14 @@ From the admin dashboard, the admin can select course under website status and c
 
 ## User Flow
 
+### Authentication System
+
+Since in Phase1, we cannot fetch cookies from browser, the login status is hardcoded as true. To test the authentication system, please click on the "User" scroll down button, and log out. No matter what page you are at, this will bring you back to homepage with a "Join Now" button on the header. Click on the button to see the popup authentication system.
+
+There are two normal users, with username: user, password: user and username: user1, password: user1, and one admin user, with username: admin, password: admin. After click "Log In", a valid user will be redirected to user dashboard, where most information can be editted. A valid admin will be redirected to admin dashboard. A user with wrong username/password pair or a banned user cannot log in.
+
+Also, click on "Sign Up" button besides "log in" will lead you to sign up for the website. Notice that since user information is hardcoded, a registered user can not log in with newly set username and password.
+
 ### Messaging
 
 ### Learn 
@@ -24,4 +32,6 @@ Additionally, navigating from the home page or search page, please click on the 
 
 ### Teach
 
-A user who taught a course can view the course by clicking on the view course details thumbnail on their profile, the home page or the search page. Please click on the React view course details button to see this functionality. The user taught this course, the course completed and the user received ratings and feedback. The course detail page will basically be a read-only for the teacher user to see the information about the completed course. There will not be any buttons for the user to click to edit the course, the review and the class completed button will be disabled. 
+A user who taught a course can view the course by clicking on the view course details thumbnail on their profile, the home page or the search page. Please click on the React view course details button to see this functionality. The user taught this course, the course completed and the user received ratings and feedback. The course detail page will basically be a read-only for the teacher user to see the information about the completed course. There will not be any buttons for the user to click to edit the course, the review and the class completed button will be disabled.
+
+A user can create a new course by clicking on the "Teach" scroll down button and choose "Create a New Course". The user will be redirected to course creation page to input basic information of new courses. After click submit, the user will be redirected to a detailed course page. This page is for course holder to view their upcoming courses specifically, where the teacher can view and edit detailed information. Notice that since data is hardcoded, this page is not the same as user input. 

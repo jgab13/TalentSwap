@@ -42,6 +42,7 @@ class Signup extends React.Component {
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
 			this.setState({redirect:true});
+			//Push new user to database
 			/*
 			let currentUser = new User({
 				//user id could be userList length

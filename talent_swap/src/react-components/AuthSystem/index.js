@@ -8,7 +8,7 @@ class AuthSystem extends React.Component {
 	constructor() {
     super();
     this.state = {
-      showLogin: true,
+      showLogin: true, // Get cookies from browser
       hidePopup: false
     };
   }

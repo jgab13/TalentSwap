@@ -66,6 +66,7 @@ class Login extends React.Component {
 		//validation
 		let input = this.state.input;
 		try{
+			//usermanager should fetch data from database
 			let currentUser = UserManager.login(input.username, input.password);
 			console.log(currentUser);
 			if (currentUser === undefined) {

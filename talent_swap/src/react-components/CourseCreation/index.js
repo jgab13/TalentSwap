@@ -45,6 +45,8 @@ class CourseCreation extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault(); //testing
+		//Push new course to database
+		//requires a server call
 		addCourse(this);
 		this.props.location.state ?
 		alert('Changes has been made to your course.')
