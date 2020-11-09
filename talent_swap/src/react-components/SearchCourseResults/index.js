@@ -1,6 +1,8 @@
 import React from "react"
 import CardDeck from "react-bootstrap/CardDeck"
+// import {Col, Row} from "react-bootstrap"
 import CourseThumbnail from "./../CourseThumbnail"
+import "./styles.css"
 
 class CourseResults extends React.Component{
     render(){
@@ -8,9 +10,9 @@ class CourseResults extends React.Component{
         const loginStatus = this.props.loginStatus;
         console.log(loginStatus);
         return(
-            <CardDeck>
+            <CardDeck id="cardDeck">
                 {courses.map( course => 
-                    <CourseThumbnail key={course.id.toString()}
+                    <CourseThumbnail id="card" key={course.id.toString()}
                             course = {course} />
                 )}
             </CardDeck>

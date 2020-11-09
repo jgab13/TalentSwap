@@ -49,7 +49,8 @@ class Home extends React.Component {
         <div className="mission">
           <h1 className="ltitle">Popular Courses</h1>
           {/* Insert grid of course thumbnails here */}
-          <CourseResutls courses = {hardcodedCourses}
+          <CourseResutls courses = {hardcodedCourses.sort((a, b) => 
+            a.enrollment/a.capacity - b.enrollment/b.capacity).slice(hardcodedCourses.length-3)}
           loginStatus={this.props.location.state === undefined ? false : this.props.location.state.loginStatus}/>
         </div>
       </div>

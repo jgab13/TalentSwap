@@ -105,7 +105,7 @@ class SearchPage extends React.Component{
         return(
             <div className="SearchPage">
                 <Header />
-                <SearchTabs handleTabSelect = {this.handleTabSelect} />
+                <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} />
                 <p id="filterHeader">Filter by</p>
                 {filter}
                 {results}

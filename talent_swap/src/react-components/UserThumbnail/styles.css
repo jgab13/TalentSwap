@@ -2,6 +2,7 @@
     padding: 30px;
     max-width: 280px;
     max-height: 430px;
+    margin: 10px 2%;
 }
 
 #body{
@@ -15,6 +16,8 @@
     height: 180px;
     border-radius: 50%;
     /* border: 1px solid #28A745; */
+    border-style: outset  #28A745;
+
 }
 
 #doeHeader {
@@ -24,6 +27,7 @@
 
 #doeContent {
     font-size: large;
+    text-transform: lowercase;
 }
 
 .userButton {
