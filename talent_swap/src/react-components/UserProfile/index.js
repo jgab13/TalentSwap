@@ -24,7 +24,7 @@ class UserProfile extends React.Component {
             <div>
                 <Header />
                 <Container>
-                    <Row>
+                    <Row className="row-cols-1 row-cols-md-3">
                         <Col>
                             <ListGroup>
                                 <ListGroupItem>
@@ -51,7 +51,7 @@ class UserProfile extends React.Component {
                             <UserProfileCourses header="Teaching Courses" courses={hardcodedCourses.filter(courses => courses.teacher === currentUser.name)} />
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Learning Courses" courses={hardcodedCourses} />
+                            <UserProfileCourses header="Learning Courses" courses={hardcodedCourses.filter(courses => courses.teacher !== currentUser.name)} />
                         </Col>
                     </Row>
                 </Container>

@@ -25,13 +25,11 @@ class UserProfileCourses extends React.Component {
             <div>
                 {this.renderRedirect()}
                 <h1>{header}</h1>
-                <ListGroup>
-                    {courses.map(course => 
-                        <ListGroupItem>
-                            <CourseThumbnail key={course.id.toString()} course={course} />
-                        </ListGroupItem>
-                    )}
-                </ListGroup>
+                {courses.map(course => 
+                    <div className="row row-cols-1">
+                        <CourseThumbnail key={course.id.toString()} course={course} />
+                    </div>
+                )}
             </div>
         )
     }

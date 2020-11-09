@@ -116,6 +116,7 @@ class User {
     }
 
     sendMessage = (userId, contents) => {
+        // Needs server call
         hardCodedMessages.push(
             new Message({
                 timestamp: Date.now(),

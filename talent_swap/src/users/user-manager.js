@@ -37,7 +37,7 @@ class UserManager {
         let userToReturn;
         if (username === "user" && password === "user") {
             userToReturn = hardCodedUsers[0];
-        } else if (username === "user1" && password === "user1") {
+        } else if (username === "user2" && password === "user2") {
             userToReturn = hardCodedUsers[1];
         } else if (username === "admin" && password === "admin") {
             return admin;
@@ -50,6 +50,7 @@ class UserManager {
     }
 
     static getUserFromId(userId) {
+        // Needs server call
         return hardCodedUsers.find(user => user.id === userId);
     }
 }
