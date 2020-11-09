@@ -54,8 +54,8 @@ class DetailedCoursePageTeacher extends React.Component {
     return (
       <div>
       {this.renderRedirect()}
-      <div className="courseDescrip">
       <Header/>
+      <div className="courseDescrip">
       <h1 className="title">{topic}</h1>
       <div id="desc">{description}</div>
       <div id="detail">
