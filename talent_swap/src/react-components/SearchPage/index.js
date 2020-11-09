@@ -41,7 +41,7 @@ class SearchPage extends React.Component{
         }
     }
 
-    updateState = (props) => {
+    updateState = () => {
         const keyword = this.props.location.state
             ? this.props.location.state.searchInput
             : undefined;
