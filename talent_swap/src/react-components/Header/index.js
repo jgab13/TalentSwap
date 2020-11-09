@@ -84,7 +84,7 @@ class Header extends React.Component {
 		        <NavDropdown.Item href="/Search">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
 		      <NavDropdown title="User" id="basic-nav-dropdown">
-		        <NavDropdown.Item href="/UserDashboard">Profile</NavDropdown.Item>
+		        <NavDropdown.Item onClick={() => this.setState({redirectURL: "/UserDashboard"})}>Profile</NavDropdown.Item>
 		        <NavDropdown.Item onClick={this.logout}>Log Out</NavDropdown.Item>
 		      </NavDropdown>
 			  <img alt="message icon" src={messageImg} className="message-icon" onClick={() => this.setState({redirectURL: "/MessageCenter"})} />
