@@ -44,7 +44,8 @@ class CourseFilter extends React.Component{
         this.setRenderObject([])
     }
 
-    handleLevelFilter = (ek) => {
+    handleLevelFilter = (e) => {
+        const ek = e.target.id
         console.log("ek is of type", typeof(ek))
         if (!this.state.levels.includes(ek)) 
             this.setState({
@@ -54,7 +55,7 @@ class CourseFilter extends React.Component{
                     state: {levelFilters: this.state.levels}
                 }
             })
-        console.log("after handling level filter selection, ", this.state)
+        // console.log("after handling level filter selection, ", this.state)
     }
 
     handleDateFilter = (ek) => {
@@ -111,34 +112,23 @@ class CourseFilter extends React.Component{
     render(){
         return(
             <div className="filterForm">
-                {/* {this.renderRedirect()} */}
-                {/* <DropdownButton onClick = {(eventKey) => this.handleLevelFilter(eventKey)}  */}
-                {/* <Dropdown>
-                    <Dropdown.Toggle variant="light" id="dropdown-level">
-                        Level
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu onSelect={(eventKey)=>this.handleLevelFilter(eventKey)}>
-                        <Dropdown.Item eventKey="beginner">Action</Dropdown.Item>
-                        <Dropdown.Item eventKey="intermediate" >Another action</Dropdown.Item>
-                        <Dropdown.Item >Something else</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown> */}
+                {this.renderRedirect()}
+            
                 <DropdownButton 
                     variant = "light" id="dropdown-level" title="Level">
-                    <Dropdown.Item eventKey="beginner" onSelect = {(eventKey) => this.handleLevelFilter(eventKey)}>
+                    <Dropdown.Item id="beginner" onClick = {this.handleLevelFilter}>
                         beginner</Dropdown.Item>
-                    <Dropdown.Item eventKey="intermediate" onSelect = {(eventKey) => this.handleLevelFilter(eventKey)} 
+                    <Dropdown.Item id="intermediate" onClick = {this.handleLevelFilter}
                         >intermediate</Dropdown.Item>
-                    <Dropdown.Item eventKey="advanced" onSelect = {(eventKey) => this.handleLevelFilter(eventKey)} 
+                    <Dropdown.Item id="advanced" onClick = {this.handleLevelFilter} 
                         >advanced</Dropdown.Item>
-                    <Dropdown.Item eventKey="all-level"onSelect = {(eventKey) => this.handleLevelFilter(eventKey)} 
+                    <Dropdown.Item id="all-level" onClick = {this.handleLevelFilter} 
                         >all-level</Dropdown.Item>
                 </DropdownButton>
-                <DropdownButton onClick={(e, eventKey) => this.handleDateFilter(e, eventKey)}
-                    onSelect = {(e, eventKey) => this.handleDateFilter(e, eventKey)} 
+                <DropdownButton onClick={this.handleDateFilter}
                     variant = "light" id="dropdown-availability" title="Availability">
-                    <Dropdown.Item eventKey="upcoming">upcoming </Dropdown.Item>
-                    <Dropdown.Item eventKey="past">past</Dropdown.Item>
+                    <Dropdown.Item id = "upcoming">upcoming </Dropdown.Item>
+                    <Dropdown.Item id ="past">past</Dropdown.Item>
                 </DropdownButton> 
 
                 <DropdownButton onSelect = {(eventKey) => this.handleSizeFilter(eventKey)}

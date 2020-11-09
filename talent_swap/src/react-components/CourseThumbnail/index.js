@@ -26,7 +26,10 @@ function CourseThumbnail(props){
                             {course.starttime.toLocaleTimeString("en-US")} - 
                                 {course.endtime.toLocaleTimeString("en-US")} {course.starttime.toLocaleDateString("en-US")}
                         </span> <br></br>
-                        <Link to=
+                        <Button id="courseButton" variant="success" href={`/DetailedCoursePage/${course.id}`}>
+                                view course details
+                            </Button>
+                        {/* <Link to=
                         {{
                             pathname: '/DetailedCoursePage',
                             state: {
@@ -35,7 +38,7 @@ function CourseThumbnail(props){
                             <Button id="courseButton" variant="success">
                                 view course details
                             </Button>
-                        </Link>
+                        </Link> */}
                     </Card.Text>
                 </Card.Body>
             </Card>
