@@ -12,6 +12,7 @@ import UserResults from "./../SearchUserResults"
 // prepare hardcoded user and course data to render on the search page
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import UserManager from "./../../users/user-manager.js"
+import { Badge } from "react-bootstrap";
 const hardcodedUsers = [UserManager.getUserFromId(1), UserManager.getUserFromId(2)]
 
 function FilterCourseLevels(curr_courses, filters){
@@ -61,9 +62,9 @@ class SearchPage extends React.Component{
     constructor(props){
         super(props);
         this.state = Object.assign({
-            tab : "courses"
+            tab : "courses",
             // filtered: false
-            // , 
+            cfilters: []
             // f_levels: [],
             // f_dates: [],
             // f_sizes: [],
@@ -187,6 +188,8 @@ class SearchPage extends React.Component{
         const users = this.state.users;
         const courses = this.state.courses;
         const tab = this.state.tab;
+        const filters = this.state.cfilters;
+
         console.log(this.state)
         let filter, results;
         filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
@@ -195,7 +198,13 @@ class SearchPage extends React.Component{
             <div className="SearchPage">
                 <Header />
                 <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} />
-                <p id="filterHeader">Filter by</p>
+                <p id="filterHeader">
+                    <span> Filter by </span> <br></br>
+                    {filters.map( (filter) =>
+                        <Badge id="filterLabel" variant="success" key={filter}>{filter}</Badge>
+                    )}
+                </p>
+                
                 {filter}
                 {/* <Button variant="success" id="clear-filter" onClick={this.handleClick}>Clear filters</Button> */}
                 {results}
