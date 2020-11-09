@@ -1,5 +1,5 @@
 .mission {
-	height: 200px;
+	min-height: 200px;
 	text-align: center;
 	padding-top: 25px;
 	border-bottom-style: solid;

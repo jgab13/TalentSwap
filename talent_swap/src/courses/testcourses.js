@@ -9,16 +9,17 @@ export const hardcodedCourses = [
 		{
 			id: 0,
 			topic: "React",
-			teacher: "User One",
+			teacher: "User Two",
 			// teacher_id: 1,
-			starttime: new Date('November 1, 2020 13:00:00'),
-			endtime: new Date('November 11, 2020 14:00:00'),
+			starttime: new Date('November 07, 2020 13:00:00'),
+			endtime: new Date('November 08, 2020 14:00:00'),
 			// date: "2020-11-11",
 			// duration: "1hr",
 			credit: 1,
-			capacity: 1,
-			enrollment: 0,
+			capacity: 2,
+			enrollment: 1,
 			pic: pic0,
+			description: "Introduction to the react framework for building single page web applications. A great course for users who are already familiar with javascript.",
 			level: "intermediate"
 		}
 	),
@@ -35,6 +36,7 @@ export const hardcodedCourses = [
 			capacity: 5,
 			enrollment: 4, 
 			pic: pic1, 
+			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
 			level: "all-level"
 		}
 	),
@@ -53,7 +55,42 @@ export const hardcodedCourses = [
 			credit: 10,
 			capacity: 10,
 			enrollment: 8,
-			description: "Welcome to introduction to cognitive science. This class explores the history and philosophy of the mind, important concepts in cognitive psychology such as intelligence, attention, memory and categorization, and important developments in the burgeoning field of artificial intelligence."
+			description: "Welcome to introduction to cognitive science. This class explores the history and philosophy of the mind, important concepts in cognitive psychology such as intelligence, attention, memory and categorization, and important developments in the burgeoning field of artificial intelligence.",
+			level: "beginner"
+		}
+	),
+	new Course(
+		{
+			id: 3,
+			topic: "Guitar lessons",
+			teacher: "User Two",
+			// teacher_id: 1,
+			starttime: new Date('November 21, 2020 13:00:00'),
+			endtime: new Date('November 21, 2020 15:00:00'),
+			// date: "2020-10-31",
+			credit: 1,
+			capacity: 1,
+			enrollment: 0, 
+			pic: pic1, 
+			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
+			level: "beginner"
+		}
+	),
+	new Course(
+		{
+			id: 4,
+			topic: "Musical Theory",
+			teacher: "User One",
+			// teacher_id: 1,
+			starttime: new Date('November 15, 2020 13:00:00'),
+			endtime: new Date('November 15, 2020 15:00:00'),
+			// date: "2020-10-31",
+			credit: 1,
+			capacity: 1,
+			enrollment: 0, 
+			pic: pic1, 
+			description: "This course introduces event handling, arrow functions, binding, functional array methods and more tips and tricks to become a great javascript programmer!",
+			level: "all-level"
 		}
 	)
 ]
