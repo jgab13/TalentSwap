@@ -6,6 +6,7 @@ import UserProfileField from "./../../react-components/UserProfileField";
 import UserProfileCourses from "./../UserProfileCourses";
 
 import UserManager from "./../../users/user-manager";
+import {hardcodedCourses} from "./../../courses/testcourses.js";
 
 class UserProfile extends React.Component {
     static contextType = UserContext;
@@ -47,10 +48,10 @@ class UserProfile extends React.Component {
                             </ListGroup>
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Teaching Courses" />
+                            <UserProfileCourses header="Teaching Courses" courses={hardcodedCourses.filter(courses => courses.teacher === currentUser.name)} />
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Learning Courses" />
+                            <UserProfileCourses header="Learning Courses" courses={hardcodedCourses} />
                         </Col>
                     </Row>
                 </Container>
