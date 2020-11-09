@@ -20,14 +20,15 @@ class UserProfileCourses extends React.Component {
         }
     }
     render() {
+        const {courses, header} = this.props;
         return (
             <div>
                 {this.renderRedirect()}
-                <h1>{this.props.header}</h1>
+                <h1>{header}</h1>
                 <ListGroup>
-                    {hardcodedCourses.map( course => 
+                    {courses.map(course => 
                         <ListGroupItem>
-                            <CourseThumbnail key={course.id.toString()} course = {course} />
+                            <CourseThumbnail key={course.id.toString()} course={course} />
                         </ListGroupItem>
                     )}
                 </ListGroup>
