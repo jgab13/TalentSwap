@@ -18,20 +18,48 @@ const hardcodedUsers = [UserManager.getUserFromId(1), UserManager.getUserFromId(
 class SearchPage extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
+        this.state = Object.assign({
             tab : "courses", 
             // keyword: "",
-            keyword: this.props.location.state.searchInput,
-            users: hardcodedUsers,      // Hardcoded users
-            courses: hardcodedCourses,   // Hardcoded courses
+            // keyword: keyword,
+            // users: users,      // Hardcoded users
+            // courses: courses,   // Hardcoded courses
             // course_results: [], 
             // user_results: []
-        };
+        }, this.updateState());
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         // this.handleLevelFilter = this.handleLevelFilter.bind(this);
         // this.handleDateFilter = this.handleDateFilter.bind(this);
         // this.handleSizeFilter = this.handleSizeFilter.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const newState = this.updateState();
+        if (newState.keyword !== prevState.keyword) {
+            this.setState(newState);
+        }
+    }
+
+    updateState = (props) => {
+        const keyword = this.props.location.state
+            ? this.props.location.state.searchInput
+            : undefined;
+        const users = keyword
+            ? hardcodedUsers.filter((user) => 
+                user.name.toLowerCase() === keyword.toLowerCase()
+            )
+            : hardcodedUsers;
+        const courses = keyword
+            ? hardcodedCourses.filter((course) => 
+                course.topic.toLowerCase() === keyword.toLowerCase()
+            )
+            : hardcodedCourses;
+        return {
+            keyword: keyword,
+            users: users,
+            courses: courses
+        };
     }
 
     handleTabSelect = (eventKey) => {
@@ -67,8 +95,13 @@ class SearchPage extends React.Component{
     // }
 
     render(){
-        console.log(this.props.location.state.searchInput);
-        {this.handleSearch()}
+// <<<<<<< HEAD
+//         console.log(this.props.location.state.searchInput);
+//         {this.handleSearch()}
+// =======
+        // console.log(this.props.location.state.searchInput);
+        // {this.handleSearch}
+// >>>>>>> c4b33360f45488ea403f3f9aa491481974183396
 
 
         const users = this.state.users;

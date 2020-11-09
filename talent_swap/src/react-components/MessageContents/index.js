@@ -1,5 +1,6 @@
 import React from "react";
 import { uid } from "react-uid";
+import "./styles.css";
 import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import {UserContext} from "./../../react-contexts/user-context";
 
@@ -22,18 +23,25 @@ class MessageContents extends React.Component {
     render() {
         const {currentUser} = this.context;
         return (
-            <div>
-                <ListGroup>
+            <div className="message-container">
+                <div className="message-contents">
                     {this.state.messages
                     .map(message => (
-                        <ListGroupItem key={uid(message)} className={message.senderId === currentUser.id ? "text-right" : "text-left"} variant={message.senderId === currentUser.id ? "primary" : "secondary"}>
-                            {message.contents}
-                        </ListGroupItem>
+                        <div key={uid(message)} className={message.senderId === currentUser.id ? "self" : "other"}>
+                            <span>{message.contents}</span>
+                        </div>
                     ))}
-                </ListGroup>
-                <div>
-                    <input type="text" onChange={this.handleInputChange} />
-                    <Button variant="primary" type="button" onClick={() => {this.sendMessageHandler(this.state.messageToSend); this.setState({messages: currentUser.getMessagesFromContact(this.state.selectedContact)})}}>Send</Button>
+                </div>
+                <div className="message-input">
+                    <input type="text" onChange={this.handleInputChange} value={this.state.messageToSend} />
+                    <Button variant="primary" type="button" onClick={() => {
+                        this.sendMessageHandler(this.state.messageToSend);
+                        this.setState({
+                            messages: currentUser.getMessagesFromContact(this.state.selectedContact),
+                            messageToSend: ""
+                        });
+
+                    }}>Send</Button>
                 </div>
             </div>
         )
