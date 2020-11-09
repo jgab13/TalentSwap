@@ -68,7 +68,7 @@ class SearchPage extends React.Component{
 
     render(){
         console.log(this.props.location.state.searchInput);
-        // {this.handleSearch}
+        {this.handleSearch()}
 
 
         const users = this.state.users;

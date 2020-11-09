@@ -21,7 +21,8 @@ class SearchBox extends React.Component{
         e.preventDefault();
         this.setState({
             redirectObject: {
-                pathname: '/Search',
+                // pathname: `/Search/keyword=${this.state.input}`,
+                pathname: `/Search`,
                 state: {searchInput: this.state.input}
             }
         });
@@ -35,6 +36,7 @@ class SearchBox extends React.Component{
 
     renderRedirect() {
         if (this.state.redirectObject) {
+            console.log("renderRedirect invoked")
             return <Redirect to={this.state.redirectObject} />
         }
     };
