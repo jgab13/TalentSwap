@@ -5,8 +5,8 @@ import {hardcodedCourses} from "./../../courses/testcourses.js";
 import {hardCodedUsers} from "./../../users/user-manager.js";
 
 
-  const reviewDesc = "This was the greatest course I have ever taken. My guy Jonathan Gabe did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
-  const reviewDesc1 = "Test review";
+  const reviewDesc = "This was the greatest course I have ever taken. My guy did a great job teaching this course. This was my favourite of all time. I'm into it. Let's do it again!!!!";
+  const reviewDesc1 = "Really enjoyed the course. Lots of fun. Big fan!";
   const reviewDesc2 = "Test review2";  
 
   const review1 = {
@@ -44,7 +44,7 @@ class DetailedCoursePage extends React.Component {
 
   	render() {
     console.log(this.state.courseID);  
-    const course0 = this.state.courseID === 0 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={null}/> : null ;
+    const course0 = this.state.courseID === 0 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={reviews} admin={null}/> : null ;
     const course1 = this.state.courseID === 1 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={null}/> : null ;
     const course2 = this.state.courseID === 2 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={reviews} admin={null}/> : null ;
     const course3 = this.state.courseID === 3 ? <CourseContainer courseID={this.state.courseID} userID={-1} reviews={[]} admin={null}/> : null ;
