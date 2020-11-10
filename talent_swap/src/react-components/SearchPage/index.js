@@ -1,11 +1,12 @@
 import React from "react";
 import "./styles.css";
+import {Badge} from "react-bootstrap";
 
 
 import Header from "./../Header"
 import SearchTabs from "./../SearchTabs"
 import CourseFilter from "./../SearchCourseFilter"
-import UserFilter from "./../SearchUserFilter"
+// import UserFilter from "./../SearchUserFilter"
 import CourseResults from "./../SearchCourseResults"
 import UserResults from "./../SearchUserResults"
 
@@ -60,7 +61,7 @@ class SearchPage extends React.Component{
         super(props);
         this.state = Object.assign({
             tab : "courses", 
-        }, this.updateState());
+        }, this.updateState()); // server call
         this.handleTabSelect = this.handleTabSelect.bind(this);
     }
 
@@ -83,20 +84,20 @@ class SearchPage extends React.Component{
         const keyword = this.props.location.state
             ? this.props.location.state.searchInput
             : undefined;
-        let users = keyword
+        let users = keyword // server call
             ? hardcodedUsers.filter((user) => 
                  (user.name.toLowerCase().match(keyword.toLowerCase())) 
                  || (user.development.toLowerCase().match(keyword.toLowerCase())) 
                  || (user.expertise.toLowerCase().match(keyword.toLowerCase())) 
             )
-            : hardcodedUsers;
-        let courses = keyword
+            : hardcodedUsers; 
+        let courses = keyword // server call
             ? hardcodedCourses.filter((course) => 
                 course.topic.toLowerCase().match(keyword.toLowerCase())
             )
             : hardcodedCourses;
         // apply course level filters, if any
-        console.log("after search input changes, courses include ", courses);
+        console.log("after search input changes to ", keyword, "courses include ", courses);
         const clfilters = this.props.location.state 
             ? this.props.location.state.levelFilters
             : undefined;
@@ -137,14 +138,24 @@ class SearchPage extends React.Component{
         const users = this.state.users;
         const courses = this.state.courses;
         const tab = this.state.tab;
+        const courseFilters = this.state.cfilters;
         let filter, results;
-        filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
+        // filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
+        filter = (tab === "courses") ? <CourseFilter /> : undefined;
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
                 <Header />
                 <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} />
-                <p id="filterHeader">Filter by</p>
+                
+                <p > 
+                    <span id="filterHeader">Filter by  </span> <br></br>
+                    { courseFilters.map( (filter) => 
+                        <Badge className ="filterLabel" variant = "success" >{filter}</Badge>
+                        )
+                    } 
+                </p>
+                
                 {filter}
                 {results}
             </div>

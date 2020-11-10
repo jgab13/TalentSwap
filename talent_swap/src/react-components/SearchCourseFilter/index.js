@@ -43,7 +43,11 @@ class CourseFilter extends React.Component{
                 levels: newFilters,
                 redirectObject: {
                     pathname: "/Search",
-                    state: {levelFilters: newFilters}
+                    state: {
+                        levelFilters: newFilters
+                        // dateFilters: this.state.redirectObject.dateFilters,
+                        // sizeFilters: this.state.redirectObject.sizeFilters
+                    }
                 }
             })
         }

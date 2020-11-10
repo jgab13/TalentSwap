@@ -12,6 +12,8 @@
     /* top: 40px; */
 }
 
-#filterLabel{
+.filterLabel{
     margin-right: 5px;
+    position: relative;
+    left: 50px;
 }

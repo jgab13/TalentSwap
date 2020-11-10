@@ -41,7 +41,7 @@ class Home extends React.Component {
         </div>
         <div className="mission">
           <h1 className="ltitle">Popular Courses</h1>
-          {/* Insert grid of course thumbnails here */}
+          {/* server call */}
           <CourseResutls courses = {hardcodedCourses.sort((a, b) => 
             a.enrollment/a.capacity - b.enrollment/b.capacity).slice(hardcodedCourses.length-3)}/>
         </div>
