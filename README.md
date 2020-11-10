@@ -34,9 +34,19 @@ There are two normal users, with username: user, password: user and username: us
 
 Also, click on "Sign Up" button besides "log in" will lead you to sign up for the website. Notice that since user information is hardcoded, a registered user can not log in with newly set username and password.
 
+### User Profile
+
+After logging in, you will be directed to the user profile, which will display editable user information, courses you are enrolled in or courses you are teaching. To access this part of the app, you must be signed in. So, please try to access this feature right after logging in.
+
+Alternatively, you can type the URL `/UserProfile/{userId}` where `userId` some integer. Currently, the 2 valid ids are `1` and `2`. This will allow you to view the user profile of that user, but not edit.
+
+Note that this is a SPA so changing the URL in this manner will log you out. We have not yet implemented cookies/jwt/some other way to persist user identity beyond storing it in memory.
+
+If you find yourself logged out, please log in again.
+
 ### Messaging
 
-After logging in, you will be directed to the user profile, which will display editable user information, courses you are enrolled in or courses you are teaching. You can click the message icon on the nav bar in the top right. This will bring you to the messaging system. This page is divided into two columns, the left side denotes the users you have recently chatted with. The right side denotes the messages themselves. You can send messages by typing into the input box and clicking "Send".
+You can click the message icon on the nav bar in the top right. This will bring you to the messaging system. This page is divided into two columns, the left side denotes the users you have recently chatted with. The right side denotes the messages themselves. You can send messages by typing into the input box and clicking "Send".
 
 In Phase 2, the plan is to have live updates to the messaging system (possibly with Socket.io).
 
