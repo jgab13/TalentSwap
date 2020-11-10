@@ -1,18 +1,17 @@
 import React from "react";
 import "./styles.css";
-// import {Button} from "react-bootstrap";
+
 
 import Header from "./../Header"
 import SearchTabs from "./../SearchTabs"
 import CourseFilter from "./../SearchCourseFilter"
-// import UserFilter from "./../SearchUserFilter"
+import UserFilter from "./../SearchUserFilter"
 import CourseResults from "./../SearchCourseResults"
 import UserResults from "./../SearchUserResults"
 
 // prepare hardcoded user and course data to render on the search page
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import UserManager from "./../../users/user-manager.js"
-import { Badge } from "react-bootstrap";
 const hardcodedUsers = [UserManager.getUserFromId(1), UserManager.getUserFromId(2)]
 
 function FilterCourseLevels(curr_courses, filters){
@@ -52,7 +51,6 @@ function FiltersCourseSizes(curr_courses, filters){
                     return course
             }}))
     }
-    console.log("before FilterCourseSizes() returns, courses include ", r_courses)
     return r_courses;
 }
 
@@ -61,52 +59,27 @@ class SearchPage extends React.Component{
     constructor(props){
         super(props);
         this.state = Object.assign({
-            tab : "courses",
-            // filtered: false
-            cfilters: []
-            // newFilters: false
-            // f_levels: [],
-            // f_dates: [],
-            // f_sizes: [],
-        }, this.updateOnSearchKeywordChange());
+            tab : "courses", 
+        }, this.updateState());
         this.handleTabSelect = this.handleTabSelect.bind(this);
-        // this.handleClick = this.handleClick.bind(this);
-
     }
 
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     const newState = this.updateState();
-    //     // console.log("prevState", prevState);
-    //     // console.log("newState", newState);
-    //     if (newState.keyword !== prevState.keyword 
-    //         || (newState.courses.length !== prevState.courses.length
-    //             || !newState.courses.every((value, index) => value === prevState.courses[index]))
-    //             // || newState.cfilters !== prevState.cfilters
-    //         )
-    //     {
-    //         this.setState(newState);
-    //     }
-    // }
-
-    componentDidUpdate(prevProps, prevState){
-        // check whether search keywords have changed 
-        const newSearchState = this.updateOnSearchKeywordChange();
-        if ( newSearchState.keyword !== prevState.keyword){
-            this.setState(newSearchState)
-        }
-        const newCourseFilterState = this.updateOnCourseFiltersChange();
-        if ( !prevState.cfilters
-            || newCourseFilterState.cfilters.length !== prevState.cfilters.length
-            || !newCourseFilterState.cfilters.every( (val, ind) => val === prevState.cfilters[ind]))
-        // if (this.state.newFiltersApplicable)
-            {
-                this.setState(newCourseFilterState)
-                // this.setState({newFiltersApplicable: false})
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const newState = this.updateState();
+        // console.log("prevState", prevState);
+        // console.log("newState", newState);
+        if (newState.keyword !== prevState.keyword 
+            || (newState.courses.length !== prevState.courses.length
+                || !newState.courses.every((value, index) => value === prevState.courses[index]))
+                // || newState.cfilters !== prevState.cfilters
+            )
+        {
+            this.setState(newState);
         }
     }
 
-    updateOnSearchKeywordChange = () => {
-        console.log("a new SEARCH ", this.props);
+    updateState = () => {
+        console.log(this.props);
         const keyword = this.props.location.state
             ? this.props.location.state.searchInput
             : undefined;
@@ -122,96 +95,57 @@ class SearchPage extends React.Component{
                 course.topic.toLowerCase().match(keyword.toLowerCase())
             )
             : hardcodedCourses;
-        console.log("after search input changed to ", keyword, "courses include ", courses);
-        return {
-            keyword: keyword,
-            users: users,
-            courses: courses,
-        };
-    }
-
-    updateOnCourseFiltersChange = () => {
-        // this.setState({newFiltersApplicable:true});
-        let courses = this.state.keyword
-            ? this.state.courses
-            : hardcodedCourses;
-        console.log("before applying any filters, courses include ", courses);
         // apply course level filters, if any
+        console.log("after search input changes, courses include ", courses);
         const clfilters = this.props.location.state 
             ? this.props.location.state.levelFilters
-            : [];
+            : undefined;
         // console.log("level filters include ", clfilters);
-        courses = clfilters && clfilters.length
+        courses = clfilters
             ? FilterCourseLevels(courses, clfilters)
             : courses;
         console.log("after applying level filters ", clfilters, "courses include ", courses);
         // apply course date filters, if any
         const cdfilters = this.props.location.state
             ? this.props.location.state.dateFilters
-            : [];
-        courses = cdfilters && cdfilters.length
+            : undefined;
+        courses = cdfilters
             ? FilterCourseDates(courses, cdfilters)
             : courses;
         console.log("after applying date filters ", cdfilters, "courses include ", courses);
         // apply course size filters, if any
         const csfilters = this.props.location.state
             ? this.props.location.state.sizeFilters
-            : [];
-        courses = csfilters && csfilters.length
+            : undefined;
+        courses = csfilters 
             ? FiltersCourseSizes(courses, csfilters)
             : courses
         console.log("after applying size filters ", csfilters, "courses include ", courses);
-        const newFilters = [].concat(clfilters).concat(cdfilters).concat(csfilters);
         return {
+            keyword: keyword,
+            users: users,
             courses: courses,
-            // cfilters: this.state.cfilters && this.state.cfilters.length
-            //     ? this.state.cfilters.concat(newFilters)
-            //     : newFilters
-            cfilters: newFilters
-            // f_levels: clfilters,
-            // f_dates: cdfilters,
-            // f_sizes: csfilters
-        }
+            cfilters: [].concat(clfilters).concat(cdfilters).concat(csfilters)
+        };
     }
-
 
     handleTabSelect = (eventKey) => {
         this.setState({tab: eventKey});
     }
 
-    // handleClick(){
-    //     this.setState({
-    //         f_levels: [],
-    //         f_dates: [],
-    //         f_sizes: [],
-    //     })
-    // }
-
     render(){
         const users = this.state.users;
         const courses = this.state.courses;
         const tab = this.state.tab;
-        const filters = this.state.cfilters;
-
-        console.log(this.state)
         let filter, results;
-        // filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
-        filter = (tab === "courses") ? <CourseFilter /> : undefined;
-
+        filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
                 <Header />
                 <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} />
-                <p id="filterHeader">
-                    <span> Filter Courses by </span> <br></br>
-                    {filters.map( (filter) =>
-                        <Badge id="filterLabel" variant="success" key={filter}>{filter}</Badge>
-                    )}
-                </p>
-                
+                <p id="filterHeader">Filter by</p>
                 {filter}
-                {/* <Button variant="success" id="clear-filter" onClick={this.handleClick}>Clear filters</Button> */}
                 {results}
             </div>
         )
