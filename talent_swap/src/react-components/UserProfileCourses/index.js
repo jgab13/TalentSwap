@@ -1,10 +1,9 @@
 import React from "react";
 import "./styles.css";
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import { Redirect } from 'react-router-dom';
+import { uid } from "react-uid";
 
 import CourseThumbnail from "./../CourseThumbnail";
-import {hardcodedCourses} from "./../../courses/testcourses.js";
 
 class UserProfileCourses extends React.Component {
     constructor(props) {
@@ -26,7 +25,7 @@ class UserProfileCourses extends React.Component {
                 {this.renderRedirect()}
                 <h1>{header}</h1>
                 {courses.map(course => 
-                    <div className="row row-cols-1">
+                    <div className="row row-cols-1" key={uid(course)}>
                         <CourseThumbnail key={course.id.toString()} course={course} />
                     </div>
                 )}

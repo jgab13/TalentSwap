@@ -1,7 +1,7 @@
 import React from "react";
 import { uid } from "react-uid";
 import "./styles.css";
-import { Button, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import {UserContext} from "./../../react-contexts/user-context";
 
 class MessageContents extends React.Component {
