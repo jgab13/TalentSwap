@@ -12,9 +12,14 @@ Navigate back to the home page by clicking the logo in the top left corner of th
 
 ### Search Page flow
 
-The search page flow applies to all users including visitors. The courses are listed in the course tab and can be filtered by entering a key word in the search input box in the header or by selecting one of the drop down items in the level, availability and class size filters. To test the filters, please select one of the filter labels to see this functionality. For phase 1, you cannot select multiple filters such as a level filter and an availability filter. This will be corrected in phase 2. To remove the filter, click clear filter to see all of the search page results. To test the search input box, enter a keyword such as react and click the search button to see the filtering. On the user tab, a thumbnail of the web app users will be displayed. A user can use the search input box to filter on a specific user. 
+The search page flow applies to all users including visitors. Start searching from any page on our website by typing in your keywords in the search input box and then click the search button. Results of your search include two data categories: users and courses, displayed under the "Users" and "Courses" tabs respectively. 
+
+If you just want to explore and the search button was clicked with no keywords specified, all existing courses and users will be shown as search results. You can filter courses based on difficulty levels, availability, or class size. You can select multiple items under the same filter. For example, if you're looking for both beginner-level and intermediate-level courses, you can select them at the same time to see all the courses that meets either critic. Remove the current filters by click the "clear filters" button. 
+
+If keywords are specified, then all the courses which have your keywords as substring in their title will be returned. All the users who have your keywords as substring in their name,  domain of expertise, or domain of development will be returned as well. Search keywords that are shorter and more general get more results. For example, if you search "JavaScriptX", nothing will be returned. But if you search "Java", then one course and one user will be returned. 
 
 Navigate back to the home page to begin the admin flow.
+
 
 ## Admin flow
 
@@ -68,10 +73,6 @@ A user can create a new course by clicking on the "Teach" scroll down button and
 
 Under the teach drop down in the header, similar to the learn drop down, a user can also click view past courses and view upcoming courses. Clicking either of these items directs to the search page filtered for upcoming or past courses that the user teaches.
 
-### Search
-Start searching from any page on our website by typing in your keywords in the search box and then click the search button. Results of your search include two data categories: users and courses, displayed under the "Users" and "Courses" tabs respectively. 
-If no keywords are specified, all existing courses and users are shown as search results. You can filter those courses based on difficulty levels, availability, or class size. For example, if you're happy with both beginner-level and all-level courses, you can select them at the same time to see all the courses that are marked as either beginner-level or all-level. 
-If keywords are specified, courses which have your keywords as substring in their title will be returned. Users who have your keywords as substring in their name,  domain of expertise, or domain of development will be returned. Search keywords that are shorter and more general get more results. For example, if you search "JavaScriptX", nothing will be returned. But if you search "Java", then one course and one user will be returned.  
 
 ## Dependencies
 
