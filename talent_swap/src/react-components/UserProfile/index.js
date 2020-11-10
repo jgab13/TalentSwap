@@ -11,14 +11,16 @@ import {hardcodedCourses} from "./../../courses/testcourses.js";
 class UserProfile extends React.Component {
     static contextType = UserContext;
     render() {
+        let currentUser;
+        let canEdit;
         if (this.props.match) {
             const {match: {params}} = this.props;
             const {userId} = params;
-            var currentUser = UserManager.getUserFromId(parseInt(userId));
-            var canEdit = false;
+            currentUser = UserManager.getUserFromId(parseInt(userId));
+            canEdit = false;
         } else {
-            var {currentUser} = this.context;
-            var canEdit = true;
+            currentUser = this.context.currentUser;
+            canEdit = true;
         }
         return (
             <div>

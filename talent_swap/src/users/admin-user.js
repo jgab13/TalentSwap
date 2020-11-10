@@ -1,4 +1,3 @@
-import User from "./user";
 import UserManager from "./user-manager";
 
 const bannedUsers = [];
