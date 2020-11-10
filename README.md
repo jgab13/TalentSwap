@@ -68,6 +68,11 @@ A user can create a new course by clicking on the "Teach" scroll down button and
 
 Under the teach drop down in the header, similar to the learn drop down, a user can also click view past courses and view upcoming courses. Clicking either of these items directs to the search page filtered for upcoming or past courses that the user teaches.
 
+### Search
+Start searching from any page on our website by typing in your keywords in the search box and then click the search button. Results of your search include two data categories: users and courses, displayed under the "Users" and "Courses" tabs respectively. 
+If no keywords are specified, all existing courses and users are shown as search results. You can filter those courses based on difficulty levels, availability, or class size. For example, if you're happy with both beginner-level and all-level courses, you can select them at the same time to see all the courses that are marked as either beginner-level or all-level. 
+If keywords are specified, courses which have your keywords as substring in their title will be returned. Users who have your keywords as substring in their name,  domain of expertise, or domain of development will be returned. Search keywords that are shorter and more general get more results. For example, if you search "JavaScriptX", nothing will be returned. But if you search "Java", then one course and one user will be returned.  
+
 ## Dependencies
 
 This is a list of third-party libraries we used:
