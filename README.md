@@ -16,7 +16,7 @@ The search page flow applies to all users including visitors. Start searching fr
 
 If you just want to explore and the search button was clicked with no keywords specified, all existing courses and users will be shown as search results. You can filter courses based on difficulty levels, availability, or class size. You can select multiple items under the same filter. For example, if you're looking for both beginner-level and intermediate-level courses, you can select them at the same time to see all the courses that meets either critic. Remove the current filters by click the "clear filters" button. 
 
-If keywords are specified, then all the courses which have your keywords as substring in their title will be returned. All the users who have your keywords as substring in their name,  domain of expertise, or domain of development will be returned as well. Search keywords that are shorter and more general get more results. For example, if you search "JavaScriptX", nothing will be returned. But if you search "Java", then one course and one user will be returned. 
+If keywords are specified, then all the courses which have your keywords as a substring in their title will be returned. All the users who have your keywords as a substring in their name, domain of expertise, or domain of development will be returned as well. Keywords that are shorter and more general get more results. For example, if you search "JavaScriptX", nothing will be returned. But if you search "Java", then one course and one user will be returned. You can do experiments with a very general keyword "s". 
 
 Navigate back to the home page to begin the admin flow.
 
