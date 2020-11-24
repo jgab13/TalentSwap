@@ -97,14 +97,23 @@ class CourseContainer extends React.Component {
     this.setState({
       enrolled: !this.state.enrolled,
     })
-   } else {
+   } else if (this.state.currUser.credits < this.state.course.credit){
+      alert('Insufficient credits to enroll!')
+   }
+   else {
+    let credits = this.state.currUser.credits
+    let currUser = this.state.currUser
     let currentEnrolled = this.state.course.enrollment + 1;
     let course = this.state.course;
+    let newCredits = credits - course.credit
+    currUser.credits = newCredits
     course.enrollment = currentEnrolled;
+
     //Server call needed to increase enrollment in course in database.
     this.setState({
       enrolled: !this.state.enrolled,
-      course: course
+      course: course,
+      currUser: currUser
     })
    }
   }
