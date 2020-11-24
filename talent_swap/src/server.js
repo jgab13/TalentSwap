@@ -8,10 +8,22 @@ const app = express();
 
 const path = require('path');
 
+const { mongoose } = require('./db/mongoose')
+mongoose.set('bufferCommands', false);
+
 // Setting up a static directory for the files in /pub
 // using Express middleware.
 // Don't put anything in /pub that you don't want the public to have access to!
 app.use(express.static(path.join(__dirname, '/pub')))
+
+
+const bodyParser = require('body-parser') 
+app.use(bodyParser.json())
+
+/*** Helper functions below **********************************/
+function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
+	return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
+}
 
 // Let's make some express 'routes'
 // Express has something called a Router, which 
