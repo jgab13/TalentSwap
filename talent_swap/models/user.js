@@ -1,10 +1,11 @@
 /* User model */
 'use strict';
 
-import { Course } from './course.js'
+// import { Course } from './course.js'
+const { Course } = require('./course')
 
 const mongoose = require('mongoose')
-const validator = require('validator')
+// const validator = require('validator')
 const bcrypt = require('bcryptjs')
 
 // Making a Mongoose model a little differently: a Mongoose Schema
@@ -28,8 +29,8 @@ const UserSchema = new mongoose.Schema({
 	bio: String,
 	expertise: [String],
 	development: [String],
-	coursesTeaching: [Course],
-	coursesLearning: [Course]
+	coursesTeaching: [{type: mongoose.Schema.Types.ObjectId, ref: "Course"}],
+	coursesLearning: [{type: mongoose.Schema.Types.ObjectId, ref: "Course"}]
 	//Need to add messages probably a schema needed here as well.
 })
 
@@ -56,11 +57,11 @@ UserSchema.pre('save', function(next) {
 // A static method on the document model.
 // Allows us to find a User document by comparing the hashed password
 //  to a given one, for example when logging in.
-UserSchema.statics.findByEmailPassword = function(email, password) {
+UserSchema.statics.findByUsernamePassword = function(username, password) {
 	const User = this // binds this to the User model
 
-	// First find the user by their email
-	return User.findOne({ email: email }).then((user) => {
+	// First find the user by their username
+	return User.findOne({ username: username }).then((user) => {
 		if (!user) {
 			return Promise.reject()  // a rejected promise
 		}
