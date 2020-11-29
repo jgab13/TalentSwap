@@ -10,16 +10,12 @@ const bcrypt = require('bcryptjs')
 // Making a Mongoose model a little differently: a Mongoose Schema
 // Allows us to add additional functionality.
 const UserSchema = new mongoose.Schema({
-	email: {
+	username: {
 		type: String,
 		required: true,
 		minlength: 1,
 		trim: true,
-		unique: true,
-		validate: {
-			validator: validator.isEmail,   // custom validator
-			message: 'Not valid email'
-		}
+		unique: true
 	}, 
 	password: {
 		type: String,

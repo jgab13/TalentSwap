@@ -27,7 +27,7 @@ class MessageContents extends React.Component {
                 <div className="message-contents">
                     {this.state.messages
                     .map(message => (
-                        <div key={uid(message)} className={message.senderId === currentUser.id ? "self" : "other"}>
+                        <div key={uid(message)} className={message.senderName === currentUser.id ? "self" : "other"}>
                             <span>{message.contents}</span>
                         </div>
                     ))}
