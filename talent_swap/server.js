@@ -26,24 +26,6 @@ app.use(bodyParser.json())
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware for authentication of resources
-const authenticate = (req, res, next) => {
-    if (req.session.user) {
-        User.findById(req.session.user).then((user) => {
-            if (!user) {
-                return Promise.reject()
-            } else {
-                req.user = user
-                next()
-            }
-        }).catch((error) => {
-            res.status(401).send("Unauthorized")
-        })
-    } else {
-        res.status(401).send("Unauthorized")
-    }
-}
-
 
 /*** Session handling **************************************/
 // Create a session and session cookie

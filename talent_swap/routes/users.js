@@ -12,7 +12,8 @@ const router = express.Router(); // Express Router
 const { User } = require("./../models/user");
 
 // helpers/middlewares
-const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers')
+const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
+const { authenticate } = require('./helpers/authentication');
 
 // A route to login and create a session
 router.post("/users/login", (req, res) => {
@@ -75,6 +76,33 @@ router.post('/api/users', mongoChecker, async (req, res) => {
         } else {
             log(error)
             res.status(400).send('Bad Request') // bad request for changing the student.
+        }
+    }
+})
+
+// https://tools.ietf.org/html/rfc6902#section-3
+router.patch('/api/users/:username', mongoChecker, authenticate, async (req, res) => {
+    const username = req.params.username;
+
+    const fieldsToUpdate = {}
+    req.body.map((change) => {
+        const propertyToChange = change.path.substr(1) // getting rid of the '/' character
+        fieldsToUpdate[propertyToChange] = change.value
+    })
+
+    try {
+        const user = await User.findOneAndUpdate({username: username}, {$set: fieldsToUpdate}, {new: true});
+        if (!user) {
+            res.status(404).send('Internal server error');
+        } else {
+            res.send(user);
+        }
+    } catch (error) {
+        log(error);
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request'); // bad request for changing the user
         }
     }
 })

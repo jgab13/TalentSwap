@@ -14,4 +14,7 @@ mongoose.connect(mongoURI,
 	})
 ;
 
+// Fix DeprecationWarning
+mongoose.set('useFindAndModify', false);
+
 module.exports = { mongoose }  // Export the active connection.
