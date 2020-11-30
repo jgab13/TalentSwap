@@ -45,13 +45,7 @@ app.use(
 // User routes
 app.use(require('./routes/users'))
 
-// Let's make some express 'routes'
-// Express has something called a Router, which 
-// takes specific HTTP requests and handles them
-// based on the HTTP method and URL
-
-// Let's make a route for an HTTP GET request to the 
-// 'root' of our app (i.e. top level domain '/')
+app.use(require('./routes/courses'))
 
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {

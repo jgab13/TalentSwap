@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-//import User from "./../../users/user";
+import { Register } from "../../actions/user";
 
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
@@ -18,7 +18,7 @@ class Signup extends React.Component {
 	  		password2: ''
 	  	}
 	  };
-	  this.handleSignup = this.handleSignup.bind(this);
+	this.handleSignup = this.handleSignup.bind(this);
     this.validate = this.validate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -26,7 +26,6 @@ class Signup extends React.Component {
   handleChange(event) {
   	let input = this.state.input;
   	input[event.target.name] = event.target.value;
-  	console.log(input)
   	this.setState({
   		input
   	});
@@ -42,6 +41,7 @@ class Signup extends React.Component {
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
 			this.setState({redirect:true});
+			Register(this.state.input)
 			//Push new user to database
 			/*
 			let currentUser = new User({

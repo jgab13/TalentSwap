@@ -2,8 +2,7 @@ import React from "react";
 import Header from "./../Header";
 import "./styles.css";
 import { hardcodedCourses } from "./../../courses/testcourses"
-import { addCourse } from "./../../courses/courseManager"
-
+import { CreateCourse } from "../../actions/course";
 import { Button, Row, Col, Form }from "react-bootstrap";
 
 /* The CourseCreation Component */
@@ -25,9 +24,7 @@ class CourseCreation extends React.Component {
     	credit: this.props.location.state.course.credit,
     	capacity: this.props.location.state.course.capacity,
     	area: this.props.location.state.course.area,
-    	description: this.props.location.state.course.description,
-    	courses: hardcodedCourses
-    	}
+    	description: this.props.location.state.course.description    	}
 	}
     else{
     	this.state = {
@@ -35,12 +32,10 @@ class CourseCreation extends React.Component {
     	teacher: "user1",
     	starttime: "",
     	endtime: "",
-    	date: "",
     	credit: 0,
     	capacity: 0,
     	area: "",
-    	description: "",
-    	courses: hardcodedCourses
+    	description: ""
     	}
     }    
   }
@@ -48,23 +43,22 @@ class CourseCreation extends React.Component {
 	handleSubmit(event) {
 		event.preventDefault(); //testing
 		//Push new course to database
-		//requires a server call
-		addCourse(this);
+		CreateCourse(this.state);
 		this.props.location.state ?
 		alert('Changes has been made to your course.')
 		:
     	alert('Congratulations! A new course has been created!');
-    window.location.href='/DetailedCoursePageTeacher';
-    console.log(this.state.courses);
+    	window.location.href='/DetailedCoursePageTeacher';
+    	console.log(this.state.courses);
 	}
 
 	handleChange(event) {
 		const target = event.target;
-    const value = target.value;
-    const name = target.name;
-  	this.setState({
-  		[name]: value
-  	});
+    	const value = target.value;
+    	const name = target.name;
+	  	this.setState({
+	  		[name]: value
+	  	});
   };
 
   render() {
