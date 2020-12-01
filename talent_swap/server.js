@@ -45,6 +45,8 @@ app.use(
 // User routes
 app.use(require('./routes/users'))
 
+app.use(require('./routes/messages'))
+
 app.use(require('./routes/courses'))
 
 // All routes other than above will go to index.html
