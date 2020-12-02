@@ -5,8 +5,8 @@ export const CreateCourse = (userInput) => {
         body: JSON.stringify({
             topic: userInput.topic,
             teacher: userInput.teacher,
-            starttime: new Date(userInput.date + "" + userInput.starttime),
-            endtime: new Date(userInput.date + "" + userInput.endtime),
+            starttime: new Date(userInput.date + " " + userInput.starttime),
+            endtime: new Date(userInput.date + " " + userInput.endtime),
             credit: userInput.credit,
             capacity: userInput.capacity,
             area: userInput.area,
