@@ -36,7 +36,7 @@ router.post('/api/messages', mongoChecker, authenticate, async (req, res) => {
 	}
 })
 
-router.get('/api/messages', mongoChecker, async (req, res) => {
+router.get('/api/messages', mongoChecker, authenticate, async (req, res) => {
     try {
 		const username = req.session.username;
 		const target = req.body.target;
