@@ -1,9 +1,4 @@
-/* server.js - Express server*/
 'use strict';
-const log = console.log
-
-// express
-log('Express server')
 
 const express = require('express')
 const router = express.Router(); // Express Router
@@ -20,7 +15,6 @@ router.post("/users/login", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    // log(username, password);
     // Use the static method on the User model to find a user
     // by their username and password
     User.findByUsernamePassword(username, password)
@@ -58,8 +52,6 @@ router.get("/users/check-session", (req, res) => {
 });
 
 router.post('/api/users', mongoChecker, async (req, res) => {
-    log(req.body)
-
     // Create a new user
     const user = new User({
         username: req.body.username,
@@ -74,7 +66,6 @@ router.post('/api/users', mongoChecker, async (req, res) => {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
         } else {
-            log(error)
             res.status(400).send('Bad Request') // bad request for changing the student.
         }
     }
@@ -98,7 +89,6 @@ router.patch('/api/users/:username', mongoChecker, authenticate, async (req, res
             res.send(user);
         }
     } catch (error) {
-        log(error);
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');
         } else {
