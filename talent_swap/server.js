@@ -49,6 +49,8 @@ app.use(require('./routes/messages'))
 
 app.use(require('./routes/courses'))
 
+app.use(require('./routes/enrollment'))
+
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
     // send index.html

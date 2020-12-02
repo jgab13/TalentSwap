@@ -1,9 +1,4 @@
-/* server.js - Express server*/
 'use strict';
-const log = console.log
-
-// express
-log('Express server')
 
 const express = require('express')
 const router = express.Router(); // Express Router
@@ -30,7 +25,6 @@ router.post('/api/messages', mongoChecker, authenticate, async (req, res) => {
 		if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
 			res.status(500).send('Internal server error')
 		} else {
-			log(error)
 			res.status(400).send('Bad Request') // bad request for changing the student.
 		}
 	}
@@ -51,7 +45,6 @@ router.get('/api/messages', mongoChecker, authenticate, async (req, res) => {
 		if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
 			res.status(500).send('Internal server error')
 		} else {
-			log(error)
 			res.status(400).send('Bad Request') // bad request for changing the student.
 		}
 	}
