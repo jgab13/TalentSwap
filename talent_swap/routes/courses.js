@@ -48,8 +48,8 @@ courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
 //update a course
 courseRouter.patch('/api/courses/update/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
-    const attr = req.body.attr
-    const newValue = req.body.newValue
+    const attrs = req.body.attr
+    const newValues = req.body.newValue
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -61,7 +61,9 @@ courseRouter.patch('/api/courses/update/:id', mongoChecker, async (req, res) => 
         if (!course) {
             res.status(404).send('Resource not found')  // could not find this student
         } else { 
-            course[attr] = newValue
+            for (let i in attrs) {
+                course[attrs[i]] = newValues[i]
+            }
             await course.save()
             res.send(course)
         }
