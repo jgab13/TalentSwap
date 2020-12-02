@@ -4,6 +4,13 @@ const mongoose = require('mongoose')
 // import { User } from './user.js'
 const { User } = require('./user')
 
+const RatingSchema = new mongoose.Schema({
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+    date: Date,
+    description: String,
+    rating: Number
+});
+
 const Course = mongoose.model('Course', {
 	topic: String,
 	teacher: String,
@@ -15,7 +22,8 @@ const Course = mongoose.model('Course', {
 	rate: Number,
 	description: String,
 	level: String,
-	enrolledUsers: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}]
+	enrolledUsers: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+	ratings: [RatingSchema]
 	//Need to add rating schema
 })
 
