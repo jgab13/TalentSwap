@@ -18,8 +18,6 @@ export const CreateCourse = (userInput) => {
         }
     });
 
-    console.log(request)
-
     fetch(request)
         .then(res => {
             if (res.status === 200) {

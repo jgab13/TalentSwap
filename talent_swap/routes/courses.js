@@ -45,6 +45,32 @@ courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
     }
 })
 
+//update a course
+courseRouter.patch('/api/courses/update/:id', mongoChecker, async (req, res) => {
+    const id = req.params.id
+    const attr = req.body.attr
+    const newValue = req.body.newValue
+
+    if (!ObjectID.isValid(id)) {
+        res.status(404).send()  // if invalid id, definitely can't find resource, 404.
+        return;  // so that we don't run the rest of the handler.
+    }
+
+     try {
+        let course = await Course.findById(id)
+        if (!course) {
+            res.status(404).send('Resource not found')  // could not find this student
+        } else { 
+            course[attr] = newValue
+            await course.save()
+            res.send(course)
+        }
+    } catch(error) {
+        console.log(error)
+        res.status(500).send('Internal Server Error')  // server error
+    }
+})
+
 //retrieve a course route
 courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
