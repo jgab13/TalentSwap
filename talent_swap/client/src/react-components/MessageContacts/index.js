@@ -9,12 +9,23 @@ class MessageContacts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            contacts: this.props.contactIds.map(id => UserManager.getUserFromId(id)),
+            contacts: null,
             selectedContact: null
         };
-        this.state.selectedContact = this.state.contacts[0];
+    }
+    componentDidMount() {
+        if (this.props.contactUsernames) {
+            const contacts = this.props.contactUsernames.map(username => UserManager.getUserFromUsername(username));
+            this.setState({
+                contacts: contacts,
+                selectedContact: contacts[0]
+            })
+        }
     }
     render() {
+        if (!this.state.contacts) {
+            return <div></div>
+        }
         return (
             <ListGroup>
                 {this.state.contacts

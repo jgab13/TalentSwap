@@ -14,8 +14,8 @@ export class UserTable extends React.Component {
       <tbody>
       {user.map((user) => (
       <tr>
-        <td>{user.id}</td>
-        <td><Link to= {{pathname:`/UserProfile/${user.id}`}} >
+        <td>{user.username}</td>
+        <td><Link to= {{pathname:`/UserProfile/${user.username}`}} >
                   {user.name}
             </Link></td>
         <td>{user.credits}</td>

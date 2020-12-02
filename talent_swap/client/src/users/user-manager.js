@@ -5,7 +5,7 @@ import pic1 from "./profile1.jpg";
 
 export const hardCodedUsers = [
     new User({
-        id: 1,
+        username: "user",
         userType: "user",
         name: "User One",
         credits: 0,
@@ -17,7 +17,7 @@ export const hardCodedUsers = [
         pic: pic0
     }),
     new User({
-        id: 2,
+        username: "user2",
         userType: "user",
         name: "User Two",
         credits: 0,
@@ -32,6 +32,29 @@ export const hardCodedUsers = [
 
 class UserManager {
     static login(username, password) {
+        // Login with session, but send back hardcoded frontend data for now
+        const request = new Request("/users/login", {
+            method: "post",
+            body: JSON.stringify({username: username, password: password}),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        });
+        fetch(request)
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json();
+                }
+            })
+            .then(json => {
+                if (json.currentUser !== undefined) {
+                    console.log(json.currentUser);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
         // Needs server call
         let admin = new AdminUser();
         let userToReturn;
@@ -49,9 +72,9 @@ class UserManager {
         }
     }
 
-    static getUserFromId(userId) {
+    static getUserFromUsername(username) {
         // Needs server call
-        return hardCodedUsers.find(user => user.id === userId);
+        return hardCodedUsers.find(user => user.username === username);
     }
 }
 

@@ -34,7 +34,7 @@ const hardCodedMessages = [
 
 class User {
     constructor(json=null) {
-        this.id = ""; // username
+        this.username = ""; // username
         this.userType = "user";
         this.name = "";
         this.credits = 0;
@@ -74,54 +74,41 @@ class User {
         return true;
     };
 
-    getContactIds = () => {
-        // Needs server call
-        const sortedMessages = hardCodedMessages
-            .sort(
-                (message1, message2) => {
-                    if (message1.timestamp > message2.timestamp) {
-                        return -1;
-                    }
-                    if (message1.timestamp < message2.timestamp) {
-                        return 1;
-                    }
-                    return 0;
-                }
-            );
-        const receivers = sortedMessages
-            .filter(message => message.senderName === this.id)
-            .map(message => message.receiverName);
-        const senders = sortedMessages
-            .filter(message => message.receiverName === this.id)
-            .map(message => message.senderName);
-        return Array.from(new Set([...receivers, ...senders]));
+    getContactUsernames = async () => {
+        const request = new Request("/api/message-contacts", {
+            method: "get"
+        });
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return res.json();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    getMessagesFromContact = (contactId) => {
-        // Needs server call
-        const sortByTimestamp = (message1, message2) => {
-            if (message1.timestamp > message2.timestamp) {
-                return 1;
+    getMessagesFromContact = async (contactUsername) => {
+        const request = new Request(`/api/messages/${contactUsername}`, {
+            method: "get"
+        })
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return res.json();
             }
-            if (message1.timestamp < message2.timestamp) {
-                return -1;
-            }
-            return 0;
-        };
-        const sentMessages = hardCodedMessages
-            .filter(message => message.senderName === this.id);
-        const receivedMessages = hardCodedMessages
-            .filter(message => message.receiverName === this.id);
-        return Array.from(new Set([...sentMessages, ...receivedMessages])).sort(sortByTimestamp);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    sendMessage = (userId, contents) => {
+    sendMessage = (username, contents) => {
         // Needs server call
         hardCodedMessages.push(
             new Message({
                 timestamp: Date.now(),
-                senderName: this.id,
-                receiverName: userId,
+                senderName: this.username,
+                receiverName: username,
                 contents: contents
             })
         )

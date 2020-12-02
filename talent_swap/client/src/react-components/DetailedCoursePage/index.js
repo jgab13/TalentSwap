@@ -48,7 +48,7 @@ class DetailedCoursePage extends React.Component {
     const course1 = this.state.courseID === 1 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={null}/> : null ;
     const course2 = this.state.courseID === 2 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={reviews} admin={null}/> : null ;
     const course3 = this.state.courseID === 3 ? <CourseContainer courseID={this.state.courseID} userID={-1} reviews={[]} admin={null}/> : null ;
-    const course4 = this.state.courseID === 4 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={[]} admin={UserManager.getUserFromId(1)}/> : null ;
+    const course4 = this.state.courseID === 4 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={[]} admin={UserManager.getUserFromUsername("user")}/> : null ;
 		
 		return (
       <div>

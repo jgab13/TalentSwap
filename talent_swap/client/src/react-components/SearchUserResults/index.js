@@ -18,7 +18,7 @@ class UserResults extends React.Component {
         return(
             <CardDeck>
                 {users.map((user) => 
-                    <UserThumbnail key={user.id.toString()}
+                    <UserThumbnail key={user.username.toString()}
                         user = {user} />
                 )}
             </CardDeck>

@@ -7,9 +7,9 @@ class BannedUser extends React.Component {
 
         return (
             <tr>
-                <td>{user.id}</td>
+                <td>{user.username}</td>
                 <td>{user.name}</td>
-                <td><Button variant="primary" onClick={() => unban(user.id)}>UNBAN</Button></td>
+                <td><Button variant="primary" onClick={() => unban(user.username)}>UNBAN</Button></td>
             </tr>
         )
     }

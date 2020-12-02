@@ -15,8 +15,8 @@ class UserProfile extends React.Component {
         let canEdit;
         if (this.props.match) {
             const {match: {params}} = this.props;
-            const {userId} = params;
-            currentUser = UserManager.getUserFromId(parseInt(userId));
+            const {username} = params;
+            currentUser = UserManager.getUserFromUsername(username);
             canEdit = false;
         } else {
             currentUser = this.context.currentUser;

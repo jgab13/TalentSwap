@@ -36,7 +36,8 @@ app.use(
         saveUninitialized: false,
         cookie: {
             expires: 60000,
-            httpOnly: true
+            httpOnly: true,
+            sameSite: "strict"
         }
     })
 );

@@ -11,19 +11,19 @@ class AdminUser {
         );
     }
 
-    banUser = (userId) => {
+    banUser = (username) => {
         // Needs server call
-        const userToBan = UserManager.getUserFromId(userId);
+        const userToBan = UserManager.getUserFromUsername(username);
         if (userToBan) {
             bannedUsers.push(userToBan);
         }
     }
 
-    unbanUser = (userId) => {
+    unbanUser = (username) => {
         // Needs server call
         bannedUsers.splice(
             bannedUsers.indexOf(
-                UserManager.getUserFromId(userId)
+                UserManager.getUserFromUsername(username)
             ),
             1
         );
