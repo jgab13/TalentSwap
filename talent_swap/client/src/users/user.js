@@ -102,16 +102,27 @@ class User {
         }
     }
 
-    sendMessage = (username, contents) => {
-        // Needs server call
-        hardCodedMessages.push(
-            new Message({
-                timestamp: Date.now(),
-                senderName: this.username,
-                receiverName: username,
+    sendMessage = async (username, contents) => {
+        const request = new Request("/api/messages", {
+            method: "post",
+            body: JSON.stringify({
+                target: username,
                 contents: contents
-            })
-        )
+            }),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        });
+
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return res.json();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
