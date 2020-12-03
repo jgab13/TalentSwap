@@ -17,16 +17,27 @@ import DetailedCoursePageTeacher from './react-components/DetailedCoursePageTeac
 import SearchPage from './react-components/SearchPage';
 import PersonalCourses from './react-components/PersonalCourses';
 
+import { checkSession } from "./actions/user";
+
 
 class App extends React.Component {
 
   // a 'global' state that you can pass through to any child componenets of App.
   //   In the Routes below they are passed to both the Home and Queue states.
 
-  
-  state = {}
+  constructor(props) {
+    super(props);
+    checkSession(this);
+  }
+
+  state = {
+    currentUser: null
+  }
 
   render() {
+
+    const { currentUser } = this.state;
+
     return (
         <ContextComponent>
           <BrowserRouter>
@@ -34,8 +45,12 @@ class App extends React.Component {
               { /* Didn't delete the state passing function since we may need it. */ }
               <Route exact path='/' render={(props) => 
                               (<Home appState={this.state} {...props}/>)}/>
-              <Route exact path='/CourseCreation' render={(props) => 
-                              (<CourseCreation appState={this.state} {...props}/>)}/>
+              <Route exact path='/CourseCreation' render={ props => (
+                <div className="app">
+                  {!currentUser ? <Home appState={this.state} {...props}/> : <CourseCreation {...props} app={this}/>}
+                </div>
+                )}
+              />
               <Route exact path='/DetailedCoursePage' render={(props) => 
                               (<DetailedCoursePage appState={this.state} {...props}/>)}/>
               <Route exact path='/AuthSystem' render={() => 
@@ -52,7 +67,7 @@ class App extends React.Component {
                               (<DetailedCoursePageTeacher appState={this.state}/>)}/>
               <Route exact path='/Search' render={(props) => 
                              (<SearchPage appState={this.state} {...props}/>)}/>
-               <Route exact path='/PersonalCourses/:filter' render={(props) => 
+              <Route exact path='/PersonalCourses/:filter' render={(props) => 
                              (<PersonalCourses appState={this.state} {...props}/>)}/>
             </Switch>
           </BrowserRouter>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-import { Register } from "../../actions/user";
+import { CheckUsername, Register } from "../../actions/user";
 
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
@@ -23,25 +23,34 @@ class Signup extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-  	let input = this.state.input;
-  	input[event.target.name] = event.target.value;
-  	this.setState({
-  		input
-  	});
-  }
+	handleChange(event) {
+		let input = this.state.input;
+		input[event.target.name] = event.target.value;
+		this.setState({
+			input
+		});
+	}
 
-  renderRedirect() {
-    if (this.state.redirect) {
-      return <Redirect to='/UserDashboard' />
-    }
-  }
+	renderRedirect() {
+		if (this.state.redirect) {
+			return <Redirect to='/UserDashboard' />
+		}
+	}
 
 	handleSignup(event) {	
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
-			this.setState({redirect:true});
-			Register(this.state.input)
+			CheckUsername(this.state.input)
+				.then(user => {
+					if (user.user === null) {
+						Register(this.state.input)
+						this.setState({redirect:true});
+					}
+					else {
+						event.preventDefault();
+						alert("This username is taken, please change another username!")
+					}		
+				});
 			//Push new user to database
 			/*
 			let currentUser = new User({
@@ -55,7 +64,7 @@ class Signup extends React.Component {
 		}
 		else {
 			event.preventDefault();
-			alert("Check your password input.");
+			alert("Passwords are not the same, please check your password input.");
 		}
 	}
 

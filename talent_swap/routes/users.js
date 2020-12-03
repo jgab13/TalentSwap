@@ -62,7 +62,9 @@ router.post('/api/users', mongoChecker, async (req, res) => {
     try {
         // Save the user
         const newUser = await user.save()
-        res.send(newUser)
+        req.session.user = user._id;
+        req.session.username = user.username;
+        res.send({ currentUser: user.username })
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
@@ -109,6 +111,24 @@ router.get('/api/users/:username', mongoChecker, authenticate, async (req, res) 
             bio: user.bio,
             expertise: user.expertise,
             development: user.development
+        });
+    } catch (error) {
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request'); // bad request for changing the user
+        }
+    }
+});
+
+//get a user
+router.get('/api/users/get/:username', async (req, res) => {
+    const username = req.params.username;
+
+    try {
+        const user = await User.findOne({ username: username });
+        res.send({
+            user: user
         });
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request

@@ -7,6 +7,8 @@ import {UserContext} from "./../../react-contexts/user-context";
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 
+import { login } from "./../../actions/user"
+
 class Login extends React.Component {
 	static contextType = UserContext;
 	
@@ -18,26 +20,31 @@ class Login extends React.Component {
     		username: "",
 	  		password: ""
     	}
-	  };
+	};
 
-	  this.handleLogin = this.handleLogin.bind(this);
-	  this.handleChange = this.handleChange.bind(this);
-	  this.validate = this.validate.bind(this);
-  }
+	this.handleLogin = this.handleLogin.bind(this);
+	this.handleChange = this.handleChange.bind(this);
+	this.validate = this.validate.bind(this);
+	}
 
-  renderRedirect() {
-    if (this.state.redirect === 'user') {
-      return <Redirect to='/UserDashboard' />
-    } else if (this.state.redirect === 'admin') {
-    	return <Redirect to='/AdminDashboard' />
-    }
-  }
+	renderRedirect() {
+		if (this.state.redirect === 'user') {
+			return <Redirect to='/UserDashboard' />
+		} else if (this.state.redirect === 'admin') {
+			return <Redirect to='/AdminDashboard' />
+		}
+	}
 
 	handleLogin(event) {
 		event.preventDefault();
-		let currentUser = this.validate();
+		let currentUser = this.validate().currentUser;
 		if (currentUser !== false) {
+			
+			//testing
+			this.setState({redirect:"user"})
+
 			//admin validation
+			//TODO pass userType to login component
 			if (currentUser.userType === "admin") { //usertype
 				this.setState({redirect:"admin"});
 			}  else {
@@ -54,23 +61,21 @@ class Login extends React.Component {
 	}
 
 	handleChange(event) {
-  	let input = this.state.input;
-  	input[event.target.name] = event.target.value;
-  	console.log(input)
-  	this.setState({
-  		input
-  	});
-  }
+	  	let input = this.state.input;
+	  	input[event.target.name] = event.target.value;
+	  	this.setState({
+	  		input
+	  	});
+ 	}
 
 	validate() {
 		//validation
 		let input = this.state.input;
 		try{
 			//usermanager should fetch data from database
-			let currentUser = UserManager.login(input.username, input.password);
-			console.log(currentUser);
+			let currentUser = login(input, this);
 			if (currentUser === undefined) {
-			return false;
+				return false;
 			}
 			return currentUser;
 		}

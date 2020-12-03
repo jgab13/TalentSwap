@@ -9,15 +9,20 @@ import SearchBox from "./../SearchBox";
 import { Redirect, withRouter } from 'react-router-dom';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 
+import { checkSession, login, logout } from "./../../actions/user";
+
 /* The Header Component */
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    checkSession(this);
+
     this.state = {
-    showPopup: false,
-	  loginStatus: this.props.loginStatus === false ? false : true, //should be fetched from cookies
-	  redirectURL: ""
+    	currentUser: null,
+    	showPopup: false,
+		redirectURL: ""
     };
+
     this.logout = this.logout.bind(this);
 	this.togglePopup = this.togglePopup.bind(this);
 	this.renderRedirect = this.renderRedirect.bind(this);
@@ -26,31 +31,22 @@ class Header extends React.Component {
 
   renderRedirect() {
 	  if (this.state.redirectURL) {
-	  	if (this.state.redirectURL === "/") {
-	  		return <Redirect to=
-		      {{
-		        pathname: '/',
-		        state: {loginStatus: false}
-		      }} />
-	  	}
-		  return (
-			<Redirect to={this.state.redirectURL} />
-		  )
+		  return (<Redirect to={this.state.redirectURL} />)
 	  }
   }
 
-  togglePopup() {
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-  }
+	togglePopup() {
+		this.setState({
+			showPopup: !this.state.showPopup
+		});
+	}
 
-  logout() {
-  	this.setState({
-      loginStatus: false,
-      redirectURL: "/"
-    });
-  }
+	logout() {
+		logout(this);
+		this.setState({
+			redirectURL: "/"
+		});
+	}
 //   handleSearch(input){
 // 	  this.props.handleSearch(input);
 //   }
@@ -66,7 +62,7 @@ class Header extends React.Component {
 		    </a>
 		  {/* <SearchBox handleSearch={this.handleSearch}/> */}
 		  <SearchBox />
-	      {this.state.loginStatus ? 
+	      {this.state.currentUser ? 
 	      <Nav className="ml-auto">
 			  <NavDropdown title="Teach" id="basic-nav-dropdown" variant="success">
 		        <NavDropdown.Item href="/CourseCreation">Create a New Course</NavDropdown.Item>
@@ -78,7 +74,7 @@ class Header extends React.Component {
 		        <NavDropdown.Item href="/PersonalCourses/sp">View Past Courses</NavDropdown.Item>
 		        <NavDropdown.Item href="/PersonalCourses/sf">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
-		      <NavDropdown title="User" id="basic-nav-dropdown">
+		      <NavDropdown title={this.state.currentUser} id="basic-nav-dropdown">
 		        <NavDropdown.Item onClick={() => this.setState({redirectURL: "/UserDashboard"})}>Profile</NavDropdown.Item>
 		        <NavDropdown.Item onClick={this.logout}>Log Out</NavDropdown.Item>
 		      </NavDropdown>

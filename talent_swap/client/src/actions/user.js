@@ -31,11 +31,14 @@ export const updateLoginForm = (loginComp, field) => {
 };
 
 // A function to send a POST request with the user to be logged in
-export const login = (loginComp, app) => {
+export const login = (userInput, app) => {
     // Create our request constructor with all the parameters we need
     const request = new Request("/users/login", {
         method: "post",
-        body: JSON.stringify(loginComp.state),
+        body: JSON.stringify({
+            username: userInput.username,
+            password: userInput.password
+        }),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -59,7 +62,21 @@ export const login = (loginComp, app) => {
         });
 };
 
-export const Register = (userInput) => {
+export const CheckUsername = (userInput) => {
+    const url = "api/users/get/"+userInput.username
+
+    return fetch(url)
+         .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const Register = (userInput, app) => {
 
     const request = new Request("api/users", {
         method: "post",
@@ -73,12 +90,16 @@ export const Register = (userInput) => {
         }
     });
 
-    console.log(request.body)
 
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-                    return res.json();
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json.currentUser !== undefined) {
+                app.setState({ currentUser: json.currentUser });
             }
         })
         .catch(error => {
