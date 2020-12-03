@@ -10,6 +10,7 @@ const { Course } = require("./../models/course");
 
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
+const { authenticate } = require('./helpers/authentication');
 
 courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
 
@@ -73,6 +74,7 @@ courseRouter.patch('/api/courses/update/:id', mongoChecker, async (req, res) => 
     }
 })
 
+//Add authentication for many of these routes.
 //retrieve a course route
 courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
@@ -162,7 +164,8 @@ courseRouter.post('/api/courses/:id', mongoChecker, async (req, res) => {
 })
 
 
-// Update the enrollment of a course - this route doesn't work
+// Update the enrollment of a course - should check if user is already in the course and if 
+//course enrollment has been exceeded.
 courseRouter.patch('/api/courses/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
     console.log(req.body)
@@ -178,23 +181,19 @@ courseRouter.patch('/api/courses/:id', mongoChecker, async (req, res) => {
         if (!course) {
             res.status(404).send('Resource not found')  
         } else { 
-            course.enrolledUsers.push({
-                user: req.body.user,
-            })
 
+            if (course.enrollment == course.capacity){
+                res.status(400).send('Bad request - course is full')
+                return
+            } else if (course.enrolledUsers.includes(req.body.user)){
+                res.status(400).send('Bad request - user already enrolled')
+                return
+            }
+            course.enrolledUsers.push(req.body.user)
             course.enrollment += 1
 
-            try {
-                const result = await course.save()  
-                    res.send(result)
-            } catch(error) {
-                console.log(error) // log server error to the console, not to the client.
-                if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
-                    res.status(500).send('Internal server error')
-                } else {
-                    res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-                }
-            }
+            const result = await course.save()  
+            res.send(result)
         }   
     } catch(error) {
         console.log(error)
@@ -202,7 +201,7 @@ courseRouter.patch('/api/courses/:id', mongoChecker, async (req, res) => {
     }
 })
 
-//Edit a review route - this route doesn't work yet
+//Edit a review route
 courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, async (req, res) => {
     const id = req.params.id;
     const revid = req.params.rev_id;
@@ -220,19 +219,37 @@ courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, async (req, res) =>
         return;  // so that we don't run the rest of the handler.
     }
 
-    const fieldsToUpdate = {}
-    req.body.map((change) => {
-        console.log(change)
-        const propertyToChange = change.path.substr(1) // getting rid of the '/' character
-        fieldsToUpdate[propertyToChange] = change.value
-    })
-
     try {
-        const course = await Course.findOneAndUpdate({_id: id}, {$set: fieldsToUpdate}, {new: true});
+        const course = await Course.findById(id);
         if (!course) {
             res.status(404).send('Internal server error');
         } else {
-            res.send(course);
+            console.log(course)
+            let index = -1
+            for (let i = 0; i < course.ratings.length; i++){
+                if (String(course.ratings[i]._id) === (String(revid))){
+                    index = i
+                }
+            }
+            if (index === -1){
+                console.log('index is invalid')
+                res.status(404).send('Resource not found')
+                return
+            }
+
+            if (req.body.description !== undefined){
+                course.ratings[index].description = req.body.description    
+            }
+            
+            if (req.body.rating !== undefined){
+                course.ratings[index].rating = req.body.rating   
+            }
+
+            if (req.body.rating !== undefined){
+                course.ratings[index].rating = req.body.rating   
+            }
+            await course.save()
+            res.send(course)
         }
     } catch (error) {
         console.log(error);
@@ -254,7 +271,6 @@ courseRouter.delete('/api/courses/:id/:rev_id', mongoChecker, async (req, res) =
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
         return;  // so that we don't run the rest of the handler.
     }
-
    
     try {
         const course = await Course.updateOne({_id: id},
