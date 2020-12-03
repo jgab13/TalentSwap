@@ -31,7 +31,7 @@ export const updateLoginForm = (loginComp, field) => {
 };
 
 // A function to send a POST request with the user to be logged in
-export const login = (userInput, app) => {
+export const login = (userInput) => {
     // Create our request constructor with all the parameters we need
     const request = new Request("/users/login", {
         method: "post",
@@ -46,15 +46,19 @@ export const login = (userInput, app) => {
     });
 
     // Send the request with fetch()
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
                 return res.json();
             }
         })
         .then(json => {
+            console.log(json)
+            if (json === undefined) {
+                return undefined
+            }
             if (json.currentUser !== undefined) {
-                app.setState({ currentUser: json.currentUser });
+                return json.currentUser;
             }
         })
         .catch(error => {

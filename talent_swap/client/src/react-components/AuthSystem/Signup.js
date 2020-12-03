@@ -37,20 +37,21 @@ class Signup extends React.Component {
 		}
 	}
 
-	handleSignup(event) {	
+	async handleSignup(event) {	
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
-			CheckUsername(this.state.input)
-				.then(user => {
-					if (user.user === null) {
-						Register(this.state.input)
-						this.setState({redirect:true});
-					}
-					else {
-						event.preventDefault();
-						alert("This username is taken, please change another username!")
-					}		
-				});
+			let user = await CheckUsername(this.state.input)
+			console.log(user)
+			if (user.user === null) {
+				event.preventDefault();
+				await Register(this.state.input)
+				alert("You have successfully registered!")
+				//this.setState({redirect:true});
+			}
+			else {
+				event.preventDefault();
+				alert("This username is taken, please change another username!")
+			}		
 			//Push new user to database
 			/*
 			let currentUser = new User({

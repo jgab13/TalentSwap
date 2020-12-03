@@ -4,7 +4,7 @@ export const CreateCourse = (userInput) => {
         method: "post",
         body: JSON.stringify({
             topic: userInput.topic,
-            teacher: userInput.teacher,
+            teacher: userInput.currentUser,
             starttime: new Date(userInput.date + " " + userInput.starttime),
             endtime: new Date(userInput.date + " " + userInput.endtime),
             credit: userInput.credit,

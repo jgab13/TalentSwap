@@ -4,12 +4,15 @@ import "./styles.css";
 import { hardcodedCourses } from "./../../courses/testcourses"
 import { CreateCourse } from "../../actions/course";
 import { Button, Row, Col, Form }from "react-bootstrap";
+import { checkSession } from "./../../actions/user";
+
 
 /* The CourseCreation Component */
 class CourseCreation extends React.Component {
 
 	constructor(props) {
     super(props);
+    checkSession(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     if (this.props.location.state) {
@@ -29,7 +32,7 @@ class CourseCreation extends React.Component {
     else{
     	this.state = {
 		topic: "",
-    	teacher: "user1",
+    	currentUser: "",
     	starttime: "",
     	endtime: "",
     	credit: 0,

@@ -35,12 +35,13 @@ class Login extends React.Component {
 		}
 	}
 
-	handleLogin(event) {
+	async handleLogin(event) {
 		event.preventDefault();
-		let currentUser = this.validate().currentUser;
+		let currentUser = await this.validate();
 		if (currentUser !== false) {
 			
 			//testing
+			alert("You have successfully logged in!")
 			this.setState({redirect:"user"})
 
 			//admin validation
@@ -68,13 +69,15 @@ class Login extends React.Component {
 	  	});
  	}
 
-	validate() {
+	async validate() {
 		//validation
 		let input = this.state.input;
 		try{
 			//usermanager should fetch data from database
-			let currentUser = login(input, this);
-			if (currentUser === undefined) {
+			let currentUser = await login(input);
+			console.log(currentUser)
+			if (currentUser == undefined) {
+				console.log("here!")
 				return false;
 			}
 			return currentUser;
