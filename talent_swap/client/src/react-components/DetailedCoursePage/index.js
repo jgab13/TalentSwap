@@ -48,19 +48,13 @@ class DetailedCoursePage extends React.Component {
 
 
     componentDidMount() {
-      getCourse(this, '5fc7c1ffcf3dce1e70de4364')
-      checkSession(this)        
+      getCourse(this, '5fc975bf45792e35ccf344f3')
+      // getCourse(this, this.state.courseID)
+      checkSession(this) //this does not return the object that I want - need the user        
     }
-
-      
-
-
-
-
 
   	render() {
     
-
     if (this.state.course === null){
       return (<div></div>)
 
@@ -70,19 +64,10 @@ class DetailedCoursePage extends React.Component {
         console.log('This is the error2')
         console.log(this.state.course.teacher)
         console.log(this.state.currentUser)
-        const course0 = this.state.courseID === 0 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={reviews} admin={null}/> : null ;
-        const course1 = this.state.courseID === 1 ? <CourseContainer courseID={this.state.courseID} userID={1} reviews={[]} admin={null}/> : null ;
-        const course2 = this.state.courseID === 2 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={reviews} admin={null}/> : null ;
-        const course3 = this.state.courseID === 3 ? <CourseContainer courseID={this.state.courseID} userID={-1} reviews={[]} admin={null}/> : null ;
-        const course4 = this.state.courseID === 4 ? <CourseContainer courseID={this.state.courseID} userID={0} reviews={[]} admin={UserManager.getUserFromUsername("user")}/> : null ;
-        
+         
         return (
           <div>
-           {course0} 
-           {course1}
-           {course2}
-           {course3}
-           {course4}
+            <CourseContainer course={this.state.course} user={this.state.currentUser}/>
 
           </div>
           );

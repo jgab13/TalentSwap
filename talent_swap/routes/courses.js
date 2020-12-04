@@ -100,7 +100,7 @@ courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
 
 
 //delete a course route
-courseRouter.delete('/api/courses/:id', mongoChecker, async (req, res) => {
+courseRouter.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id
     console.log(id)
 
@@ -123,7 +123,7 @@ courseRouter.delete('/api/courses/:id', mongoChecker, async (req, res) => {
 })
 
 // Create a review for a course
-courseRouter.post('/api/courses/:id', mongoChecker, async (req, res) => {
+courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id
     console.log(req.body)
 
@@ -166,43 +166,44 @@ courseRouter.post('/api/courses/:id', mongoChecker, async (req, res) => {
 
 // Update the enrollment of a course - should check if user is already in the course and if 
 //course enrollment has been exceeded.
-courseRouter.patch('/api/courses/:id', mongoChecker, async (req, res) => {
-    const id = req.params.id
-    console.log(req.body)
-    console.log(req.body.user)
+//this is a duplicate of the enrollment API - just use that instead.
+// courseRouter.patch('/api/courses/:id', mongoChecker, async (req, res) => {
+//     const id = req.params.id
+//     console.log(req.body)
+//     console.log(req.body.user)
 
-    if (!ObjectID.isValid(id)) {
-        res.status(404).send()  // if invalid id, definitely can't find resource, 404.
-        return;  // so that we don't run the rest of the handler.
-    }
+//     if (!ObjectID.isValid(id)) {
+//         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
+//         return;  // so that we don't run the rest of the handler.
+//     }
     
-    try {
-        const course = await Course.findById(id)
-        if (!course) {
-            res.status(404).send('Resource not found')  
-        } else { 
+//     try {
+//         const course = await Course.findById(id)
+//         if (!course) {
+//             res.status(404).send('Resource not found')  
+//         } else { 
 
-            if (course.enrollment == course.capacity){
-                res.status(400).send('Bad request - course is full')
-                return
-            } else if (course.enrolledUsers.includes(req.body.user)){
-                res.status(400).send('Bad request - user already enrolled')
-                return
-            }
-            course.enrolledUsers.push(req.body.user)
-            course.enrollment += 1
+//             if (course.enrollment == course.capacity){
+//                 res.status(400).send('Bad request - course is full')
+//                 return
+//             } else if (course.enrolledUsers.includes(req.body.user)){
+//                 res.status(400).send('Bad request - user already enrolled')
+//                 return
+//             }
+//             course.enrolledUsers.push(req.body.user)
+//             course.enrollment += 1
 
-            const result = await course.save()  
-            res.send(result)
-        }   
-    } catch(error) {
-        console.log(error)
-        res.status(500).send('Internal Server Error')  // server error
-    }
-})
+//             const result = await course.save()  
+//             res.send(result)
+//         }   
+//     } catch(error) {
+//         console.log(error)
+//         res.status(500).send('Internal Server Error')  // server error
+//     }
+// })
 
 //Edit a review route
-courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, async (req, res) => {
+courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id;
     const revid = req.params.rev_id;
     console.log(id)
@@ -262,7 +263,7 @@ courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, async (req, res) =>
 })
 
 //delete a review route
-courseRouter.delete('/api/courses/:id/:rev_id', mongoChecker, async (req, res) => {
+courseRouter.delete('/api/courses/:id/:rev_id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id;
     const revid = req.params.rev_id;
     console.log(id)

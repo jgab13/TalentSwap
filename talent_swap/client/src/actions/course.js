@@ -57,7 +57,7 @@ export const getCourse = (course, id) => {
         });
 };
 
-export const deleteCourse = (course, id) => {
+export const deleteCourse = (id) => {
     // the URL for the request
     const url = "/api/courses/" + id;
     console.log(url)
@@ -80,3 +80,90 @@ export const deleteCourse = (course, id) => {
             console.log(error);
         });
 };
+
+export const addReview = (id, review) => {
+    // the URL for the request
+    const url = "/api/courses/" + id;
+    console.log(url)
+
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify({
+            user: review.user,
+            date: review.date,
+            description: review.description,
+            rating: review.rating
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                    return res.json(); //this returns the entire course - probably better to only return the review
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+export const editReview = (id, revid, review) => {
+    // the URL for the request
+    const url = "/api/courses/" + id + "/" + revid;
+    console.log(url)
+
+    const request = new Request(url, {
+        method: "patch",
+        body: JSON.stringify({
+            date: review.currentUser,
+            description: review.description,
+            rating: review.rating
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                    return res.json(); //this returns the entire course - probably better to only return the review
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+export const deleteReview = (id, revid) => {
+    // the URL for the request
+    const url = "/api/courses/" + id + "/" + revid;
+    console.log(url)
+
+    const request = new Request(url, {
+        method: "delete",
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                    return res.json(); //this returns the entire course - probably better to only return the review
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+//Use the enrollment API for enroll in course
+
+

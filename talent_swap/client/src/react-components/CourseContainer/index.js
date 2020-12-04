@@ -13,32 +13,37 @@ import {hardcodedCourses} from "./../../courses/testcourses.js";
 import {hardCodedUsers} from "./../../users/user-manager.js";
 import UserManager from "./../../users/user-manager.js";
 import {getCourse} from "./../../courses/courseManager.js";
+import { deleteCourse, editReview, addReview, deleteReview } from "../../actions/course.js";
 
   const enrollment = [hardCodedUsers[0].name, "user2", "user3", "user4"];
 
 class CourseContainer extends React.Component {
 
   state = {
-      //Server call needed to retrieve current user and course information from database.
-      currUser: hardCodedUsers[this.props.userID],
-      course: getCourse(this.props.courseID),
-      review: this.props.reviews,
+      // currUser: hardCodedUsers[this.props.userID],
+      // course: getCourse(this.props.courseID),
+      // review: this.props.reviews,
+      currUser: this.props.user,
+      course: this.props.course,
+      review: this.props.course.ratings,
       enrolled: false,
       compl: false,
       edit: false,
       reviewed: false,
       currReview: null,
-      adminUser: this.props.admin
+      adminUser: null, //change this on next commit
+      // adminUser: this.props.admin,
+      enrollment: this.props.course.enrolledUsers
   }
 
   /////On Mount component functions
 
   //check if the current user is enrolled in the course.
   checkEnrollment = () => {
-    if (this.state.course !== null && this.state.currUser !== undefined){
+    if (this.state.course !== null && this.state.currUser !== null){
       console.log(this.state.currUser)
-      const enrollUser = enrollment.filter(user => {
-        return user === this.state.currUser.name;
+      const enrollUser = this.state.enrollment.filter(user => {
+        return user === this.state.currUser.username;
       });
       const enrolled = enrollUser.length === 0 ? false: true;
       this.setState({
@@ -65,11 +70,11 @@ class CourseContainer extends React.Component {
 
   //check if the current user has reviewed the current course.
   checkIfReviewed = () => {
-    if (this.state.course !== null){
+    if (this.state.course !== null && this.state.currUser !== null){
       const checkReview = this.state.review.filter(rev => {
-        console.log(this.state.currUser.name);
+        console.log(this.state.currUser._id);
         console.log(rev.user);
-        return rev.user === this.state.currUser.name;
+        return rev.user === this.state.currUser._id;
       });
       const check = checkReview.length !== 0 ? true : false
       console.log(check)
@@ -93,7 +98,7 @@ class CourseContainer extends React.Component {
 
   //Enroll current user in course.
   enrollCourse = () => {
-   if (this.state.currUser === undefined){
+   if (this.state.currUser === null){
     this.setState({
       enrolled: !this.state.enrolled,
     })
@@ -140,10 +145,22 @@ class CourseContainer extends React.Component {
   //Removes review from current reviews
   deleteReview = event => {
     const reviewName = event.target.name;
+    
+    const reviewToDelete = this.state.review.filter(rev => {
+      return rev.description === reviewName
+    })
+
+    //Need to confirm that this server call works
+    deleteReview(this.state.courseID, reviewToDelete[0]._id)
+
     const deletedReviews = this.state.review.filter(rev => {
       return rev.description !== reviewName;
     });
+
+    //Need a server call to update course - use Jingwen's updateCourse route
     const newRating = this.calcReviewRating(deletedReviews);
+
+
     // const newRating = calcReviewRating(deletedReviews);
     const curCourse = this.state.course;
     curCourse.rate = newRating;
@@ -180,12 +197,25 @@ class CourseContainer extends React.Component {
     }
 
     const newReview = {
-      user: this.state.currUser.name,
+      user: this.state.currUser.username,
       date: date,
       img: instImg,
       description: desc,
       rating: parseInt(rating)
     };
+
+    //check if already reviewed - if so
+    // Need to check if this works
+    // if (!this.state.reviewed){
+    //   addReview(this.state.course._id, newReview)
+    // } else {
+    //   const existingReviews = this.state.review
+    //   const getReview = existingReviews.filter(rev => {
+    //     return rev.user === newReview.user;
+    //   });
+    //   editReview(this.state.course._id, getReview[0]._id, newReview)
+    // }
+
     const existingReviews = this.state.review
     const getReview = existingReviews.filter(rev => {
       return rev.user !== newReview.user;
@@ -205,10 +235,11 @@ class CourseContainer extends React.Component {
   }
 
   deleteCourse = event => {
-    const deleteCourse = hardcodedCourses.filter(course => {
-      return course !== this.state.course;
-    });
-    //Server call needed to delte course from database.
+    // const deleteCourse = hardcodedCourses.filter(course => {
+    //   return course !== this.state.course;
+    // });
+    //Server call needed to delete course from database.
+    deleteCourse(this.state.course._id)
     alert("Course successfully deleted");
   }
 
@@ -228,7 +259,7 @@ class CourseContainer extends React.Component {
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
   	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser.name !== this.state.course.instruct ?
   					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
-    const deleteCourse = this.state.adminUser === this.state.currUser ? (<Link to={"./../AdminDashboard"}>
+    const deleteCourse = this.state.adminUser === this.state.currUser && this.state.currUser !== null ? (<Link to={"./../AdminDashboard"}>
       <Button className="delete" onClick={this.deleteCourse} variant="danger"> Delete Course</Button>
       </Link>) : null;
 
@@ -236,7 +267,7 @@ class CourseContainer extends React.Component {
     
     <div>
       <Header/>
-      {this.state.enrolled && this.state.currUser === undefined ? <AuthSystem/> : null}
+      {this.state.enrolled && this.state.currUser === null ? <AuthSystem/> : null}
       {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={""} cancelForm={this.cancelForm} addReview={this.addReviewForm} description={""}/> : null}
       {this.state.currReview === null ? null : <AddCourseReview curDate={this.state.currReview.date} cancelForm={this.cancelForm} addReview={this.addReviewForm} stars={this.state.currReview.rating} description={this.state.currReview.description}/>}
       {deleteCourse}
@@ -252,7 +283,7 @@ class CourseContainer extends React.Component {
         
       <h3>Reviews for this course: </h3>
   	  {addReview}
-      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.enrolled} user={this.state.currUser.name} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
+      {this.state.review.map(rev => (<CourseReview review={rev} edit={this.state.edit} compl={this.state.compl} sign={this.state.enrolled} user={this.state.currUser} editLink={this.editReview} deleteLink={this.deleteReview}/>) 
       )}
     </div>
 
