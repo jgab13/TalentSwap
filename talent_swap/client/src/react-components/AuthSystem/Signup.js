@@ -46,7 +46,7 @@ class Signup extends React.Component {
 			if (user.user === null) {
 				await Register(this.state.input)
 				alert("You have successfully registered!")
-				//this.setState({redirect:true});
+				this.setState({redirect:true});
 			}
 			else {
 				alert("This username is taken, please change another username!")

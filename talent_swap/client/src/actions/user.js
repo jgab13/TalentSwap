@@ -80,7 +80,7 @@ export const CheckUsername = (userInput) => {
         });
 }
 
-export const Register = (userInput, app) => {
+export const Register = (userInput) => {
 
     const request = new Request("api/users", {
         method: "post",
@@ -103,7 +103,7 @@ export const Register = (userInput, app) => {
         })
         .then(json => {
             if (json.currentUser !== undefined) {
-                app.setState({ currentUser: json.currentUser });
+                console.log(json.currentUser);
             }
         })
         .catch(error => {

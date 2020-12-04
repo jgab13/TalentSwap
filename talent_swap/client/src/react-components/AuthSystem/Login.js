@@ -41,7 +41,6 @@ class Login extends React.Component {
 		if (currentUser !== false) {
 			
 			//testing
-			alert("You have successfully logged in!")
 			this.setState({redirect:"user"})
 
 			//admin validation
