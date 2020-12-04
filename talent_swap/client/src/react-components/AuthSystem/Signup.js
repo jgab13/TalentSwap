@@ -38,18 +38,17 @@ class Signup extends React.Component {
 	}
 
 	async handleSignup(event) {	
+		event.preventDefault();
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
 			let user = await CheckUsername(this.state.input)
 			console.log(user)
 			if (user.user === null) {
-				event.preventDefault();
 				await Register(this.state.input)
 				alert("You have successfully registered!")
 				//this.setState({redirect:true});
 			}
 			else {
-				event.preventDefault();
 				alert("This username is taken, please change another username!")
 			}		
 			//Push new user to database
@@ -64,7 +63,6 @@ class Signup extends React.Component {
 			*/
 		}
 		else {
-			event.preventDefault();
 			alert("Passwords are not the same, please check your password input.");
 		}
 	}
