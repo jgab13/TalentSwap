@@ -62,9 +62,9 @@ router.post('/api/users', mongoChecker, async (req, res) => {
     try {
         // Save the user
         const newUser = await user.save()
-        req.session.user = user._id;
-        req.session.username = user.username;
-        res.send({ currentUser: user.username })
+        req.session.user = newUser._id;
+        req.session.username = newUser.username;
+        res.send({ currentUser: newUser.username })
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
