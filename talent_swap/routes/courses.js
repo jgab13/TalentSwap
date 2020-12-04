@@ -90,7 +90,7 @@ courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
         if (!course) {
             res.status(404).send('Resource not found')  // could not find this student
         } else { 
-            res.send(course)
+            res.send({ course })
         }
     } catch(error) {
         console.log(error)

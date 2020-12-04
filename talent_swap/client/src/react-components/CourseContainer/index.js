@@ -48,7 +48,7 @@ class CourseContainer extends React.Component {
   }
 
   //Check the current date to determine if the course has been completed.
-  checkCourseCompl = (date) => {
+  checkCourseCompl = () => {
     if (this.state.course !== null){
       const cur = new Date(Date.now());
       const courseDate = this.state.course.endtime;
@@ -144,6 +144,7 @@ class CourseContainer extends React.Component {
       return rev.description !== reviewName;
     });
     const newRating = this.calcReviewRating(deletedReviews);
+    // const newRating = calcReviewRating(deletedReviews);
     const curCourse = this.state.course;
     curCourse.rate = newRating;
     console.log(curCourse);
@@ -192,6 +193,7 @@ class CourseContainer extends React.Component {
     getReview.push(newReview);
     //Server call needed to add review to the course in the database.
     const newRating = this.calcReviewRating(getReview);
+    // const newRating = calcReviewRating(getReview);
     const curCourse = this.state.course;
     curCourse.rate = newRating;
     this.setState({
@@ -213,7 +215,7 @@ class CourseContainer extends React.Component {
 
   componentDidMount() {
     //Check if course completed
-    this.checkCourseCompl(this.state.course.date);
+    this.checkCourseCompl();
     //Check if enrolled in course.
     this.checkEnrollment();
     //check if already reviewed the course.
