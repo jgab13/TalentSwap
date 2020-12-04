@@ -56,7 +56,30 @@ router.post('/api/users', mongoChecker, async (req, res) => {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
-        credits: 0
+        credits: 10
+    })
+
+    try {
+        // Save the user
+        const newUser = await user.save()
+        req.session.user = newUser._id;
+        req.session.username = newUser.username;
+        res.send({ currentUser: newUser.username })
+    } catch (error) {
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            res.status(400).send('Bad Request') // bad request for changing the student.
+        }
+    }
+})
+
+//admin user route
+router.post('/api/adminuser', mongoChecker, async (req, res) => {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+        userType: "admin"
     })
 
     try {

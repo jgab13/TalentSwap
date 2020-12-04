@@ -165,5 +165,46 @@ export const deleteReview = (id, revid) => {
 };
 
 //Use the enrollment API for enroll in course
+export const enroll = (app, user, courseID) => {
+    // the URL for the request
+    const url = "/api/enrollment";
+
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify({
+            username: user,
+            courseId: courseID
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json(); //this returns 
+            }
+            else if (res.status === 400){
+                alert('Enrollment unsuccessful')
+            } else if (res.status === 402){
+                alert('User is already enrolled')
+            } else {
+                console.log(res.status)
+                alert('Insufficient credits to enroll in course!')
+            }
+        }).then(json => {
+            app.setState({
+                enrolled: !app.state.enrolled,
+                course: json.course,
+                currUser: json.user.username,
+                enrollment: json.course.enrolledUsers
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
 

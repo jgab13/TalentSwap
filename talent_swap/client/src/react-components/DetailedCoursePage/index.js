@@ -46,9 +46,14 @@ class DetailedCoursePage extends React.Component {
     }
 
 
-
+    
     componentDidMount() {
-      getCourse(this, '5fc975bf45792e35ccf344f3')
+      // getCourse(this, '5fca598900a3fb0c9cfc9475') // this course is completed
+      //getCourse(this, '5fca7b6568c6bb29b0097b34') // this course is not completed and full.
+      getCourse(this, "5fca7d2d044c6b2c68827617") //this course is completed.
+      //getCourse(this, "5fca7b6568c6bb29b0097b34") //this course is not completed and full.
+      //getCourse(this,"5fca7b7268c6bb29b0097b37") //this course is not completed and not full.
+
       // getCourse(this, this.state.courseID)
       checkSession(this) //this does not return the object that I want - need the user        
     }

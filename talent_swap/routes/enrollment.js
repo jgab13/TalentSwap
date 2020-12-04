@@ -16,17 +16,20 @@ router.post("/api/enrollment", mongoChecker, authenticate, async (req, res) => {
         const username = req.session.username;
         const user = await User.findOne({username: username});
         const course = await Course.findById(req.body.courseId);
-        if (user.credits < course.credit) {
-            res.status(400).send("Insufficient credits");
+        if (course.enrolledUsers.includes(user.username)) {
+            res.status(402).send("User is already enrolled");
             return;
         }
-        if (course.enrolledUsers.includes(user._id)) {
-            res.status(400).send("User is already enrolled");
+        console.log(user.credits)
+        console.log(course.credit)
+        if (user.credits < course.credit) {
+            res.status(403).send("Insufficient credits");
             return;
         }
         user.credits -= course.credit;
         user.save();
-        course.enrolledUsers.push(user._id);
+        course.enrolledUsers.push(user.username);
+        course.enrollment += 1;
         course.save();
         res.send({user: user, course: course});
     } catch (error) {

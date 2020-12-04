@@ -13,7 +13,7 @@ import {hardcodedCourses} from "./../../courses/testcourses.js";
 import {hardCodedUsers} from "./../../users/user-manager.js";
 import UserManager from "./../../users/user-manager.js";
 import {getCourse} from "./../../courses/courseManager.js";
-import { deleteCourse, editReview, addReview, deleteReview } from "../../actions/course.js";
+import { deleteCourse, editReview, addReview, deleteReview, enroll } from "../../actions/course.js";
 
   const enrollment = [hardCodedUsers[0].name, "user2", "user3", "user4"];
 
@@ -31,7 +31,7 @@ class CourseContainer extends React.Component {
       edit: false,
       reviewed: false,
       currReview: null,
-      adminUser: null, //change this on next commit
+      adminUser: null, 
       // adminUser: this.props.admin,
       enrollment: this.props.course.enrolledUsers
   }
@@ -43,7 +43,7 @@ class CourseContainer extends React.Component {
     if (this.state.course !== null && this.state.currUser !== null){
       console.log(this.state.currUser)
       const enrollUser = this.state.enrollment.filter(user => {
-        return user === this.state.currUser.username;
+        return user === this.state.currUser; // Need to change review users
       });
       const enrolled = enrollUser.length === 0 ? false: true;
       this.setState({
@@ -56,7 +56,9 @@ class CourseContainer extends React.Component {
   checkCourseCompl = () => {
     if (this.state.course !== null){
       const cur = new Date(Date.now());
-      const courseDate = this.state.course.endtime;
+      console.log(cur)
+      const courseDate = new Date(this.state.course.endtime)
+      console.log(courseDate)
       let compl = false;
       if (courseDate < cur){
         compl = true;
@@ -72,9 +74,9 @@ class CourseContainer extends React.Component {
   checkIfReviewed = () => {
     if (this.state.course !== null && this.state.currUser !== null){
       const checkReview = this.state.review.filter(rev => {
-        console.log(this.state.currUser._id);
+        console.log(this.state.currUser);
         console.log(rev.user);
-        return rev.user === this.state.currUser._id;
+        return rev.user === this.state.currUser; //need to change user to username - change the api route
       });
       const check = checkReview.length !== 0 ? true : false
       console.log(check)
@@ -83,6 +85,21 @@ class CourseContainer extends React.Component {
         edit: check
       })  
     }
+  }
+
+  setAdminFlag = () => {
+    const user = this.state.currUser
+    console.log("This is the user " + user)
+    if (user !== null && user.includes("admin")){
+      console.log("userType is " + user.userType)
+      this.setState({
+        adminUser: user
+      })   
+    }
+      console.log("The admin user is now " + this.state.adminUser)
+      console.log("This current user is now " + this.state.currUser)
+      console.log("Are they equal?")
+      console.log(this.state.adminUser === this.state.currUser)
   }
 
   /////On change and other functions
@@ -98,29 +115,35 @@ class CourseContainer extends React.Component {
 
   //Enroll current user in course.
   enrollCourse = () => {
-   if (this.state.currUser === null){
+   if (this.state.currUser === null || this.state.currUser.userType === 'admin'){
     this.setState({
       enrolled: !this.state.enrolled,
     })
-   } else if (this.state.currUser.credits < this.state.course.credit){
-      alert('Insufficient credits to enroll!')
-   }
-   else {
-    let credits = this.state.currUser.credits
-    let currUser = this.state.currUser
-    let currentEnrolled = this.state.course.enrollment + 1;
-    let course = this.state.course;
-    let newCredits = credits - course.credit
-    currUser.credits = newCredits
-    course.enrollment = currentEnrolled;
+   // } else if (this.state.currUser.credits < this.state.course.credit){
+   //    alert('Insufficient credits to enroll!')
+   // }
+   } else {
+    // let course = this.state.course;
+    // let currUser = this.state.currUser;
+
+    // const credits = this.state.currUser.credits
+    // let newCredits = credits - course.credit
+    // currUser.credits = newCredits
+
+    // let currentEnrolled = this.state.course.enrollment + 1;
+    // course.enrollment = currentEnrolled;
+    // course.enrolledUsers.push(currUser)
 
     //Server call needed to increase enrollment in course in database.
-    this.setState({
-      enrolled: !this.state.enrolled,
-      course: course,
-      currUser: currUser
-    })
-   }
+      const enrol = enroll(this, this.state.currUser, this.state.course._id)
+    // this.setState({
+    //   enrolled: !this.state.enrolled,
+    //   course: course,
+    //   currUser: currUser,
+    //   enrollment: course.enrolledUsers
+    // })
+    }
+  
   }
 
   //Changes the state of reviewed to pop up review entry form.
@@ -197,7 +220,7 @@ class CourseContainer extends React.Component {
     }
 
     const newReview = {
-      user: this.state.currUser.username,
+      user: this.state.currUser,
       date: date,
       img: instImg,
       description: desc,
@@ -235,11 +258,8 @@ class CourseContainer extends React.Component {
   }
 
   deleteCourse = event => {
-    // const deleteCourse = hardcodedCourses.filter(course => {
-    //   return course !== this.state.course;
-    // });
     //Server call needed to delete course from database.
-    deleteCourse(this.state.course._id)
+    deleteCourse(this.state.course._id) // this works :)!
     alert("Course successfully deleted");
   }
 
@@ -251,13 +271,19 @@ class CourseContainer extends React.Component {
     this.checkEnrollment();
     //check if already reviewed the course.
     this.checkIfReviewed();
+    //set admin user flag
+    this.setAdminFlag();
     }
 
   render() {
-
     const {courseID, userID, reviews, admin} = this.props;
+    console.log("the course is completed " + this.state.compl)
+    console.log("the user is enrolled " + this.state.enrolled)
+    console.log("the user has reviwed " + this.state.reviewed)
+
+
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
-  	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser.name !== this.state.course.instruct ?
+  	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser !== this.state.course.teacher ?
   					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
     const deleteCourse = this.state.adminUser === this.state.currUser && this.state.currUser !== null ? (<Link to={"./../AdminDashboard"}>
       <Button className="delete" onClick={this.deleteCourse} variant="danger"> Delete Course</Button>
