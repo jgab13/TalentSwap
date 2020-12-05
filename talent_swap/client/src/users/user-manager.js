@@ -43,7 +43,6 @@ class UserManager {
         });
         try {
             const res = await fetch(request);
-            console.log(res)
             if (res.status === 200) {
                 return new User(await res.json())
             }
@@ -65,6 +64,17 @@ class UserManager {
         // } else {
         //     return userToReturn;
         // }
+    }
+
+    static async logout() {
+        const request = new Request("/users/logout", {
+            method: "get"
+        });
+        try {
+            await fetch(request);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     static getUserFromUsername(username) {

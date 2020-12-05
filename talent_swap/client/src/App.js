@@ -17,6 +17,8 @@ import DetailedCoursePageTeacher from './react-components/DetailedCoursePageTeac
 import SearchPage from './react-components/SearchPage';
 import PersonalCourses from './react-components/PersonalCourses';
 
+import {UserContext} from "./react-contexts/user-context";
+
 import { checkSession } from "./actions/user";
 
 
@@ -24,20 +26,14 @@ class App extends React.Component {
 
   // a 'global' state that you can pass through to any child componenets of App.
   //   In the Routes below they are passed to both the Home and Queue states.
-
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     checkSession(this);
   }
 
-  state = {
-    currentUser: null
-  }
-
   render() {
-
-    const { currentUser } = this.state;
-
+    console.log(this.context.currentUser)
     return (
         <ContextComponent>
           <BrowserRouter>
@@ -47,7 +43,7 @@ class App extends React.Component {
                               (<Home appState={this.state} {...props}/>)}/>
               <Route exact path='/CourseCreation' render={ props => (
                 <div className="app">
-                  {!currentUser ? <Home appState={this.state} {...props}/> : <CourseCreation {...props} app={this}/>}
+                  {!this.context.currentUser ? <Home appState={this.state} {...props}/> : <CourseCreation {...props} app={this}/>}
                 </div>
                 )}
               />

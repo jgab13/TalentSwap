@@ -5,29 +5,31 @@ import AuthSystem from "./../AuthSystem"
 import messageImg from "./message.png";
 import logoImg from "./logo.png";
 import SearchBox from "./../SearchBox";
+import {UserContext} from "./../../react-contexts/user-context";
 
 import { Redirect, withRouter } from 'react-router-dom';
 import { Navbar, Nav, Button, NavDropdown } from 'react-bootstrap';
 
-import { checkSession, login, logout } from "./../../actions/user";
+import { checkSession } from "./../../actions/user";
 
 /* The Header Component */
 class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    checkSession(this);
+	static contextType = UserContext;
+	constructor(props) {
+		super(props);
+		checkSession(this);
 
-    this.state = {
-    	currentUser: null,
-    	showPopup: false,
-		redirectURL: ""
-    };
+		this.state = {
+			currentUser: null,
+			showPopup: false,
+			redirectURL: ""
+		};
 
-    this.logout = this.logout.bind(this);
-	this.togglePopup = this.togglePopup.bind(this);
-	this.renderRedirect = this.renderRedirect.bind(this);
-	// this.handleSearch = this.handleSearch.bind(this);
-  }
+		this.logout = this.logout.bind(this);
+		this.togglePopup = this.togglePopup.bind(this);
+		this.renderRedirect = this.renderRedirect.bind(this);
+		// this.handleSearch = this.handleSearch.bind(this);
+	}
 
   renderRedirect() {
 	  if (this.state.redirectURL) {
@@ -42,7 +44,7 @@ class Header extends React.Component {
 	}
 
 	logout() {
-		logout(this);
+		this.context.logout();
 		this.setState({
 			redirectURL: "/"
 		});

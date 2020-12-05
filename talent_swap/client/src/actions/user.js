@@ -74,19 +74,3 @@ export const Register = (userInput) => {
             console.log(error);
         });
 };
-
-// A function to send a GET request to logout the current user
-export const logout = (app) => {
-    const url = "/users/logout";
-
-    fetch(url)
-        .then(res => {
-            app.setState({
-                currentUser: null,
-                message: { type: "", body: "" }
-            });
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};

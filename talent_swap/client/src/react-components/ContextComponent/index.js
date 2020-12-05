@@ -11,10 +11,15 @@ class ContextComponent extends React.Component {
         this.changeUser(user);
         return user;
     }
+    logout = async () => {
+        await UserManager.logout();
+        this.changeUser(undefined);
+    }
     state = {
-        currentUser: new User(),
+        currentUser: undefined,
         changeUser: this.changeUser,
-        login: this.login
+        login: this.login,
+        logout: this.logout
     }
 
     render() {
