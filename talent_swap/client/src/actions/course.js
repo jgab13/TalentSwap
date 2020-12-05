@@ -18,10 +18,10 @@ export const CreateCourse = (userInput) => {
         }
     });
 
-    fetch(request)
+    return fetch(request)
         .then(res => {
             if (res.status === 200) {
-                    return res.json();
+                return res.json();
             }
         })
         .catch(error => {

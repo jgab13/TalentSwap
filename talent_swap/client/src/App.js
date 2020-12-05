@@ -41,12 +41,8 @@ class App extends React.Component {
               { /* Didn't delete the state passing function since we may need it. */ }
               <Route exact path='/' render={(props) => 
                               (<Home appState={this.state} {...props}/>)}/>
-              <Route exact path='/CourseCreation' render={ props => (
-                <div className="app">
-                  {!this.context.currentUser ? <Home appState={this.state} {...props}/> : <CourseCreation {...props} app={this}/>}
-                </div>
-                )}
-              />
+              <Route exact path='/CourseCreation' render={(props) => 
+                              (<CourseCreation appState={this.state} {...props}/>)}/>
               <Route exact path='/DetailedCoursePage' render={(props) => 
                               (<DetailedCoursePage appState={this.state} {...props}/>)}/>
               <Route exact path='/AuthSystem' render={() => 
@@ -59,8 +55,8 @@ class App extends React.Component {
                               (<MessageCenter appState={this.state}/>)}/>
               <Route exact path='/UserProfile/:userId' render={(props) => 
                               (<UserProfile appState={this.state} {...props}/>)}/>
-              <Route exact path='/DetailedCoursePageTeacher' render={() => 
-                              (<DetailedCoursePageTeacher appState={this.state}/>)}/>
+              <Route exact path='/DetailedCoursePageTeacher/:id' render={(props) => 
+                              (<DetailedCoursePageTeacher appState={this.state} {...props}/>)}/>
               <Route exact path='/Search' render={(props) => 
                              (<SearchPage appState={this.state} {...props}/>)}/>
               <Route exact path='/PersonalCourses/:filter' render={(props) => 

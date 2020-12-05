@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./../Header";
 import "./styles.css";
 import { hardcodedCourses } from "./../../courses/testcourses"
-import { CreateCourse } from "../../actions/course";
+import { CreateCourse, updateCourse } from "../../actions/course";
 import { Button, Row, Col, Form }from "react-bootstrap";
 import { checkSession } from "./../../actions/user";
 
@@ -17,17 +17,17 @@ class CourseCreation extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     if (this.props.location.state) {
     	this.state = {
-		topic: this.props.location.state.course.topic,
-    	teacher: this.props.location.state.course.teacher,
-    	starttime: this.props.location.state.course.starttime.toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false}),
-    	endtime: this.props.location.state.course.endtime.toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false}),
-    	date: this.props.location.state.course.endtime.toLocaleDateString("fr-CA",{year: "numeric",
+		topic: this.props.location.state.course.course.topic,
+    	teacher: this.props.location.state.course.course.teacher,
+    	starttime: new Date(this.props.location.state.course.course.starttime).toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false}),
+    	endtime: new Date(this.props.location.state.course.course.endtime).toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false}),
+    	date: new Date(this.props.location.state.course.course.endtime).toLocaleDateString("fr-CA",{year: "numeric",
 																		   		month: "2-digit",
 																		   		day: "2-digit"}),
-    	credit: this.props.location.state.course.credit,
-    	capacity: this.props.location.state.course.capacity,
-    	area: this.props.location.state.course.area,
-    	description: this.props.location.state.course.description    	}
+    	credit: this.props.location.state.course.course.credit,
+    	capacity: this.props.location.state.course.course.capacity,
+    	area: this.props.location.state.course.course.area,
+    	description: this.props.location.state.course.course.description    	}
 	}
     else{
     	this.state = {
@@ -35,6 +35,7 @@ class CourseCreation extends React.Component {
     	currentUser: "",
     	starttime: "",
     	endtime: "",
+    	date: "",
     	credit: 0,
     	capacity: 0,
     	area: "",
@@ -43,16 +44,24 @@ class CourseCreation extends React.Component {
     }    
   }
 
-	handleSubmit(event) {
+	async handleSubmit(event) {
 		event.preventDefault(); //testing
 		//Push new course to database
-		CreateCourse(this.state);
-		this.props.location.state ?
-		alert('Changes has been made to your course.')
-		:
-    	alert('Congratulations! A new course has been created!');
-    	window.location.href='/DetailedCoursePageTeacher';
-    	console.log(this.state.courses);
+		if (this.props.location.state == undefined ) {
+			const newCourse = await CreateCourse(this.state);
+	    	alert('Congratulations! A new course has been created!');
+	    	window.location.href='/DetailedCoursePageTeacher/' + newCourse._id;
+	    	}
+		else {
+			console.log(this.props.location.state)
+			let starttime = new Date(this.state.date + " " + this.state.starttime)
+			let endtime = new Date(this.state.date + " " + this.state.endtime)
+			let  attributes = ["topic", "currentUser", "starttime", "endtime", "credit", "capacity", "area", "description"]
+			let values = [this.state.topic, this.state.currentUser, starttime, endtime, this.state.credit, this.state.capacity, this.state.area, this.state.description]
+			updateCourse(attributes, values, this.props.location.state.course.courseid)
+			alert('Changes has been made to your course.')
+			window.location.href='/DetailedCoursePageTeacher/' + this.props.location.state.course.courseid;
+		}
 	}
 
 	handleChange(event) {

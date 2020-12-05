@@ -15,12 +15,7 @@ import AddCourseReview from "./../AddCourseReview"
 import {Button, Tooltip, OverlayTrigger} from "react-bootstrap";
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import {UserContext} from "./../../react-contexts/user-context";
-
-//should be fetched from database
-const currCourse = hardcodedCourses[2];
-
-const enrollment = ["user2", "user3", "user4"];
-  
+import { getCourse } from "../../actions/course.js";  
 
 class DetailedCoursePageTeacher extends React.Component {
 
@@ -28,25 +23,45 @@ class DetailedCoursePageTeacher extends React.Component {
     super(props);
     this.state = {
       redirect: false,
-      course: currCourse,
+      course: {
+        topic: "",
+        description: "",
+        enrollment: "",
+        capacity: "",
+        teacher: "",
+        credit: "",
+        starttime: "",
+        endtime: ""
+      },
+      courseid: this.props.match.params.id
     }
     this.setRedirect = this.setRedirect.bind(this);
     this.renderRedirect = this.renderRedirect.bind(this);
   }
 
+  componentDidMount() {
+      getCourse(this, this.state.courseid) //this is JX's course.      
+    }
+
   setRedirect() {
-    this.setState({
-      redirect: true
-    })
+    if (new Date(this.state.course.endtime) < Date.now()) {
+      alert("You can not edit a completed course!")
+    }
+    else {
+      this.setState({
+        redirect: true
+      })
+    }
   }
 
   renderRedirect() {
     if (this.state.redirect) {
+      console.log(this.state.course)
       return <Redirect to=
       {{
         pathname: '/CourseCreation',
         state: {
-          course: this.state.course}
+          course: this.state}
       }} />
     }
   }
@@ -55,7 +70,6 @@ class DetailedCoursePageTeacher extends React.Component {
     const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime} = this.state.course;
     return (
       <div>
-      {console.log(currCourse)}
       {this.renderRedirect()}
       <Header/>
       <div className="courseDescrip">
@@ -63,12 +77,12 @@ class DetailedCoursePageTeacher extends React.Component {
       <div id="desc">{description}</div>
       <div id="detail">
         <h5>Course Details:</h5>
-        <span>Enrollment: {enrollment}/{capacity}</span><br/>
+        <span>Enrollment: {enrollment?enrollment:0}/{capacity}</span><br/>
         <span>Teacher: {teacher}</span><br/>
-        <span>Start: {starttime.toLocaleString("en-US")}</span><br/>
-        <span>End: {endtime.toLocaleString("en-US")}</span><br/>
+        <span>Start: {new Date(starttime).toLocaleString("en-US")}</span><br/>
+        <span>End: {new Date(endtime).toLocaleString("en-US")}</span><br/>
         <span>Credit: {credit}</span><br/>
-        <span>Status: Upcoming</span><br/>
+        <span>Status: {new Date(endtime) < Date.now()? "Completed" : "Upcoming"}</span><br/>
         <Button className="edit" onClick={this.setRedirect} variant="success"> Edit</Button>
       </div>
         <span title="You can not enroll in your own course.">
@@ -78,7 +92,6 @@ class DetailedCoursePageTeacher extends React.Component {
         </span>
     </div>
     <h3>Reviews for this course: </h3>
-    <CourseReview review={this.state.course.feedback}/>
     </div>
     );
   }
