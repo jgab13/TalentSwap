@@ -28,6 +28,9 @@ router.post("/api/enrollment", mongoChecker, authenticate, async (req, res) => {
         }
         user.credits -= course.credit;
         user.save();
+        const teacher = await User.findOne({username: course.teacher});
+        teacher.credits += course.credit;
+        teacher.save();
         course.enrolledUsers.push(user.username);
         course.enrollment += 1;
         course.save();
