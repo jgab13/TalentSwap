@@ -1,13 +1,16 @@
 import React from 'react';
 import './styles.css';
 
-import { CheckUsername, Register } from "../../actions/user";
+import { CheckUsername } from "../../actions/user";
+import {UserContext} from "./../../react-contexts/user-context";
 
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 
 
 class Signup extends React.Component {
+	static contextType = UserContext;
+
 	constructor(props) {
     super(props);
     this.state = {
@@ -44,7 +47,7 @@ class Signup extends React.Component {
 			let user = await CheckUsername(this.state.input)
 			console.log(user)
 			if (user.user === null) {
-				await Register(this.state.input)
+				await this.context.register(this.state.input.username, this.state.input.password1)
 				alert("You have successfully registered!")
 				this.setState({redirect:true});
 			}

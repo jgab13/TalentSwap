@@ -77,6 +77,25 @@ class UserManager {
         }
     }
 
+    static async register(username, password) {
+        const request = new Request("/api/users", {
+            method: "post",
+            body: JSON.stringify({username: username, password: password}),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        });
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return new User(await res.json())
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     static getUserFromUsername(username) {
         // Needs server call
         return hardCodedUsers.find(user => user.username === username);
