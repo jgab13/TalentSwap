@@ -147,7 +147,7 @@ courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, re
 
             try {
                 const result = await course.save()  
-                    res.send(result)
+                    res.send({course: result})
             } catch(error) {
                 console.log(error) // log server error to the console, not to the client.
                 if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
@@ -162,45 +162,6 @@ courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, re
         res.status(500).send('Internal Server Error')  // server error
     }
 })
-
-
-// Update the enrollment of a course - should check if user is already in the course and if 
-//course enrollment has been exceeded.
-//this is a duplicate of the enrollment API - just use that instead.
-// courseRouter.patch('/api/courses/:id', mongoChecker, async (req, res) => {
-//     const id = req.params.id
-//     console.log(req.body)
-//     console.log(req.body.user)
-
-//     if (!ObjectID.isValid(id)) {
-//         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
-//         return;  // so that we don't run the rest of the handler.
-//     }
-    
-//     try {
-//         const course = await Course.findById(id)
-//         if (!course) {
-//             res.status(404).send('Resource not found')  
-//         } else { 
-
-//             if (course.enrollment == course.capacity){
-//                 res.status(400).send('Bad request - course is full')
-//                 return
-//             } else if (course.enrolledUsers.includes(req.body.user)){
-//                 res.status(400).send('Bad request - user already enrolled')
-//                 return
-//             }
-//             course.enrolledUsers.push(req.body.user)
-//             course.enrollment += 1
-
-//             const result = await course.save()  
-//             res.send(result)
-//         }   
-//     } catch(error) {
-//         console.log(error)
-//         res.status(500).send('Internal Server Error')  // server error
-//     }
-// })
 
 //Edit a review route
 courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, authenticate, async (req, res) => {
@@ -222,6 +183,7 @@ courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, authenticate, async
 
     try {
         const course = await Course.findById(id);
+        console.log('This is the course')
         if (!course) {
             res.status(404).send('Internal server error');
         } else {
@@ -242,21 +204,23 @@ courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, authenticate, async
                 course.ratings[index].description = req.body.description    
             }
             
-            if (req.body.rating !== undefined){
-                course.ratings[index].rating = req.body.rating   
+            if (req.body.date !== undefined){
+                course.ratings[index].date = req.body.date   
             }
 
             if (req.body.rating !== undefined){
                 course.ratings[index].rating = req.body.rating   
             }
+            console.log(course.ratings[index])
             await course.save()
-            res.send(course)
+            res.send({course: course})
         }
     } catch (error) {
         console.log(error);
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');
         } else {
+            console.log('Fuck here I am')
             res.status(400).send('Bad Request'); // bad request for changing the user
         }
     }
@@ -279,9 +243,8 @@ courseRouter.delete('/api/courses/:id/:rev_id', mongoChecker, authenticate, asyn
         if (!course) {
             res.status(404).send('Internal server error');
         } else {
-            
             console.log(course)
-            res.send(course);
+            res.send("Course deleted");
         }
     } catch (error) {
         console.log(error);

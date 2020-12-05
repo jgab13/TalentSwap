@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 import StarRatings from 'react-star-ratings';
 import "./styles.css";
 import Button from "react-bootstrap/Button";
+import instImg from "./../DetailedCoursePage/logo192.png";
+
 
 
 class CourseReview extends React.Component {
   render() {
   	const {review, edit, compl, sign, user, editLink, deleteLink} = this.props;
 
-    const username = user !== null ? user._id: null
-
     const reviewButton = (!sign ? null :
       (!compl ? null:
-        edit && review.user===username ? (<div className="starRating"><Button variant="outline-success" name={review.description} onClick={editLink}> Edit</Button><Button onClick={deleteLink} className="modify" name={review.description} variant="outline-success"> Delete </Button></div>)  :
+        edit && review.user===user ? (<div className="starRating"><Button variant="outline-success" name={review.description} onClick={editLink}> Edit</Button><Button onClick={deleteLink} className="modify" name={review.description} variant="outline-success"> Delete </Button></div>)  :
         null));
       console.log(sign)
       console.log(compl)
@@ -24,7 +24,7 @@ class CourseReview extends React.Component {
     return (
         <div className="reviewContainer">
           <div className="userContainer">  
-            <img className="userImg" src={review.img}/>
+            <img className="userImg" src={instImg}/>
             <span className="element">{review.user}</span>
             <span className="element">{review.date}</span>
 

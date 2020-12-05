@@ -81,7 +81,7 @@ export const deleteCourse = (id) => {
         });
 };
 
-export const addReview = (id, review) => {
+export const addReview = (app, id, review) => {
     // the URL for the request
     const url = "/api/courses/" + id;
     console.log(url)
@@ -105,21 +105,28 @@ export const addReview = (id, review) => {
             if (res.status === 200) {
                     return res.json(); //this returns the entire course - probably better to only return the review
             }
+        }).then(json =>{
+            app.setState({
+                review: json.course.ratings,
+                edit: true,
+                currReview: null,
+                course: json.course
+            })
         })
         .catch(error => {
             console.log(error);
         });
 };
 
-export const editReview = (id, revid, review) => {
+export const editReview = (app, id, revid, review) => {
     // the URL for the request
     const url = "/api/courses/" + id + "/" + revid;
     console.log(url)
 
     const request = new Request(url, {
-        method: "patch",
+        method: "PATCH",
         body: JSON.stringify({
-            date: review.currentUser,
+            date: review.date,
             description: review.description,
             rating: review.rating
         }),
@@ -132,8 +139,20 @@ export const editReview = (id, revid, review) => {
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-                    return res.json(); //this returns the entire course - probably better to only return the review
+
+                return res.json(); //this returns the entire course - probably better to only return the review
+            } else {
+                console.log(res.status)
+                console.log('Fuck, got an error after fetching request')
             }
+        }).then(json => {
+            console.log(json)
+            app.setState({
+                review: json.course.ratings,
+                edit: true,
+                currReview: null,
+                course: json.course
+            })
         })
         .catch(error => {
             console.log(error);

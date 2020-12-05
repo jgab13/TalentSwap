@@ -5,15 +5,14 @@ import CourseList from "./../CourseList";
 import CourseReview from "./../CourseReview"
 import Container from "react-bootstrap/Container";
 import Header from "./../Header";
-import instImg from "./../DetailedCoursePage/logo192.png";
 import AuthSystem from "./../AuthSystem";
 import AddCourseReview from "./../AddCourseReview";
 import Button from "react-bootstrap/Button";
 import {hardcodedCourses} from "./../../courses/testcourses.js";
 import {hardCodedUsers} from "./../../users/user-manager.js";
 import UserManager from "./../../users/user-manager.js";
-import {getCourse} from "./../../courses/courseManager.js";
-import { deleteCourse, editReview, addReview, deleteReview, enroll } from "../../actions/course.js";
+// import {getCourse} from "./../../courses/courseManager.js";
+import { deleteCourse, editReview, addReview, deleteReview, enroll, getCourse } from "../../actions/course.js";
 
   const enrollment = [hardCodedUsers[0].name, "user2", "user3", "user4"];
 
@@ -107,6 +106,9 @@ class CourseContainer extends React.Component {
   //Calculate rating for course - call this any time a review is modified, added or deleted.
   calcReviewRating = (Review) => {
     const count = Review.length;
+    if (count === 0){
+      return 0;
+    }
     const totalRate = Review.reduce(function(total, rev)  {
       return total + rev.rating 
     }, 0);
@@ -119,29 +121,8 @@ class CourseContainer extends React.Component {
     this.setState({
       enrolled: !this.state.enrolled,
     })
-   // } else if (this.state.currUser.credits < this.state.course.credit){
-   //    alert('Insufficient credits to enroll!')
-   // }
    } else {
-    // let course = this.state.course;
-    // let currUser = this.state.currUser;
-
-    // const credits = this.state.currUser.credits
-    // let newCredits = credits - course.credit
-    // currUser.credits = newCredits
-
-    // let currentEnrolled = this.state.course.enrollment + 1;
-    // course.enrollment = currentEnrolled;
-    // course.enrolledUsers.push(currUser)
-
-    //Server call needed to increase enrollment in course in database.
       const enrol = enroll(this, this.state.currUser, this.state.course._id)
-    // this.setState({
-    //   enrolled: !this.state.enrolled,
-    //   course: course,
-    //   currUser: currUser,
-    //   enrollment: course.enrolledUsers
-    // })
     }
   
   }
@@ -156,6 +137,7 @@ class CourseContainer extends React.Component {
 
   //Sets currReview to not null to trigger edit pop up
   editReview = event => {
+    event.preventDefault()
     console.log(event.target.name);
     const getReview = this.state.review.filter(rev => {
       return rev.description === event.target.name;
@@ -167,38 +149,48 @@ class CourseContainer extends React.Component {
 
   //Removes review from current reviews
   deleteReview = event => {
+    event.preventDefault()
     const reviewName = event.target.name;
     
     const reviewToDelete = this.state.review.filter(rev => {
       return rev.description === reviewName
     })
+    console.log("this is the review to delete ")
+    console.log(reviewToDelete[0])
 
-    //Need to confirm that this server call works
-    deleteReview(this.state.courseID, reviewToDelete[0]._id)
+    deleteReview(this.state.course._id, reviewToDelete[0]._id)
 
-    const deletedReviews = this.state.review.filter(rev => {
-      return rev.description !== reviewName;
-    });
+    // const deletedReviews = this.state.review.filter(rev => {
+    //   return rev.description !== reviewName;
+    // });
+    // console.log('these are the reviews to keep')
+    // console.log(deletedReviews)
 
     //Need a server call to update course - use Jingwen's updateCourse route
-    const newRating = this.calcReviewRating(deletedReviews);
-
+    const newRating = this.calcReviewRating(this.state.review);
+    console.log(newRating)
 
     // const newRating = calcReviewRating(deletedReviews);
     const curCourse = this.state.course;
     curCourse.rate = newRating;
     console.log(curCourse);
     //Server call needed to delete review from course in database.
+    const remainingReview = this.state.review.filter(rev => {
+      return rev.description !== reviewName
+    })
+    // console.log(this.state.course)
+    // console.log(this.state.course.ratings)
+
     this.setState({
-      review: deletedReviews,
+      review: remainingReview,
       reviewed: false,
-      edit: false,
-      course: curCourse 
+      edit: false 
     })
   }
 
   //Exits addReview entry form.
   cancelForm = event =>{
+    event.preventDefault()
     this.setState({
       reviewed: !this.state.reviewed,
       currReview: null
@@ -218,46 +210,42 @@ class CourseContainer extends React.Component {
       alert('Rating must be a number between 0 and 5. Enter a valid rating.');
       return;
     }
-
     const newReview = {
-      user: this.state.currUser,
-      date: date,
-      img: instImg,
-      description: desc,
-      rating: parseInt(rating)
+        user: this.state.currUser,
+        date: date,
+        description: desc,
+        rating: parseInt(rating)
     };
-
-    //check if already reviewed - if so
-    // Need to check if this works
-    // if (!this.state.reviewed){
-    //   addReview(this.state.course._id, newReview)
-    // } else {
-    //   const existingReviews = this.state.review
-    //   const getReview = existingReviews.filter(rev => {
-    //     return rev.user === newReview.user;
-    //   });
-    //   editReview(this.state.course._id, getReview[0]._id, newReview)
-    // }
-
-    const existingReviews = this.state.review
-    const getReview = existingReviews.filter(rev => {
+    //if the length of getReview and checkReview is the same, then the current user has
+    //not reviewed the course and the course should be added to the db.
+    let getReview = this.state.review
+    const checkReview = getReview.filter(rev => {
       return rev.user !== newReview.user;
     });
-    getReview.push(newReview);
-    //Server call needed to add review to the course in the database.
-    const newRating = this.calcReviewRating(getReview);
-    // const newRating = calcReviewRating(getReview);
-    const curCourse = this.state.course;
-    curCourse.rate = newRating;
-    this.setState({
-      review: getReview,
-      edit: true,
-      currReview: null,
-      course: curCourse 
-    })
+    if (getReview.length === checkReview.length){
+      const reviewData = addReview(this, this.state.course._id, newReview)
+    }
+    //Otherwise get the review that matches the current user and call the edit review route.
+    else {
+      const ReviewToEdit = {
+        date: date,
+        description: desc,
+        rating: parseInt(rating)
+      };
+      const editThisReview = getReview.filter(rev => {
+        return rev.user === newReview.user;
+      });
+      console.log(editThisReview[0])
+      const edittedReviewData = editReview(this, this.state.course._id, editThisReview[0]._id, ReviewToEdit)
+    }
+    //Calculate the new rating
+    const newRating = this.calcReviewRating(this.state.review);
+    console.log(newRating)
+    //Need a server call for this as well
   }
 
   deleteCourse = event => {
+    event.preventDefault()
     //Server call needed to delete course from database.
     deleteCourse(this.state.course._id) // this works :)!
     alert("Course successfully deleted");
@@ -279,7 +267,8 @@ class CourseContainer extends React.Component {
     const {courseID, userID, reviews, admin} = this.props;
     console.log("the course is completed " + this.state.compl)
     console.log("the user is enrolled " + this.state.enrolled)
-    console.log("the user has reviwed " + this.state.reviewed)
+    console.log("the user has reveiwed " + this.state.reviewed)
+    console.log("this review should edittable " + this.state.edit)
 
 
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
