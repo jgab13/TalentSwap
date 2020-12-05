@@ -10,6 +10,18 @@ const { User } = require("./../models/user");
 const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
 const { authenticate } = require('./helpers/authentication');
 
+const formatUser = (user) => {return {
+    username: user.username,
+    userType: user.userType,
+    name: user.name,
+    credits: user.credits,
+    bio: user.bio,
+    expertise: user.expertise,
+    development: user.development,
+    coursesTeaching: user.coursesTeaching,
+    coursesLearning: user.coursesLearning
+}}
+
 // A route to login and create a session
 router.post("/users/login", (req, res) => {
     const username = req.body.username;
@@ -23,7 +35,7 @@ router.post("/users/login", (req, res) => {
             // We can check later if this exists to ensure we are logged in.
             req.session.user = user._id;
             req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
-            res.send({ currentUser: user.username });
+            res.send(formatUser(user));
         })
         .catch(error => {
             res.status(400).send()
@@ -64,7 +76,7 @@ router.post('/api/users', mongoChecker, async (req, res) => {
         const newUser = await user.save()
         req.session.user = newUser._id;
         req.session.username = newUser.username;
-        res.send({ currentUser: newUser.username })
+        res.send(formatUser(newUser));
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
@@ -128,13 +140,7 @@ router.get('/api/users/:username', mongoChecker, authenticate, async (req, res) 
 
     try {
         const user = await User.findOne({ username: username });
-        res.send({
-            username: user.username,
-            credits: user.credits,
-            bio: user.bio,
-            expertise: user.expertise,
-            development: user.development
-        });
+        res.send(formatUser(user));
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');
