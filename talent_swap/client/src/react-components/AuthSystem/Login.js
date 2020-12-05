@@ -7,8 +7,6 @@ import {UserContext} from "./../../react-contexts/user-context";
 import { Button, Form } from "react-bootstrap";
 import { Redirect } from 'react-router-dom';
 
-import { login } from "./../../actions/user"
-
 class Login extends React.Component {
 	static contextType = UserContext;
 	
@@ -38,7 +36,7 @@ class Login extends React.Component {
 	async handleLogin(event) {
 		event.preventDefault();
 		let currentUser = await this.validate();
-		if (currentUser !== false) {
+		if (currentUser) {
 			
 			//testing
 			this.setState({redirect:"user"})
@@ -55,7 +53,6 @@ class Login extends React.Component {
 			console.log(currentUser);
 		}
 		else {
-			event.preventDefault();
 			alert("Validation failed! Please try again.");
 		}
 	}
@@ -73,9 +70,9 @@ class Login extends React.Component {
 		let input = this.state.input;
 		try{
 			//usermanager should fetch data from database
-			let currentUser = await login(input);
-			console.log(currentUser)
-			if (currentUser == undefined) {
+			let currentUser = await this.context.login(input.username, input.password);
+			console.log(currentUser);
+			if (!currentUser) {
 				console.log("here!")
 				return false;
 			}

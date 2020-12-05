@@ -31,7 +31,7 @@ export const hardCodedUsers = [
 ]
 
 class UserManager {
-    static login(username, password) {
+    static async login(username, password) {
         // Login with session, but send back hardcoded frontend data for now
         const request = new Request("/users/login", {
             method: "post",
@@ -41,35 +41,30 @@ class UserManager {
                 "Content-Type": "application/json"
             }
         });
-        fetch(request)
-            .then(res => {
-                if (res.status === 200) {
-                    return res.json();
-                }
-            })
-            .then(json => {
-                if (json.currentUser !== undefined) {
-                    console.log(json.currentUser);
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
+        try {
+            const res = await fetch(request);
+            console.log(res)
+            if (res.status === 200) {
+                return new User(await res.json())
+            }
+        } catch (error) {
+            console.log(error);
+        }
         // Needs server call
-        let admin = new AdminUser();
-        let userToReturn;
-        if (username === "user" && password === "user") {
-            userToReturn = hardCodedUsers[0];
-        } else if (username === "user2" && password === "user2") {
-            userToReturn = hardCodedUsers[1];
-        } else if (username === "admin" && password === "admin") {
-            return admin;
-        }
-        if (admin.getBannedUsers().includes(userToReturn)) {
-            throw new Error("USER IS BANNED");
-        } else {
-            return userToReturn;
-        }
+        // let admin = new AdminUser();
+        // let userToReturn;
+        // if (username === "user" && password === "user") {
+        //     userToReturn = hardCodedUsers[0];
+        // } else if (username === "user2" && password === "user2") {
+        //     userToReturn = hardCodedUsers[1];
+        // } else if (username === "admin" && password === "admin") {
+        //     return admin;
+        // }
+        // if (admin.getBannedUsers().includes(userToReturn)) {
+        //     throw new Error("USER IS BANNED");
+        // } else {
+        //     return userToReturn;
+        // }
     }
 
     static getUserFromUsername(username) {

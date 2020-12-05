@@ -30,42 +30,6 @@ export const updateLoginForm = (loginComp, field) => {
     });
 };
 
-// A function to send a POST request with the user to be logged in
-export const login = (userInput) => {
-    // Create our request constructor with all the parameters we need
-    const request = new Request("/users/login", {
-        method: "post",
-        body: JSON.stringify({
-            username: userInput.username,
-            password: userInput.password
-        }),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    });
-
-    // Send the request with fetch()
-    return fetch(request)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        })
-        .then(json => {
-            console.log(json)
-            if (json === undefined) {
-                return undefined
-            }
-            if (json !== undefined) {
-                return new User(json);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
-
 export const CheckUsername = (userInput) => {
     const url = "api/users/get/"+userInput.username
 
