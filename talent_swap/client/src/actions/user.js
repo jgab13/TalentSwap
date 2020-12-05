@@ -1,5 +1,5 @@
 // Functions to help with user actions.
-
+import User from "./../users/user"
 // Send a request to check if a user is logged in through the session cookie
 export const checkSession = (app) => {
     const url = "/users/check-session";
@@ -57,8 +57,8 @@ export const login = (userInput) => {
             if (json === undefined) {
                 return undefined
             }
-            if (json.currentUser !== undefined) {
-                return json.currentUser;
+            if (json !== undefined) {
+                return new User(json);
             }
         })
         .catch(error => {

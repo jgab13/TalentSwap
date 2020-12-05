@@ -95,7 +95,8 @@ class User {
         try {
             const res = await fetch(request);
             if (res.status === 200) {
-                return res.json().map(message => Message(message));
+                const messagesArray = await res.json();
+                return messagesArray.map(message => new Message(message));
             }
         } catch (error) {
             console.log(error);
