@@ -23,13 +23,12 @@ courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
         endtime: req.body.endtime,
         credit: req.body.credit,
         capacity: req.body.capacity,
-        enrollment: req.body.enrollment,
-        rate: req.body.rate,
+        enrollment: 0,
+        rate: 0,
         description: req.body.description,
         level: req.body.level,
-        description: req.body.description,
-        enrolledUsers: req.body.enrolledUsers,
-        ratings: req.body.ratings
+        enrolledUsers: req.body.enrolledUsers, //are these necessary?
+        ratings: req.body.ratings //are these necessary?
     })
 
     try {
@@ -164,19 +163,12 @@ courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, re
 })
 
 //Edit a review route
-courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, authenticate, async (req, res) => {
+courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id;
-    const revid = req.params.rev_id;
     console.log(id)
-    console.log(revid)
     console.log(req.body)
 
     if (!ObjectID.isValid(id)) {
-        res.status(404).send()  // if invalid id, definitely can't find resource, 404.
-        return;  // so that we don't run the rest of the handler.
-    }
-
-    if (!ObjectID.isValid(revid)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
         return;  // so that we don't run the rest of the handler.
     }
@@ -190,7 +182,7 @@ courseRouter.patch('/api/courses/:id/:rev_id', mongoChecker, authenticate, async
             console.log(course)
             let index = -1
             for (let i = 0; i < course.ratings.length; i++){
-                if (String(course.ratings[i]._id) === (String(revid))){
+                if (String(course.ratings[i].user) === (String(req.body.user))){
                     index = i
                 }
             }

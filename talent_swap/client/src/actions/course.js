@@ -29,6 +29,31 @@ export const CreateCourse = (userInput) => {
         });
 };
 
+export const updateCourse = (attributes, values, id) => {
+    const url = "/api/courses/update/" + id;
+    const request = new Request(url, {
+        method: "PATCH",
+        body: JSON.stringify({
+            attr: attributes,
+            newValue: values
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                    return res.json();
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
 export const getCourse = (course, id) => {
     // the URL for the request
     const url = "/api/courses/" + id;
@@ -81,7 +106,7 @@ export const deleteCourse = (id) => {
         });
 };
 
-export const addReview = (app, id, review) => {
+export const addReview = (id, review) => {
     // the URL for the request
     const url = "/api/courses/" + id;
     console.log(url)
@@ -105,27 +130,21 @@ export const addReview = (app, id, review) => {
             if (res.status === 200) {
                     return res.json(); //this returns the entire course - probably better to only return the review
             }
-        }).then(json =>{
-            app.setState({
-                review: json.course.ratings,
-                edit: true,
-                currReview: null,
-                course: json.course
-            })
         })
         .catch(error => {
             console.log(error);
         });
 };
 
-export const editReview = (app, id, revid, review) => {
+export const editReview = (id, review) => {
     // the URL for the request
-    const url = "/api/courses/" + id + "/" + revid;
+    const url = "/api/courses/" + id;
     console.log(url)
 
     const request = new Request(url, {
         method: "PATCH",
         body: JSON.stringify({
+            user: review.user,
             date: review.date,
             description: review.description,
             rating: review.rating
@@ -143,16 +162,7 @@ export const editReview = (app, id, revid, review) => {
                 return res.json(); //this returns the entire course - probably better to only return the review
             } else {
                 console.log(res.status)
-                console.log('Fuck, got an error after fetching request')
             }
-        }).then(json => {
-            console.log(json)
-            app.setState({
-                review: json.course.ratings,
-                edit: true,
-                currReview: null,
-                course: json.course
-            })
         })
         .catch(error => {
             console.log(error);
