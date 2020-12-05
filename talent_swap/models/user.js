@@ -27,8 +27,8 @@ const UserSchema = new mongoose.Schema({
 	name: String,
 	credits: Number,
 	bio: String,
-	expertise: [String],
-	development: [String],
+	expertise: String,
+	development: String,
 	coursesTeaching: [{type: mongoose.Schema.Types.ObjectId, ref: "Course"}],
 	coursesLearning: [{type: mongoose.Schema.Types.ObjectId, ref: "Course"}]
 	//Need to add messages probably a schema needed here as well.
