@@ -38,10 +38,10 @@ In addition to the visitor functionality, an admin user has access to the admin 
 
 ##### Get all courses 'api/courses'
 This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns a all of the course objects
-from the db in the form '{"courses": <course document>, <course document>}'.
+from the db in the form '{"courses": "<course document>", "<course document>"}'.
 
 ##### Get a course 'api/courses/:id'
-This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form '{"course": <course document>}'.
+This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form '{"course": "<course document>"}'.
 
 ##### Delete a course 'api/courses/:id'
 This API is used by admin users to delete courses. The route does not require a request body, but it requires a request parameter of a valid course object id. In order to use this route, a user must be logged in. Post a login request user the route describe in users below. Once a cookie has been created, this API route can be used. The route returns the deleted course.
