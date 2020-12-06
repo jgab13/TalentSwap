@@ -142,12 +142,16 @@ router.patch('/api/users', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
-router.get('/api/users/:username', mongoChecker, authenticate, async (req, res) => {
+router.get('/api/users/:username', mongoChecker, async (req, res) => {
     const username = req.params.username;
 
     try {
         const user = await User.findOne({ username: username });
-        res.send(formatUser(user));
+        if (user) {
+            res.send(formatUser(user));
+        } else {
+            res.send(undefined);
+        }
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');

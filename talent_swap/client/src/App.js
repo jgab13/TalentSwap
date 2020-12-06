@@ -53,7 +53,7 @@ class App extends React.Component {
                               (<AdminDashboard appState={this.state}/>)}/>
               <Route exact path='/MessageCenter' render={() => 
                               (<MessageCenter appState={this.state}/>)}/>
-              <Route exact path='/UserProfile/:userId' render={(props) => 
+              <Route exact path='/UserProfile/:username' render={(props) => 
                               (<UserProfile appState={this.state} {...props}/>)}/>
               <Route exact path='/DetailedCoursePageTeacher/:id' render={(props) => 
                               (<DetailedCoursePageTeacher appState={this.state} {...props}/>)}/>

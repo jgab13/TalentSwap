@@ -34,7 +34,7 @@ class UserManager {
     static async login(username, password) {
         // Login with session, but send back hardcoded frontend data for now
         const request = new Request("/users/login", {
-            method: "post",
+            method: "POST",
             body: JSON.stringify({username: username, password: password}),
             headers: {
                 Accept: "application/json, text/plain, */*",
@@ -68,7 +68,7 @@ class UserManager {
 
     static async logout() {
         const request = new Request("/users/logout", {
-            method: "get"
+            method: "GET"
         });
         try {
             await fetch(request);
@@ -79,7 +79,7 @@ class UserManager {
 
     static async register(username, password) {
         const request = new Request("/api/users", {
-            method: "post",
+            method: "POST",
             body: JSON.stringify({username: username, password: password}),
             headers: {
                 Accept: "application/json, text/plain, */*",
@@ -97,8 +97,17 @@ class UserManager {
     }
 
     static async getUserFromUsername(username) {
-        // Needs server call
-        return hardCodedUsers.find(user => user.username === username);
+        const request = new Request(`/api/users/${username}`, {
+            method: "GET"
+        });
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return new User(await res.json())
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
