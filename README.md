@@ -1,84 +1,84 @@
 # team15 
+# Talent Swap
 
-Please note that for the first phase of this project, we have hardcoded user, course, enrollment, review and other data in various components of our app. The flow described below takes that into account and demonstrates the functionality and UI of our app for this phase of the project. 
+## Instructions
 
-## Visitor Flow
+Please use this URL to access our web application xxxxx.
 
-The default of state of our web app on the home page is logged in. Therefore, please click user and then log out from the drop down to begin the visitor flow. A visitor can view the course details of a course on the home page or from the search page. The search page can be accesssed by clicking the search button in the header. If the course has not completed yet, then the visitor can click on the enrol button on the course details page and the visitor will be prompted with the login or sign up pop up. The visitor can cancel the pop up and navigate back to home page, sign in using his/her credentials or sign up as a new user. 
+### Functionality
 
-Since our data is hardcoded, please click on the guitar lessons view course details button on the search page to see this functionality. The visitor will see the course name, description, teacher, the start and end time, the number of spots remaining in the course and the credit cost. The enroll now button will be displayed and can be clicked by the visitor.
+#### Visitor Functionality 
+The following functionality is applicable to all users (visitors, regular users and admin users). The home page is accessible by all users. The header contains a search bar, a logo and a join now button. The home page displays basic information about our application as well as a list of popular courses. 
 
-Navigate back to the home page by clicking the logo in the top left corner of the header or click the search button to navigate to the search page. Please click the search button to begin the search page flow.
+All users can click a course. This will direct the user to the detailed course page which includes a description of the course, course dates, enrollment data and credit cost to take the course. If the course has been completed, the user will be able to read reviews and see ratings of the course, If the course has not been completed and the course is not full, users can click the enabled enroll button. They will be prompted to log in or sign up. 
 
-### Search Page flow
+All users can also use the search bar to filter courses based on keyword search. Once again, the filtered results can be clicked, which will redirect the user to the detailed course page.
 
-The search page flow applies to all users including visitors. Start searching from any page on our website by typing in your keywords in the search input box and then click the search button. Results of your search include two data categories: users and courses, displayed under the "Users" and "Courses" tabs respectively. 
+#### Regular user Functionality
 
-If you just want to explore and the search button was clicked with no keywords specified, all existing courses and users will be shown as search results. You can filter courses based on difficulty levels, availability, or class size. You can select multiple items under the same filter. For example, if you're looking for both beginner-level and intermediate-level courses, you can select them at the same time to see all the courses that meets either critic. Remove the current filters by click the "clear filters" button. 
+In addition to the functionality described above, a regular user (who has signed in after signing up for the application) has access to the user dashboard. A regular user can modify the user's profile information such as name, interests and expertise. The regular user can also view courses that the user is taking or teaching by clicking on the course thumbnail in the user dashboard.
 
-If keywords are specified, then all the courses which have your keywords as a substring in their title will be returned. All the users who have your keywords as a substring in their name, domain of expertise, or domain of development will be returned as well. Keywords that are shorter and more general get more results. For example, if you search "JavaScriptX", nothing will be returned. But if you search "Java", then one course and one user will be returned. You can do experiments with a very general keyword "s". 
+The regular user also has access to header pathways learn and teach. The learn pathway allows the user to search for new courses, view past courses taken and view upcoming courses that the user has enrolled in. The teach pathway allows a user to create a new course that the user will teach.
 
-Navigate back to the home page to begin the admin flow.
+Users can enroll in courses if they have enough credits to pay the credit cost of the course. Once the course has completed, enrolled users can add, edit or delete reviews to the course. User who have created a course to teach can modify the details of the upcoming course. 
+
+Users also have the ability to communicate via the messaging system. By clicking the envelope icon in the top right corner or the header, the user will have acesss to the messages sent and received to other users. 
+
+#### Admin user Functionality
+
+In addition to the visitor functionality, an admin user has access to the admin dashboard. The dashboard provides statistics about the application. An admin can ban a user or delete a course by clicking on the course page. A delete button will be present which the admin user can click. Admin users cannot create or enroll in courses.
+
+### Overview of the Routes
+
+#### Course routes
+
+##### Create course 'api/courses'
+
+##### Update course 'api/courses/update/:id'
+
+##### Get all courses 'api/courses'
+This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns a all of the course objects
+from the db in the form '{"courses": <course document>, <course document>}'.
+
+##### Get a course 'api/courses/:id'
+This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form '{"course": <course document>}'.
+
+##### Delete a course 'api/courses/:id'
+This API is used by admin users to delete courses. The route does not require a request body, but it requires a request parameter of a valid course object id. In order to use this route, a user must be logged in. Post a login request user the route describe in users below. Once a cookie has been created, this API route can be used. The route returns the deleted course.
+
+##### Create a review 'api/courses/:id'
+This API route is used by regular users who have enrolled in a completed course to add a review. This route requires a request parameter of a valid course object id, a request body as follows.
+{
+	"user": "<username>",
+	"date": "<MM-DD-YYYY>",
+	"description": "<description>",
+	"rating": "<number>"
+}
+The route returns the course object with the new review in the ratings property of the course.
+
+##### Edit a review 'api/courses/:id'
+This API route is used by regular users who have enrolled in a completed course and already reviewed the course, to edit their existing review. This route requires a request parameter of a valid course object id, a request body as follows.
+{
+	"user": "<username>",
+	"date": "<MM-DD-YYYY>",
+	"description": "<description>",
+	"rating": "<number>"
+}
+The route returns the course object with the editted review in the ratings property of the course.
+
+##### Delete a review 'api/courses/review/:id'
+This API route is used by regular users who have enrolled in a completed course and already reviewed the course, to delete their existing review. This route requires a request parameter of a valid course object id, a request body as follows.
+{
+	"user": "<username>",
+}
+
+The route returns the course object. The review of the user will not be in the ratings property of the course.
+
+#### Enrollment routes
 
 
-## Admin flow
-
-On the home page, click user -> log out. Then click join now and enter user credentials admin/admin. This will redirect you to the admin dashboard. On the dashboard, an admin user can ban/unban users. Enter in user id 1 or 2 to see this functionality. The user can be unbanned as well by clicking the unban button. The admin dashboard shows website status details such as a list of courses and users. Clicking on a user or course will navigate to the user profile or the course page. While an admin user can view course details and delete a course, the admin cannot enroll, edit or review the course. 
-
-Since our data is hardcoded, please click on the musical theory course to demonstrate the functionality of the admin user. The course detail page will display the typical details, however, a red delete button will appear underneath a disabled enroll now button. By clicking the delete button, the admin user will see an alert indicating that the course has been deleted and the user will be directed back to the admin dashboard. Since the data is hardcoded, the musical theory course will still appear in the course list under website status. This will be removed in phase 2.
-
-Navigate back to the home page to begin the user flow.
-
-## User Flow
-
-### Authentication System
-
-Since in Phase1, we cannot fetch cookies from browser, the login status is hardcoded as true. To test the authentication system, please click on the "User" scroll down button, and log out. No matter what page you are at, this will bring you back to homepage with a "Join Now" button on the header. Click on the button to see the popup authentication system.
-
-There are two normal users, with username: user, password: user and username: user2, password: user2, and one admin user, with username: admin, password: admin. After click "Log In", a valid user will be redirected to user dashboard, where most information can be editted. A valid admin will be redirected to admin dashboard. A user with wrong username/password pair or a banned user cannot log in.
-
-Also, click on "Sign Up" button besides "log in" will lead you to sign up for the website. Notice that since user information is hardcoded, a registered user can not log in with newly set username and password.
-
-### User Profile
-
-After logging in, you will be directed to the user profile, which will display editable user information, courses you are enrolled in or courses you are teaching. To access this part of the app, you must be signed in. So, please try to access this feature right after logging in.
-
-Alternatively, you can type the URL `/UserProfile/{userId}` where `userId` some integer. Currently, the 2 valid ids are `1` and `2`. This will allow you to view the user profile of that user, but not edit.
-
-Note that this is a SPA so changing the URL in this manner will log you out. We have not yet implemented cookies/jwt/some other way to persist user identity beyond storing it in memory.
-
-If you find yourself logged out, please log in again.
-
-### Messaging
-
-You can click the message icon on the nav bar in the top right. This will bring you to the messaging system. This page is divided into two columns, the left side denotes the users you have recently chatted with. The right side denotes the messages themselves. You can send messages by typing into the input box and clicking "Send".
-
-In Phase 2, the plan is to have live updates to the messaging system (possibly with Socket.io).
-
-There are messages between User One and User Two. To access these messages, you must be signed in. So, please try to access this feature right after logging in.
-
-### Learn 
-
-A logged in user can access courses from the home page, search page or their user profile. To demonstrate this functionality, please click on the introduction to cognitive science view course details button. The user will see the course details page. The user was enrolled in the class, the class completed and the user provided a review. The user can edit/delete his or her review by clicking the appropriate buttons besider the review. Clicking delete will remove the review and the user can click the add review button to provide a new review. If the user tries to submit blank information in the review date and description input boxes in the add review pop up, or a number less than 0 or greater than 5 in the star rating input box, the user will see validation error messages. The user can click the cancel button to close the pop up. The user can add a new review by entering any text in the review description input box, a 5 star review number and a date in the format MM-DD-YYYY. Please enter a review in this format and click submit. The user will then be able to edit or delete that review.
-
-Additionally, navigating from the home page or search page, please click on the Using Functions in JavaScript view course details button. The user will see the course details page. In this case, the user was not enrolled in the course and there is availability in the enrollment. The user can click enroll now to sign up for the class. Note that the button will be greyed out with the message class full and the enrollment will be 5 of 5 (enrollment equal to the capacity of the course).
-
-Under the learn drop down in the header, a user can click find a course, view past coures and view upcoming courses. Clicking find a course navigates to the search page. The other items navigate to the search page, filtered on upcoming and completed courses.
-
-### Teach
-
-A user who taught a course can view the course by clicking on the view course details thumbnail on their profile, the home page or the search page. Please click on the React view course details button to see this functionality. The user taught this course, the course completed and the user received ratings and feedback. The course detail page will basically be a read-only for the teacher user to see the information about the completed course. There will not be any buttons for the user to click to edit the course, the review and the class completed button will be disabled.
-
-A user can create a new course by clicking on the "Teach" scroll down button and choose "Create a New Course". The user will be redirected to course creation page to input basic information of new courses. After click submit, the user will be redirected to a detailed course page. This page is for course holder to view their upcoming courses specifically, where the teacher can view and edit detailed information. Notice that since data is hardcoded, this page is not the same as user input. 
-
-Under the teach drop down in the header, similar to the learn drop down, a user can also click view past courses and view upcoming courses. Clicking either of these items directs to the search page filtered for upcoming or past courses that the user teaches.
+#### Message routes
 
 
-## Dependencies
+#### User routes
 
-This is a list of third-party libraries we used:
-
-- "react-router-dom": "^5.2.0",
-- "react-bootstrap": "^1.4.0",
-- "bootstrap": "^4.5.3",
-- "react-star-ratings": "^2.3.0",
