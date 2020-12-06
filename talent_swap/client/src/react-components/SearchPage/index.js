@@ -13,7 +13,7 @@ import UserResults from "./../SearchUserResults"
 // prepare hardcoded user and course data to render on the search page
 import {hardcodedCourses} from "./../../courses/testcourses.js"
 import UserManager from "./../../users/user-manager.js"
-const hardcodedUsers = [UserManager.getUserFromUsername("user"), UserManager.getUserFromUsername("user2")]
+const hardcodedUsers = ["user", "user2"].map(async username => await UserManager.getUserFromUsername(username));
 
 function FilterCourseLevels(curr_courses, filters){
     let r_courses = [];

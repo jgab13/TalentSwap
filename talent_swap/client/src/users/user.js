@@ -1,36 +1,26 @@
 import Message from "./message";
-const hardCodedMessages = [
-    new Message({
-        timestamp: 1000,
-        senderName: 1,
-        receiverName: 2,
-        contents: "Hi User 2!!!"
-    }),
-    new Message({
-        timestamp: 9000,
-        senderName: 2,
-        receiverName: 1,
-        contents: "Hello!!!"
-    }),
-    new Message({
-        timestamp: 9001,
-        senderName: 2,
-        receiverName: 1,
-        contents: "Yo"
-    }),
-    new Message({
-        timestamp: 9002,
-        senderName: 2,
-        receiverName: 1,
-        contents: "Wanna teach me some stuff"
-    }),
-    new Message({
-        timestamp: 9003,
-        senderName: 2,
-        receiverName: 1,
-        contents: "In exchange I will teach you some stuff"
-    }),
-]
+
+async function fetchPatch(payload) {
+    const request = new Request("/api/users", {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    try {
+        console.log("HI")
+        const res = await fetch(request);
+        console.log(res)
+        if (res.status === 200) {
+            return res.json();
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 class User {
     constructor(json=null) {
@@ -50,33 +40,29 @@ class User {
         );
     }
 
-    changeName = (newName) => {
-        // Needs server call
+    changeName = async (newName) => {
         this.name = newName;
-        return true;
+        await fetchPatch({name: newName});
     };
 
-    changeBio = (newBio) => {
-        // Needs server call
+    changeBio = async (newBio) => {
         this.bio = newBio;
-        return true;
+        await fetchPatch({bio: newBio});
     };
 
-    changeExpertise = (newExpertise) => {
-        // Needs server call
+    changeExpertise = async (newExpertise) => {
         this.expertise = newExpertise;
-        return true;
+        await fetchPatch({expertise: newExpertise});
     };
 
-    changeDevelopment = (newDevelopment) => {
-        // Needs server call
+    changeDevelopment = async (newDevelopment) => {
         this.development = newDevelopment;
-        return true;
+        await fetchPatch({development: newDevelopment});
     };
 
     getContactUsernames = async () => {
         const request = new Request("/api/message-contacts", {
-            method: "get"
+            method: "GET"
         });
         try {
             const res = await fetch(request);
@@ -90,7 +76,7 @@ class User {
 
     getMessagesFromContact = async (contactUsername) => {
         const request = new Request(`/api/messages/${contactUsername}`, {
-            method: "get"
+            method: "GET"
         })
         try {
             const res = await fetch(request);
@@ -105,7 +91,7 @@ class User {
 
     sendMessage = async (username, contents) => {
         const request = new Request("/api/messages", {
-            method: "post",
+            method: "POST",
             body: JSON.stringify({
                 target: username,
                 contents: contents

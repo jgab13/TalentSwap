@@ -10,17 +10,27 @@ import {hardcodedCourses} from "./../../courses/testcourses.js";
 
 class UserProfile extends React.Component {
     static contextType = UserContext;
-    render() {
+    state = {
+        currentUser: undefined,
+        canEdit: false
+    }
+    async componentDidMount() {
         let currentUser;
         let canEdit;
         if (this.props.match) {
             const {match: {params}} = this.props;
             const {username} = params;
-            currentUser = UserManager.getUserFromUsername(username);
+            currentUser = await UserManager.getUserFromUsername(username);
             canEdit = false;
         } else {
             currentUser = this.context.currentUser;
             canEdit = true;
+        }
+        this.setState({currentUser: currentUser, canEdit: canEdit});
+    }
+    render() {
+        if (!this.state.currentUser) {
+            return <div></div>
         }
         return (
             <div>
@@ -30,30 +40,30 @@ class UserProfile extends React.Component {
                         <Col>
                             <ListGroup>
                                 <ListGroupItem>
-                                    <Image src={currentUser.pic} thumbnail />
+                                    <Image src={this.state.currentUser.pic} thumbnail />
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <UserProfileField fieldName="Name" fieldValue={currentUser.name} changeValue={currentUser.changeName} canEdit={canEdit} />
+                                    <UserProfileField fieldName="Name" fieldValue={this.state.currentUser.name} changeValue={this.state.currentUser.changeName} canEdit={this.state.canEdit} />
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <UserProfileField fieldName="Short Bio" fieldValue={currentUser.bio} changeValue={currentUser.changeBio} canEdit={canEdit} />
+                                    <UserProfileField fieldName="Short Bio" fieldValue={this.state.currentUser.bio} changeValue={this.state.currentUser.changeBio} canEdit={this.state.canEdit} />
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <UserProfileField fieldName="Domain of Expertise" fieldValue={currentUser.expertise} changeValue={currentUser.changeExpertise} canEdit={canEdit} />
+                                    <UserProfileField fieldName="Domain of Expertise" fieldValue={this.state.currentUser.expertise} changeValue={this.state.currentUser.changeExpertise} canEdit={this.state.canEdit} />
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <UserProfileField fieldName="Domain of Development" fieldValue={currentUser.development} changeValue={currentUser.changeDevelopment} canEdit={canEdit} />
+                                    <UserProfileField fieldName="Domain of Development" fieldValue={this.state.currentUser.development} changeValue={this.state.currentUser.changeDevelopment} canEdit={this.state.canEdit} />
                                 </ListGroupItem>
                                 <ListGroupItem>
-                                    <UserProfileField fieldName="Credits" fieldValue={currentUser.credits} canEdit={false} />
+                                    <UserProfileField fieldName="Credits" fieldValue={this.state.currentUser.credits} canEdit={false} />
                                 </ListGroupItem>
                             </ListGroup>
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Teaching Courses" courses={hardcodedCourses.filter(courses => courses.teacher === currentUser.name)} />
+                            <UserProfileCourses header="Teaching Courses" courses={hardcodedCourses.filter(courses => courses.teacher === this.state.currentUser.name)} />
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Learning Courses" courses={hardcodedCourses.filter(courses => courses.teacher !== currentUser.name)} />
+                            <UserProfileCourses header="Learning Courses" courses={hardcodedCourses.filter(courses => courses.teacher !== this.state.currentUser.name)} />
                         </Col>
                     </Row>
                 </Container>

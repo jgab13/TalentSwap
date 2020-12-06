@@ -109,38 +109,49 @@ router.post('/api/adminuser', mongoChecker, async (req, res) => {
     }
 })
 
-// https://tools.ietf.org/html/rfc6902#section-3
-router.patch('/api/users/:username', mongoChecker, authenticate, async (req, res) => {
-    const username = req.params.username;
-
-    const fieldsToUpdate = {}
-    req.body.map((change) => {
-        const propertyToChange = change.path.substr(1) // getting rid of the '/' character
-        fieldsToUpdate[propertyToChange] = change.value
-    })
+router.patch('/api/users', mongoChecker, authenticate, async (req, res) => {
+    const username = req.session.username;
 
     try {
-        const user = await User.findOneAndUpdate({username: username}, {$set: fieldsToUpdate}, {new: true});
+        const user = await User.findOne({username: username});
         if (!user) {
             res.status(404).send('Internal server error');
-        } else {
-            res.send(user);
+            return;
         }
+        if (req.body.name) {
+            user.name = req.body.name;
+        }
+        if (req.body.bio) {
+            user.bio = req.body.bio;
+        }
+        if (req.body.expertise) {
+            user.expertise = req.body.expertise;
+        }
+        if (req.body.development) {
+            user.development = req.body.development;
+        }
+        const updatedUser = await user.save();
+        res.send(formatUser(updatedUser));
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');
         } else {
+            console.log(error)
             res.status(400).send('Bad Request'); // bad request for changing the user
         }
     }
 });
 
-router.get('/api/users/:username', mongoChecker, authenticate, async (req, res) => {
+router.get('/api/users/:username', mongoChecker, async (req, res) => {
     const username = req.params.username;
 
     try {
         const user = await User.findOne({ username: username });
-        res.send(formatUser(user));
+        if (user) {
+            res.send(formatUser(user));
+        } else {
+            res.send(undefined);
+        }
     } catch (error) {
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');
