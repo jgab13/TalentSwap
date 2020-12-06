@@ -13,9 +13,9 @@ class MessageContacts extends React.Component {
             selectedContact: null
         };
     }
-    componentDidMount() {
+    async componentDidMount() {
         if (this.props.contactUsernames) {
-            const contacts = this.props.contactUsernames.map(username => UserManager.getUserFromUsername(username));
+            const contacts = this.props.contactUsernames.map(async username => await UserManager.getUserFromUsername(username));
             this.setState({
                 contacts: contacts,
                 selectedContact: contacts[0]

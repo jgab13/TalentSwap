@@ -96,7 +96,7 @@ class UserManager {
         }
     }
 
-    static getUserFromUsername(username) {
+    static async getUserFromUsername(username) {
         // Needs server call
         return hardCodedUsers.find(user => user.username === username);
     }
