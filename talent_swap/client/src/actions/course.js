@@ -169,13 +169,16 @@ export const editReview = (id, review) => {
         });
 };
 
-export const deleteReview = (id, revid) => {
+export const deleteReview = (id, user) => {
     // the URL for the request
-    const url = "/api/courses/" + id + "/" + revid;
+    const url = "/api/courses/review/" + id;
     console.log(url)
 
     const request = new Request(url, {
         method: "delete",
+        body: JSON.stringify({
+            user: user
+        }),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

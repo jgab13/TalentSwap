@@ -219,10 +219,10 @@ courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, r
 })
 
 //delete a review route
-courseRouter.delete('/api/courses/:id/:rev_id', mongoChecker, authenticate, async (req, res) => {
+courseRouter.delete('/api/courses/review/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id;
-    const revid = req.params.rev_id;
     console.log(id)
+    console.log(req.body.user)
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -230,13 +230,35 @@ courseRouter.delete('/api/courses/:id/:rev_id', mongoChecker, authenticate, asyn
     }
    
     try {
-        const course = await Course.updateOne({_id: id},
-                                           { $pull: {"ratings": {_id: revid}}});
+        const course = await Course.findById(id)
         if (!course) {
             res.status(404).send('Internal server error');
         } else {
-            console.log(course)
-            res.send("Course deleted");
+            let index = -1
+            for (let i = 0; i < course.ratings.length; i++){
+                if (course.ratings[i].user === req.body.user){
+                    index = i
+                }
+            }
+            if (index === -1){
+                console.log('index is invalid')
+                res.status(404).send('Resource not found')
+                return
+            }
+
+            console.log(course.ratings[index])
+            const revisedCourse = course.ratings.splice(index,1)
+            try {
+                const result = await course.save()  
+                    res.send(result)
+            } catch(error) {
+                log(error) // log server error to the console, not to the client.
+                if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+                    res.status(500).send('Internal server error')
+                } else {
+                    res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+                }
+            }
         }
     } catch (error) {
         console.log(error);

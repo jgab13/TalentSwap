@@ -152,7 +152,7 @@ class CourseContainer extends React.Component {
     console.log("this is the review to delete ")
     console.log(reviewToDelete[0])
     //server call to delete review
-    deleteReview(this.state.course._id, reviewToDelete[0]._id)
+    deleteReview(this.state.course._id, this.state.currUser)
     
     const remainingReview = this.state.review.filter(rev => {
       return rev.description !== reviewName
@@ -247,11 +247,12 @@ class CourseContainer extends React.Component {
 
   }
 
-  deleteCourse = event => {
+  deleteCourseFunc = event => {
     event.preventDefault()
     //Server call needed to delete course from database.
-    deleteCourse(this.state.course._id) // this works :)!
     alert("Course successfully deleted");
+    deleteCourse(this.state.course._id) // this works :)!
+    window.location.href='/AdminDashboard'
   }
 
 
@@ -277,9 +278,7 @@ class CourseContainer extends React.Component {
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
   	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser !== this.state.course.teacher ?
   					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
-    const deleteCourse = this.state.adminUser === this.state.currUser && this.state.currUser !== null ? (<Link to={"./../AdminDashboard"}>
-      <Button className="delete" onClick={this.deleteCourse} variant="danger"> Delete Course</Button>
-      </Link>) : null;
+    const deleteCourseButton = this.state.adminUser === this.state.currUser && this.state.currUser !== null ? <Button className="delete" onClick={this.deleteCourseFunc} variant="danger"> Delete Course</Button> : null;
 
     return (
     
@@ -288,7 +287,7 @@ class CourseContainer extends React.Component {
       {this.state.enrolled && this.state.currUser === null ? <AuthSystem/> : null}
       {this.state.reviewed && !this.state.edit ? <AddCourseReview curDate={""} stars={""} cancelForm={this.cancelForm} addReview={this.addReviewForm} description={""}/> : null}
       {this.state.currReview === null ? null : <AddCourseReview curDate={this.state.currReview.date} cancelForm={this.cancelForm} addReview={this.addReviewForm} stars={this.state.currReview.rating} description={this.state.currReview.description}/>}
-      {deleteCourse}
+      {deleteCourseButton}
       <CourseList  
         course= {this.state.course}
         alreadyEnrolled={this.state.enrolled}

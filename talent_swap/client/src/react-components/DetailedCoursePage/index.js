@@ -48,13 +48,7 @@ class DetailedCoursePage extends React.Component {
 
     
     componentDidMount() {
-      //getCourse(this, "5fcbbddb2bb5962b04a637e8") //this is MG's course.
-      //getCourse(this, "5fcbbe1d2bb5962b04a637e9") //this is JG's course.
-      getCourse(this, "5fcbbe622bb5962b04a637ea") //this is JX's course.
-
-      
-
-      // getCourse(this, this.state.courseID)
+      getCourse(this, "5fcc29eaa5576015bc327d3b")
       checkSession(this) //sets the currentUser which passes to CourseContainer to set current user        
     }
 
