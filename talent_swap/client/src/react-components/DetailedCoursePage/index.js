@@ -47,9 +47,9 @@ class DetailedCoursePage extends React.Component {
 
 
     
-    componentDidMount() {
-      getCourse(this, "5fcc29eaa5576015bc327d3b")
-      checkSession(this) //sets the currentUser which passes to CourseContainer to set current user        
+    async componentDidMount() {
+      await getCourse(this, "5fcc29eaa5576015bc327d3b")
+      await checkSession(this) //sets the currentUser which passes to CourseContainer to set current user        
     }
 
   	render() {

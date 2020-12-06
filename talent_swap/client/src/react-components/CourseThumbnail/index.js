@@ -3,47 +3,54 @@ import { Link } from 'react-router-dom';
 import "./styles.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import pic0 from "./course0pic.jpg"
 
-function CourseThumbnail(props){
-    const course = props.course;
+class CourseThumbnail extends React.Component{
+    render(){
+        const course = this.props.course;
+        console.log(course)
+        const start = new Date(course.starttime)
+        const end = new Date(course.endtime)
 
-    return(
-        <div className="col">
-            <Card id="courseCard">
-                <Card.Img id="coursePic" variant="top" src={course.pic}/>
-                <Card.Body id="body">
-                    <Card.Title>
-                        {course.topic}
-                    </Card.Title>
-                    <Card.Subtitle>
-                        with {course.teacher}
-                    </Card.Subtitle>
-                    <Card.Text>
-                        <span className="text">
-                            {course.level} | {course.enrollment}/{course.capacity} enrolled
-                        </span> <br></br>
-                        <span className="text">
-                            {course.starttime.toLocaleTimeString("en-US")} - 
-                                {course.endtime.toLocaleTimeString("en-US")} {course.starttime.toLocaleDateString("en-US")}
-                        </span> <br></br>
-                        {/* <Button id="courseButton" variant="success" href={`/DetailedCoursePage/${course.id}`}>
-                                view course details
-                            </Button> */}
-                        <Link to=
-                        {{
-                            pathname: '/DetailedCoursePage',
-                            state: {
-                            course: props.course}
-                        }} >
-                            <Button id="courseButton" variant="success">
-                                view course details
-                            </Button>
-                        </Link>
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        </div>
-    );
+        return(
+            <div className="col">
+                <Card id="courseCard">
+                    <Card.Img id="coursePic" variant="top" src={pic0}/>
+                    <Card.Body id="body">
+                        <Card.Title>
+                            {course.topic}
+                        </Card.Title>
+                        <Card.Subtitle>
+                            with {course.teacher}
+                        </Card.Subtitle>
+                        <Card.Text>
+                            <span className="text">
+                                {course.level} | {course.enrollment}/{course.capacity} enrolled
+                            </span> <br></br>
+                            <span className="text">
+                                {start.toLocaleDateString("en-US")} - 
+                                    {end.toLocaleDateString("en-US")} {start.toLocaleDateString("en-US")}
+                            </span> <br></br>
+                            {/* <Button id="courseButton" variant="success" href={`/DetailedCoursePage/${course.id}`}>
+                                    view course details
+                                </Button> */}
+                            <Link to=
+                            {{
+                                pathname: '/DetailedCoursePage',
+                                state: {
+                                course: this.props.course}
+                            }} >
+                                <Button id="courseButton" variant="success">
+                                    view course details
+                                </Button>
+                            </Link>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </div>
+        );    
+    }
+    
 }
 
 export default CourseThumbnail;
