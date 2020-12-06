@@ -73,7 +73,24 @@ courseRouter.patch('/api/courses/update/:id', mongoChecker, async (req, res) => 
     }
 })
 
-//Add authentication for many of these routes.
+//retrieve all courses route - Jonathan added - this one works
+courseRouter.get('/api/courses', mongoChecker, async (req, res) => {
+
+    try {
+        const course = await Course.find()
+        if (!course) {
+            res.status(404).send('Resource not found')  // could not find this student
+        } else { 
+            res.send({ "courses": course })
+        }
+    } catch(error) {
+        console.log(error)
+        res.status(500).send('Internal Server Error')  // server error
+    }
+})
+
+
+
 //retrieve a course route
 courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
     const id = req.params.id

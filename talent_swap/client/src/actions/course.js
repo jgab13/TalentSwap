@@ -54,6 +54,36 @@ export const updateCourse = (attributes, values, id) => {
         });
 };
 
+//Jonathan addes this route for get all
+export const getCourses = (app) => {
+    // the URL for the request
+    const url = "/api/courses";
+    console.log(url)
+
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                alert("Could not retrieve course");
+            }
+        })
+        .then(json => {
+            // the resolved promise with the JSON body
+            console.log(json.courses)
+            app.setState({
+                courses: json.courses
+            })
+            // course.setState({ studentList: json.students });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+
 export const getCourse = (course, id) => {
     // the URL for the request
     const url = "/api/courses/" + id;
