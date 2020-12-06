@@ -7,14 +7,8 @@ import '../AuthSystem/styles.css';
 
 
 class AddCourseReview extends React.Component {
-  //Add a cancel button
-  // state = {
-  //   date: "",
-  //   rating: "",
-  //   desc: ""
-  // }
   state = {
-    date: this.props.curDate,
+    date: new Date(this.props.curDate).toLocaleDateString("en-US"),
     rating: this.props.stars,
     desc: this.props.description
   }
@@ -43,17 +37,6 @@ class AddCourseReview extends React.Component {
     console.log(this.state);
 
   }
-
-  // placeholderChecker = () =>{
-  //   console.log(this.props)
-  //   if (this.props.curDate !== "" && this.props.description !== "" && this.props.stars < 6 && this.props.stars > -1){
-  //     this.setState({
-  //       date: this.props.curDate,
-  //       rating: this.props.stars,
-  //       desc: this.props.description
-  //     })
-  //   }
-  // }
 
   render() {
 

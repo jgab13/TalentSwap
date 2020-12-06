@@ -54,7 +54,7 @@ class Home extends React.Component {
             <h1 className="ltitle">Popular Courses</h1>
             {/* server call */}
             <CourseResutls courses = {this.state.courses.sort((a, b) => 
-              a.enrollment/a.capacity - b.enrollment/b.capacity).slice(this.state.courses.length-3)}/>
+              a.enrollment/a.capacity - b.enrollment/b.capacity)}/>
           </div>
         </div>
       );  
@@ -65,4 +65,3 @@ class Home extends React.Component {
 
 export default withRouter(Home);
 
-//Jonathan change lines 52/53 from hardcoded coures
