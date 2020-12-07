@@ -91,7 +91,6 @@ class DetailedCoursePageTeacher extends React.Component {
           </Button>
         </span>
     </div>
-    <h3>Reviews for this course: </h3>
     </div>
     );
   }
