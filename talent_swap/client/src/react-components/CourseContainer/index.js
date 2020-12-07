@@ -278,7 +278,7 @@ class CourseContainer extends React.Component {
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
   	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser !== this.state.course.teacher ?
   					   <Button className="review" onClick={this.addReviewFunc} variant="outline-success"> Add review</Button> : null);
-    const deleteCourseButton = this.state.adminUser === this.state.currUser && this.state.currUser !== null ? <Button className="delete" onClick={this.deleteCourseFunc} variant="danger"> Delete Course</Button> : null;
+    const deleteCourseButton = this.state.adminUser !== null ? <Button className="delete" onClick={this.deleteCourseFunc} variant="danger"> Delete Course</Button> : null;
 
     return (
     
