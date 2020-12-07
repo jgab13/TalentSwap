@@ -10,17 +10,16 @@ import { Redirect } from 'react-router-dom';
 
 //Jingwen - maybe you can redirect to the DetailedCoursePageTeacher if the course teacher === user?  <--Thanks:)
 class DetailedCoursePage extends React.Component {
-    state = {
+  constructor(props){
+    super(props)
+    checkSession(this)
+    getCourse(this, "5fcd09b2b110aa2200f0768a")
+    this.state = {
       id: this.props.location.state.course.id,
       course: null,
       currentUser: null
     }
-
-    async componentDidMount() {
-      await getCourse(this, "5fcd09bcb110aa2200f0768b")
-      //await getCourse(this, "5fcd9f74c44ed34ee4b41b01") //Testing course from Jingwen's local database
-      await checkSession(this) //sets the currentUser which passes to CourseContainer to set current user        
-    }
+  }
 
   	render() {
     

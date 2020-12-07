@@ -88,11 +88,14 @@ class CourseContainer extends React.Component {
       this.setState({
         adminUser: user
       })   
+      console.log(user.includes("admin"))
     }
-      // console.log("The admin user is now " + this.state.adminUser)
-      // console.log("This current user is now " + this.state.currUser)
-      // console.log("Are they equal?")
-      // console.log(this.state.adminUser === this.state.currUser)
+      console.log("The admin user is now " + this.state.adminUser)
+      console.log("This current user is now " + this.state.currUser)
+      console.log("Are they equal?")
+      console.log(this.state.adminUser === this.state.currUser)
+
+      
   }
 
   /////On change and other functions
@@ -110,13 +113,13 @@ class CourseContainer extends React.Component {
   }
 
   //Enroll current user in course.
-  enrollCourse = () => {
+  enrollCourse = async () => {
    if (this.state.currUser === null || this.state.currUser.userType === 'admin'){
     this.setState({
       enrolled: !this.state.enrolled,
     })
    } else {
-      enroll(this, this.state.currUser, this.state.course._id)
+      await enroll(this, this.state.currUser, this.state.course._id)
     }
   
   }
@@ -142,7 +145,7 @@ class CourseContainer extends React.Component {
   }
 
   //Removes review from current reviews
-  deleteReview = event => {
+  deleteReview = async (event) => {
     event.preventDefault()
     const reviewName = event.target.name;
     
@@ -152,7 +155,7 @@ class CourseContainer extends React.Component {
     console.log("this is the review to delete ")
     console.log(reviewToDelete[0])
     //server call to delete review
-    deleteReview(this.state.course._id, this.state.currUser)
+    await deleteReview(this.state.course._id, this.state.currUser)
     
     const remainingReview = this.state.review.filter(rev => {
       return rev.description !== reviewName
@@ -161,7 +164,7 @@ class CourseContainer extends React.Component {
     const newRating = this.calcReviewRating(remainingReview);
     console.log(newRating)
     //update course rating in db
-    updateCourse(["rate"], [newRating], this.state.course._id)
+    await updateCourse(["rate"], [newRating], this.state.course._id)
 
     //updates front end
     const curCourse = this.state.course;
@@ -185,7 +188,7 @@ class CourseContainer extends React.Component {
   }
 
   //Add or edit review from current user using details for addReview entry form.
-  addReviewForm = (date, rating, desc)  => {
+  addReviewForm = async (date, rating, desc)  => {
 
     if (date === ""){
       alert('Date cannot be blank. Enter a valid date.');
@@ -213,7 +216,7 @@ class CourseContainer extends React.Component {
     if (getReview.length === checkReview.length){
       console.log(newReview)
       console.log(this.state.course._id)
-      addReview(this.state.course._id, newReview)
+      await addReview(this.state.course._id, newReview)
       
     }
     //Otherwise get the review that matches the current user and call the edit review route.
@@ -225,7 +228,7 @@ class CourseContainer extends React.Component {
         return rev.user !== newReview.user
       })  
       console.log(editThisReview[0])
-      editReview(this.state.course._id, newReview)
+      await editReview(this.state.course._id, newReview)
       
     }
     getReview.push(newReview)
@@ -234,7 +237,7 @@ class CourseContainer extends React.Component {
     const newRating = this.calcReviewRating(getReview);
     console.log(newRating)
     //update the course rating in the db and update the front end
-    updateCourse(["rate"], [newRating], this.state.course._id)
+    await updateCourse(["rate"], [newRating], this.state.course._id)
     const curCourse = this.state.course
     curCourse.rate = newRating
 
@@ -247,11 +250,11 @@ class CourseContainer extends React.Component {
 
   }
 
-  deleteCourseFunc = event => {
+  deleteCourseFunc = async (event) => {
     event.preventDefault()
     //Server call needed to delete course from database.
     alert("Course successfully deleted");
-    deleteCourse(this.state.course._id) // this works :)!
+    await deleteCourse(this.state.course._id) // this works :)!
     window.location.href='/AdminDashboard'
   }
 
