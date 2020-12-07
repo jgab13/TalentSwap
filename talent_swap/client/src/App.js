@@ -61,6 +61,7 @@ class App extends React.Component {
                              (<SearchPage appState={this.state} {...props}/>)}/>
               <Route exact path='/PersonalCourses/:filter' render={(props) => 
                              (<PersonalCourses appState={this.state} {...props}/>)}/>
+              <Route render={() => <div>404 Not found!</div>}/>
             </Switch>
           </BrowserRouter>
         </ContextComponent>
