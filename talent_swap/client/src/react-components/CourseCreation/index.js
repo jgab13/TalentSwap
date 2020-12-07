@@ -5,6 +5,7 @@ import { hardcodedCourses } from "./../../courses/testcourses"
 import { CreateCourse, updateCourse } from "../../actions/course";
 import { Button, Row, Col, Form }from "react-bootstrap";
 import { checkSession } from "./../../actions/user";
+import AuthSystem from "./../AuthSystem";
 
 
 /* The CourseCreation Component */
@@ -85,6 +86,7 @@ class CourseCreation extends React.Component {
   render() {
     return (
       <div>
+      {this.props.location.state == undefined && this.state.currentUser == "" ? <AuthSystem/> : null}
       	<Header/>
 		<div className="course-form">
       	<Form onSubmit={this.handleSubmit}>
@@ -121,35 +123,13 @@ class CourseCreation extends React.Component {
 			    <Form.Label column sm="3">
 			      Date *
 			    </Form.Label>
-			    <Col sm="6">
+			    <Col sm="9">
 			    		<Form.Control required
 			    		type="date"
 			    		name="date"
 			      	value={this.state.date}
 			      	onChange={this.handleChange}/>
-			    </Col>
-			    <Col sm="3">
-			      <Form.Check
-			      	defaultChecked
-			        type='radio'
-			        id='only once'
-			        name='recurring'
-			        label='only once'
-			        value='false'
-			      />
-			      <Form.Check
-			        type='radio'
-			        id='recurring'
-			        label='recurring'
-			        value='true'
-			        name='recurring'
-			        onChange={this.handleChange}
-			      />
-			      </Col>
-			      <Form.Text id="dateBlock" className="help-date" muted>
-					    If you checked recurring, system will automatically create courses
-					    every week at the same time for you.
-					</Form.Text>  	
+			    </Col>  	
 			  </Form.Group>
 
 			  <Form.Group as={Row}>

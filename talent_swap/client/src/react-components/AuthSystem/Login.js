@@ -37,9 +37,6 @@ class Login extends React.Component {
 		event.preventDefault();
 		let currentUser = await this.validate();
 		if (currentUser) {
-			
-			//testing
-			this.setState({redirect:"user"})
 
 			//admin validation
 			//TODO pass userType to login component
@@ -73,7 +70,6 @@ class Login extends React.Component {
 			let currentUser = await this.context.login(input.username, input.password);
 			console.log(currentUser);
 			if (!currentUser) {
-				console.log("here!")
 				return false;
 			}
 			return currentUser;

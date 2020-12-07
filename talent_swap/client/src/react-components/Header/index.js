@@ -46,6 +46,7 @@ class Header extends React.Component {
 	logout() {
 		this.context.logout();
 		this.setState({
+			currentUser: null,
 			redirectURL: "/"
 		});
 	}
