@@ -81,7 +81,13 @@ courseRouter.get('/api/courses', mongoChecker, async (req, res) => {
         if (!course) {
             res.status(404).send('Resource not found')  // could not find this student
         } else { 
-            res.send({ "courses": course })
+            console.log("searching database found these courses: ", course)
+
+            res.send({ 
+                "courses": course,
+                "searchedCourses": course
+        
+        })
         }
     } catch(error) {
         console.log(error)
@@ -89,7 +95,38 @@ courseRouter.get('/api/courses', mongoChecker, async (req, res) => {
     }
 })
 
+// retrieve courses related to the given search keyword
+courseRouter.get('/api/courses/keyword=:key', mongoChecker, async (req, res) => {
+    const keyword = req.params.key.toLowerCase()
+    console.log(`seaching for "${keyword}"`)
+    try {
+        // call find twice instead of call find once with a || filter since 
+        // I want topic matched courses (considered as the most relevant ones) displayed before 
+        // description matched courses
 
+        const topicMatch = await Course.find({topic: {$regex: keyword, $options: 'i'}})
+        const descMatch = await Course.find({description: {$regex: keyword, $options: 'i'}})
+        let courses
+        if (!topicMatch && !descMatch) {
+            res.status(404).send(`No courses found for "${req.params.key}"`) 
+            return
+        } else if (!topicMatch){
+            courses = descMatch
+        } else if (!descMatch) {
+            courses = topicMatch
+        } else {
+            courses = topicMatch.concat(descMatch)
+        }
+        console.log("searching database found these courses: ", courses)
+        res.send({
+            "searchedCourses": courses
+        })
+        
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Internal Server Error')  
+    }
+})
 
 //retrieve a course route
 courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {

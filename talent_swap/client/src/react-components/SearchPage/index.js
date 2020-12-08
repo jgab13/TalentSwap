@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import {Badge} from "react-bootstrap";
+import {uid} from "react-uid";
 
 
 import Header from "./../Header"
@@ -61,38 +62,68 @@ class SearchPage extends React.Component{
         super(props);
         this.state = Object.assign({
             tab : "courses", 
-        }, this.updateState()); // server call
+        }, this.updateState()); 
         this.handleTabSelect = this.handleTabSelect.bind(this);
+        this.updateState = this.updateState.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         const newState = this.updateState();
-        // console.log("prevState", prevState);
-        // console.log("newState", newState);
+        console.log("prevState", prevState);
+        console.log("newState", newState);
         if (newState.keyword !== prevState.keyword 
-            || (newState.courses.length !== prevState.courses.length
-                || !newState.courses.every((value, index) => value === prevState.courses[index]))
+            // || (newState.courses.length !== prevState.courses.length
+            //     || !newState.courses.every((value, index) => value === prevState.courses[index]))
                 // || newState.cfilters !== prevState.cfilters
             )
         {
             this.setState(newState);
         }
     }
+    // this.setState({
+    //    keyword: this.props.location.searchKeyword,
+    //    courses: this.props.location.searchedCourses
+    // })
 
     updateState = () => {
+        // this.setState({
+        //        keyword: this.props.location.searchKeyword,
+        //        courses: this.props.location.searchedCourses
+        //     })
+        console.log('updating search page...')
+        console.log(this.props);
+        const keyword = this.props.location.state.searchKeyword
+        const courses = this.props.location.state.searchedCourses
+    
+    
+        // const keyword = this.props.location.state
+        //     ? this.props.location.state.searchKeyword
+        //     : undefined;
+        // const courses = keyword
+        //     ? this.props.location.state.searchedCourses
+        //     : this.props.courses
+        console.log(`inside updateState of SearchPage, keyword=`, keyword)
+        console.log("inside updateState of SearchPage, courses=", courses)
+        return {
+                keyword: keyword,
+                courses: courses
+        }
+    }
+    // the function below is not used for phase 2
+    updateState2 = () => {
         console.log(this.props);
         const keyword = this.props.location.state
             ? this.props.location.state.searchInput
-            : undefined;
+            : undefined; // unnecessary, will only open search page via redirection from any other pages 
         let users = keyword // server call
-            ? hardcodedUsers.filter((user) => 
+            ? hardcodedUsers.filter((user) => // unnecessary, server response has searched users based on keyword 
                  (user.name.toLowerCase().match(keyword.toLowerCase())) 
                  || (user.development.toLowerCase().match(keyword.toLowerCase())) 
                  || (user.expertise.toLowerCase().match(keyword.toLowerCase())) 
             )
             : hardcodedUsers; 
         let courses = keyword // server call
-            ? hardcodedCourses.filter((course) => 
+            ? hardcodedCourses.filter((course) =>  // unnecessary, server respond with searched courses based on keyword
                 course.topic.toLowerCase().match(keyword.toLowerCase())
             )
             : hardcodedCourses;
@@ -135,25 +166,28 @@ class SearchPage extends React.Component{
     }
 
     render(){
-        const users = this.state.users;
+        // const users = this.state.users;
         const courses = this.state.courses;
+        // console.log(`inside render of SearchPage, courses = ${courses}`)
+        // const courses = this.props.searchedCourses;
         const tab = this.state.tab;
-        const courseFilters = this.state.cfilters;
+        // const courseFilters = this.state.cfilters;
         let filter, results;
         // filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
         filter = (tab === "courses") ? <CourseFilter /> : undefined;
-        results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
+        results = (tab === "courses") ? <CourseResults courses = {courses}/> : undefined;
+        // results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
             <div className="SearchPage">
                 <Header />
-                <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} />
-                
+                <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} /> 
+                {/* can be simplified by moving handleTabSelect to SearchTabs  */}
                 <p > 
                     <span id="filterHeader">Filter by  </span> <br></br>
-                    { courseFilters.map( (filter) => 
+                    {/* { courseFilters.map( (filter) => 
                         <Badge className ="filterLabel" variant = "success" >{filter}</Badge>
                         )
-                    } 
+                    }  */}
                 </p>
                 
                 {filter}

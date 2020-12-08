@@ -2,6 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Redirect } from 'react-router-dom';
+import {getSearchedCourses} from './../../actions/course.js';
 
 
 class SearchBox extends React.Component{
@@ -10,31 +11,48 @@ class SearchBox extends React.Component{
         this.state = {
             input: "",
             redirectObject: undefined
+            // redirectURL: ""
         };
         this.handleClick = this.handleClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
         this.renderRedirect = this.renderRedirect.bind(this);
     }
 
-    handleClick(e){
-        console.log("searching the database...")
+    async handleClick(e){
         e.preventDefault();
-        this.setState({
-            redirectObject: {
-                pathname: '/Search',
-                state: {searchInput: this.state.input},
-            }
-        });
+       
+        await getSearchedCourses(this, this.state.input);
+        // await getSearchedUsers(this.props.app, this.state.input);
+        // const url = this.state.input ? '/Search?query='+this.state.input : '/Search';
+        // // setTimeout(console.log("After searching, app has the following states", this.props.app, 3000))
+        // this.setState({
+        //     redirectObject: {
+        //         pathname: url,
+        //         state: {searchKeyword: this.state.input},
+        //     }
+        // });
+        
+        // this.setState({
+        //     redirectObject: {
+        //         pathname: url,
+        //         state: {searchKeyword: this.state.input},
+        //     }
+        //     // redirectURL: url
+        // });
     }
 
-    handleChange(event) {
-        this.setState({
-            input: event.target.value
-        });
-    };
 
     renderRedirect() {
-        if (this.state.redirectObject) {
+        // if (this.state.redirectURL) {
+        //     return <Redirect to={this.state.redirectURL} />
+        // }
+        if (this.state.redirectObject 
+            // && this.state.redirectObject.state.searchedCourses
+            // && this.state.redirectObject.state.searchKeyword
+            // && this.state.redirectObject.pathname
+            ) {
+            console.log('redirecting to /Search')
+            console.log('searchBox:', this)
             return <Redirect to={this.state.redirectObject} />
         }
     };
@@ -50,8 +68,12 @@ class SearchBox extends React.Component{
                     placeholder="search courses or users"
                     className="mr-sm-2"
                     value={this.state.input}
-                    onChange={this.handleChange} />
-                    <Button variant="outline-success" onClick={this.handleClick}>search</Button>
+                    onChange={(e) => this.setState({input: e.target.value })} />
+                    <Button 
+                    variant="outline-success" 
+                    onClick={this.handleClick}>
+                        search
+                    </Button>
                 </Form>
             </div>
         );
