@@ -5,67 +5,60 @@ import Header from "./../Header"
 import CourseResults from "./../SearchCourseResults"
 
 // prepare hardcoded user and course data to render on the search page
-import {hardcodedCourses} from "./../../courses/testcourses.js"
-import UserManager from "./../../users/user-manager.js"
-import {hardCodedUsers} from "./../../users/user-manager.js"
-import {getCourse, getPast, getUpcoming} from "./../../courses/courseManager.js";
-
-//should be fetched from database
-const currUser = hardCodedUsers[0];
-const upcomingCourses = getUpcoming();
-const pastCourses = getPast();
+import { getCourses } from "../../actions/course.js"
+import { checkSession, getUserId } from "../../actions/user.js";
+import AuthSystem from "./../AuthSystem";
 
 
 class PersonalCourses extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            courses: upcomingCourses,
-            filter: ''
+            courses: null,
+            filter: '',
+            currentUser: "",
+            currentUserId: ""
         }
         this.findCourse = this.findCourse.bind(this);
     }
 
+    async componentDidMount(){
+        await getCourses(this);
+        await checkSession(this);
+        await getUserId(this);
+    }
+
     findCourse(filter) {
+        const courses = this.state.courses;
         let courseList = [];
-        let courseId;
-        let addcourse;
         switch(filter) {
           case "tp":
-            courseId = currUser.coursesTeaching;
-            courseId.forEach(id => {
-                addcourse = pastCourses.find(course => course.id === id);
-                if (addcourse != undefined) {
-                    courseList.push(addcourse);
+            for (let i in courses) {
+                if (courses[i].teacher == this.state.currentUser && new Date(courses[i].endtime).getTime() < Date.now()) {
+                    courseList.push(courses[i]);
                 }
-            })
+            }
             return courseList;
           case "tf":
-            courseId = currUser.coursesTeaching;
-            courseId.forEach(id => {
-                addcourse = upcomingCourses.find(course => course.id === id)
-                if (addcourse != undefined) {
-                    courseList.push(addcourse);
+           for (let i in courses) {
+                if (courses[i].teacher == this.state.currentUser && new Date(courses[i].endtime).getTime() > Date.now()) {
+                    courseList.push(courses[i]);
                 }
-            });
+            }
             return courseList;
           case "sp":
-            courseId = currUser.coursesLearning;
-            courseId.forEach(id => {
-                addcourse = pastCourses.find(course => course.id === id)
-                if (addcourse != undefined) {
-                    courseList.push(addcourse);
+            for (let i in courses) {
+                if (courses[i].enrolledUsers.includes(this.state.currentUserId) && new Date(courses[i].endtime).getTime() < Date.now()) {
+                    courseList.push(courses[i]);
                 }
-            });
+            }
             return courseList;
           case "sf":
-            courseId = currUser.coursesLearning;
-            courseId.forEach(id => {
-                addcourse = upcomingCourses.find(course => course.id === id)
-                if (addcourse != undefined) {
-                    courseList.push(addcourse);
+            for (let i in courses) {
+                if (courses[i].enrolledUsers.includes(this.state.currentUserId) && new Date(courses[i].endtime).getTime() > Date.now()) {
+                    courseList.push(courses[i]);
                 }
-            });
+            }
             return courseList;
         }
     }
@@ -75,6 +68,7 @@ class PersonalCourses extends React.Component{
         return(
             <div className="SearchPage">
                 <Header />
+                {/*this.state.currentUser == "" ? <AuthSystem/> : null*/}
                 {this.findCourse(filter).length === 0 ? 
                     <h4 id='alert'> There are no courses for you! </h4>
                     :
