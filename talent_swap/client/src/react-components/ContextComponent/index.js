@@ -13,7 +13,7 @@ class ContextComponent extends React.Component {
     }
     logout = async () => {
         await UserManager.logout();
-        this.changeUser(undefined);
+        this.changeUser(null);
     }
     register = async (username, password) => {
         const user = await UserManager.register(username, password);
@@ -48,18 +48,16 @@ class ContextComponent extends React.Component {
     }
 
     async componentDidMount() {
-        if (!this.state.currentUser) {
+        if (this.state.currentUser === undefined) { // undefined denotes unknown login status
             const user = await this.checkSession();
-            console.log(user)
             if (!user) {
-                console.log("NULL")
-                this.setState({currentUser: null});
+                this.setState({currentUser: null}); // No logged in user
             }
         }
     }
 
     render() {
-        if (this.state.currentUser === undefined) {
+        if (this.state.currentUser === undefined) { // undefined denotes unknown login status
             return <div></div>
         }
         return (

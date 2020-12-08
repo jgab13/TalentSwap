@@ -4,6 +4,7 @@ import Header from "./../Header";
 import {Container, Row, Col} from 'react-bootstrap';
 import MessageContacts from "../MessageContacts";
 import MessageContents from "../MessageContents";
+import { Redirect } from "react-router-dom";
 
 class MessageCenter extends React.Component {
     static contextType = UserContext;
@@ -27,7 +28,10 @@ class MessageCenter extends React.Component {
     }
     render() {
         const {currentUser} = this.context;
-        if (!currentUser || !this.state.selectedContact || !this.state.messages || !this.state.contactUsernames) {
+        if (currentUser === null) {
+            return <Redirect to="/" />
+        }
+        if (!this.state.selectedContact || !this.state.messages || !this.state.contactUsernames) {
             return <div></div>
         }
         return (
