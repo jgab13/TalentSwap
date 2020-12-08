@@ -27,7 +27,7 @@ class MessageCenter extends React.Component {
     }
     render() {
         const {currentUser} = this.context;
-        if (!this.state.selectedContact || !this.state.messages || !this.state.contactUsernames) {
+        if (!currentUser || !this.state.selectedContact || !this.state.messages || !this.state.contactUsernames) {
             return <div></div>
         }
         return (
