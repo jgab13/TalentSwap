@@ -45,7 +45,6 @@ class Signup extends React.Component {
 		//input shown in address bar need to be salted?
 		if (this.validate()) {
 			let user = await CheckUsername(this.state.input)
-			console.log(user)
 			if (user.user === null) {
 				await this.context.register(this.state.input.username, this.state.input.password1)
 				alert("You have successfully registered!")

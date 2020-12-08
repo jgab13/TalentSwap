@@ -20,14 +20,23 @@ export const checkSession = async (app) => {
         });
 };
 
-// A functon to update the login form state
-export const updateLoginForm = (loginComp, field) => {
-    const value = field.value;
-    const name = field.name;
+export const getUserId = async (app) => {
+    const url = "/users/getid";
 
-    loginComp.setState({
-        [name]: value
-    });
+    await fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            }
+        })
+        .then(json => {
+            if (json && json.currentUserId) {
+                app.setState({ currentUserId: json.currentUserId });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
 };
 
 export const CheckUsername = (userInput) => {
