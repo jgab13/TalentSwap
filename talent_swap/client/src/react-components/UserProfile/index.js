@@ -3,6 +3,7 @@ import {UserContext} from "./../../react-contexts/user-context";
 import Header from "./../Header";
 import { ListGroup, ListGroupItem, Container, Row, Col, Image } from 'react-bootstrap';
 import UserProfileField from "./../../react-components/UserProfileField";
+import ImageUploader from "./../../react-components/ImageUploader";
 import UserProfileCourses from "./../UserProfileCourses";
 
 import UserManager from "./../../users/user-manager";
@@ -40,8 +41,9 @@ class UserProfile extends React.Component {
                         <Col>
                             <ListGroup>
                                 <ListGroupItem>
-                                    <Image src={this.state.currentUser.pic} thumbnail />
+                                    <Image src={`data:;base64,${this.state.currentUser.pic}`} thumbnail />
                                 </ListGroupItem>
+                                {this.state.canEdit ? <ImageUploader changeValue={this.state.currentUser.changePicture} /> : <div></div>}
                                 <ListGroupItem>
                                     <UserProfileField fieldName="Name" fieldValue={this.state.currentUser.name} changeValue={this.state.currentUser.changeName} canEdit={this.state.canEdit} />
                                 </ListGroupItem>

@@ -22,6 +22,7 @@ courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
         starttime: req.body.starttime,
         endtime: req.body.endtime,
         credit: req.body.credit,
+        level: req.body.level,
         capacity: req.body.capacity,
         enrollment: 0,
         rate: 0,

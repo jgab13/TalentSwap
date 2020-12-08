@@ -29,6 +29,7 @@ class DetailedCoursePageTeacher extends React.Component {
         enrollment: "",
         capacity: "",
         teacher: "",
+        level: "",
         credit: "",
         starttime: "",
         endtime: ""
@@ -67,7 +68,7 @@ class DetailedCoursePageTeacher extends React.Component {
   }
 
   render() {
-    const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime} = this.state.course;
+    const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime, level} = this.state.course;
     return (
       <div>
       {this.renderRedirect()}
@@ -81,6 +82,7 @@ class DetailedCoursePageTeacher extends React.Component {
         <span>Teacher: {teacher}</span><br/>
         <span>Start: {new Date(starttime).toLocaleString("en-US")}</span><br/>
         <span>End: {new Date(endtime).toLocaleString("en-US")}</span><br/>
+        <span>Difficulty: {level}</span><br/>
         <span>Credit: {credit}</span><br/>
         <span>Status: {new Date(endtime) < Date.now()? "Completed" : "Upcoming"}</span><br/>
         <Button className="edit" onClick={this.setRedirect} variant="success"> Edit</Button>

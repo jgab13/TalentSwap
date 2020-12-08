@@ -20,7 +20,8 @@ const formatUser = (user) => {return {
     expertise: user.expertise,
     development: user.development,
     coursesTeaching: user.coursesTeaching,
-    coursesLearning: user.coursesLearning
+    coursesLearning: user.coursesLearning,
+    pic: user.pic
 }}
 
 // A route to login and create a session
@@ -147,6 +148,9 @@ router.patch('/api/users', mongoChecker, authenticate, async (req, res) => {
         }
         if (req.body.development) {
             user.development = req.body.development;
+        }
+        if (req.body.pic) {
+            user.pic = req.body.pic;
         }
         const updatedUser = await user.save();
         res.send(formatUser(updatedUser));
