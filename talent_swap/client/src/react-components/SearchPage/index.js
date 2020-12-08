@@ -32,7 +32,7 @@ function FilterCourseDates(curr_courses, filters){
             // console.log(course.starttime)
             let conv = new Date(course.starttime)
             // console.log(conv > Date.now())
-            return f === "upcoming"
+            return f === "Upcoming"
             ? conv > Date.now()
             : conv <= Date.now()
         }))
@@ -58,19 +58,19 @@ function FiltersCourseSizes(curr_courses, filters){
     filters.forEach(f => {
         let match = curr_courses.filter(course => 
             {switch(f){
-                case 'one-on-one': 
+                case 'One-on-One': 
                     return course.capacity === 1
                     // break
-                case 'small (2-8)':
+                case 'Small (2-8)':
                     return 1 < course.capacity && course.capacity < 9
                     // return 1 < course.capacity && course.capacity < 9
                     // break
 
-                case 'medium (9-20)':
+                case 'Medium (9-20)':
                     // 8 < course.capacity && course.capacity < 20
                     // break
                     return 8 < course.capacity && course.capacity < 21
-                case 'large (20+)':
+                case 'Large (20+)':
                     // course.capacity > 19
                     // break
                     return course.capacity > 20
@@ -78,7 +78,7 @@ function FiltersCourseSizes(curr_courses, filters){
                 //     return course
             }
         })
-        console.log("matched", match)
+        // console.log("matched", match)
         r_courses = r_courses.concat(match)
     })
         
@@ -310,7 +310,7 @@ class SearchPage extends React.Component{
                 <Form>
                     <div className="mb-3"> 
                     <span> Level </span>
-                    {['beginner', 'intermediate', 'advanced', 'all level'].map( level => (
+                    {['Beginner', 'Intermediate', 'Advanced', 'All Level'].map( level => (
                         <Form.Check inline label={level} type={'checkbox'} className={'cfilter'}
                         id={`c1:${level}`} onClick={this.handleCfilterCheck}
                          />
@@ -318,14 +318,14 @@ class SearchPage extends React.Component{
                     </div>
                     <div className="mb-3"> 
                     <span> Availability </span>
-                    {['past', 'upcoming'].map( a => (
+                    {['Past', 'Upcoming'].map( a => (
                         <Form.Check inline label={a} type={'checkbox'} className={'cfilter'}
                         id={`c2:${a}`} onClick={this.handleCfilterCheck}/>
                     ))}
                     </div>
                     <div className="mb-3"> 
                     <span> Class Size </span>
-                    {['one-on-one', 'small (2-8)', 'medium (9-20)', 'large (20+)'].map( s => (
+                    {['One-on-One', 'Small (2-8)', 'Medium (9-20)', 'Large (20+)'].map( s => (
                         <Form.Check inline label={s} type={'checkbox'} className={'cfilter'}
                         id={`c3:${s}`} onClick={this.handleCfilterCheck}/>
                     ))}
