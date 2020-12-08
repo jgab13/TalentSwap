@@ -15,7 +15,9 @@ class MessageCenter extends React.Component {
     }
     async componentDidMount() {
         const {currentUser} = this.context;
-        
+        if (!currentUser) {
+            return;
+        }
         const contactUsernames = await currentUser.getContactUsernames();
         const selectedContact = contactUsernames[0];
         const messages = await currentUser.getMessagesFromContact(selectedContact);
@@ -38,8 +40,9 @@ class MessageCenter extends React.Component {
             <div>
                 <Header />
                 <Container>
+                    <Row><h1>Currently Messaging:{this.state.selectedContact}</h1></Row>
                     <Row>
-                        <Col><MessageContacts contactUsernames={this.state.contactUsernames} /></Col>
+                        <Col><MessageContacts contactUsernames={this.state.contactUsernames} messageCenter={this} /></Col>
                         <Col><MessageContents selectedContact={this.state.selectedContact} messages={this.state.messages} sendMessageHandler={(message) => {currentUser.sendMessage(this.state.selectedContact, message)}} /></Col>
                     </Row>
                 </Container>

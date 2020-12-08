@@ -15,6 +15,18 @@ class MessageContents extends React.Component {
         };
         this.sendMessageHandler = this.props.sendMessageHandler;
     }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.messages.length !== this.props.messages.length
+            || !prevProps.messages.every((value, index) => value === this.props.messages[index]
+            || prevProps.selectedContact !== this.props.selectedContact)
+        ) {
+            this.setState({
+                selectedContact: this.props.selectedContact,
+                messages: this.props.messages,
+                messageToSend: ""
+            })
+        }
+    }
     handleInputChange = (event) => {
         this.setState({
             messageToSend: event.target.value

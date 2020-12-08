@@ -1,0 +1,10 @@
+.contacts-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 90vh;
+}
+
+.contacts-container > .contacts {
+    overflow-y: scroll;
+}

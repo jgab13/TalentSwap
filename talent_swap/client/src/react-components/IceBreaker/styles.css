@@ -1,0 +1,9 @@
+.contact-input {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1em;
+}
+
+.contact-input > input {
+    flex: auto;
+}
