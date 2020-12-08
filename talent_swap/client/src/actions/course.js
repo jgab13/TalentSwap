@@ -320,4 +320,43 @@ export const enroll = (app, user, courseID) => {
         });
 };
 
+//Use the enrollment API for enroll in course
+export const unenroll = (app, user, courseID) => {
+    // the URL for the request
+    const url = "/api/unenroll";
+
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify({
+            username: user,
+            courseId: courseID
+        }),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json(); //this returns 
+            }
+            else {
+                console.log(res.status)
+                alert('unenrollment unsuccessful')
+            }
+        }).then(json => {
+            app.setState({
+                enrolled: !app.state.enrolled,
+                course: json.course,
+                currUser: json.user.username,
+                enrollment: json.course.enrolledUsers
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
 

@@ -14,8 +14,11 @@ const { authenticate } = require('./helpers/authentication');
 router.post("/api/enrollment", mongoChecker, authenticate, async (req, res) => {
     try {
         const username = req.session.username;
+        console.log(username)
         const user = await User.findOne({username: username});
         const course = await Course.findById(req.body.courseId);
+        console.log(course)
+        console.log(user)
         if (course.enrolledUsers.includes(user.username)) {
             res.status(402).send("User is already enrolled");
             return;
@@ -29,6 +32,7 @@ router.post("/api/enrollment", mongoChecker, authenticate, async (req, res) => {
         user.credits -= course.credit;
         user.save();
         const teacher = await User.findOne({username: course.teacher});
+        console.log(teacher)
         teacher.credits += course.credit;
         teacher.save();
         course.enrolledUsers.push(user.username);
@@ -49,8 +53,10 @@ router.post("/api/unenroll", mongoChecker, authenticate, async (req, res) => {
         const username = req.session.username;
         const user = await User.findOne({username: username});
         const course = await Course.findById(req.body.courseId);
+        console.log(course)
+        console.log(user)
         if (!course.enrolledUsers.includes(user.username)) {
-            res.status(402).send("User is not already enrolled");
+            res.status(400).send("User is not already enrolled");
             return;
         }
         console.log(user.credits)
@@ -62,6 +68,7 @@ router.post("/api/unenroll", mongoChecker, authenticate, async (req, res) => {
         user.credits += course.credit;
         user.save();
         const teacher = await User.findOne({username: course.teacher});
+        console.log(teacher)
         teacher.credits -= course.credit;
         teacher.save();
         let index = -1
