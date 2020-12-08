@@ -15,7 +15,7 @@ class MessageCenter extends React.Component {
     }
     async componentDidMount() {
         const {currentUser} = this.context;
-
+        
         const contactUsernames = await currentUser.getContactUsernames();
         const selectedContact = contactUsernames[0];
         const messages = await currentUser.getMessagesFromContact(selectedContact);
@@ -31,7 +31,7 @@ class MessageCenter extends React.Component {
         if (currentUser === null) {
             return <Redirect to="/" />
         }
-        if (!this.state.selectedContact || !this.state.messages || !this.state.contactUsernames) {
+        if (this.state.contactUsernames === null) {
             return <div></div>
         }
         return (

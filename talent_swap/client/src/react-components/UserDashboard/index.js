@@ -9,6 +9,8 @@ class UserDashboard extends React.Component {
         const {currentUser} = this.context;
         if (currentUser === null) {
             return <Redirect to="/" />
+        } else if (currentUser && currentUser.userType === "admin") {
+            return <Redirect to="/AdminDashboard" />
         }
         return (
             <UserProfile />

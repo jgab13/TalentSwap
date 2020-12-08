@@ -1,14 +1,10 @@
 import UserManager from "./user-manager";
+import User from "./user";
 
-const bannedUsers = [];
-
-class AdminUser {
+class AdminUser extends User {
     constructor(json=null) {
+        super(json);
         this.userType = "admin";
-        Object.assign(
-            this,
-            typeof json === "string" ? JSON.parse(json) : json
-        );
     }
 
     banUser = async (username) => {
