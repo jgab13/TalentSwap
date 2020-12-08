@@ -9,7 +9,7 @@ class CourseResults extends React.Component{
     render(){
         const courses = this.props.courses;
         // const loginStatus = this.props.loginStatus;
-        console.log(courses);
+        // console.log(courses);
         return(
             <div id="cardDeck" className="row row-cols-1 row-cols-md-3">
                 {courses.map( course => 

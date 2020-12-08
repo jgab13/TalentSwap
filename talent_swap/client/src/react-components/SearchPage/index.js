@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import {Badge} from "react-bootstrap";
+import {Badge, Form, Button} from "react-bootstrap";
 import {uid} from "react-uid";
 
 
@@ -62,15 +62,49 @@ class SearchPage extends React.Component{
         super(props);
         this.state = Object.assign({
             tab : "courses", 
+            cfilters: {
+                level: [],
+                availability: [],
+                size: []
+            }
         }, this.updateState()); 
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.updateState = this.updateState.bind(this);
+        this.handleCfilterCheck = this.handleCfilterCheck.bind(this);
     }
 
+    handleCfilterCheck = (e) => {
+        const checkbox = document.getElementById(e.target.id)
+        if (checkbox.checked) {
+            console.log('checked')
+        }
+        const arr = e.target.id.split('-')
+        const cat = arr[0], tag = arr[1]
+        const dummy = {...this.state}
+        let arrToChange
+        switch(cat) {
+            case 'c1': 
+                arrToChange = dummy.cfilters.level
+                break
+            case 'c2':
+                arrToChange = dummy.cfilters.availability
+                break
+            case 'c3':
+                arrToChange = dummy.cfilters.size
+                break
+        }
+        if (checkbox.checked) {
+            arrToChange.push(tag)
+        } else {
+            arrToChange.splice(arrToChange.indexOf(tag), 1)
+        }
+        this.setState(dummy)
+
+    }
     componentDidUpdate(prevProps, prevState, snapshot) {
         const newState = this.updateState();
-        console.log("prevState", prevState);
-        console.log("newState", newState);
+        // console.log("prevState", prevState);
+        // console.log("newState", newState);
         if (newState.keyword !== prevState.keyword 
             // || (newState.courses.length !== prevState.courses.length
             //     || !newState.courses.every((value, index) => value === prevState.courses[index]))
@@ -80,30 +114,17 @@ class SearchPage extends React.Component{
             this.setState(newState);
         }
     }
-    // this.setState({
-    //    keyword: this.props.location.searchKeyword,
-    //    courses: this.props.location.searchedCourses
-    // })
+    
 
     updateState = () => {
-        // this.setState({
-        //        keyword: this.props.location.searchKeyword,
-        //        courses: this.props.location.searchedCourses
-        //     })
+        
         console.log('updating search page...')
-        console.log(this.props);
+        // console.log(this.props);
         const keyword = this.props.location.state.searchKeyword
         const courses = this.props.location.state.searchedCourses
-    
-    
-        // const keyword = this.props.location.state
-        //     ? this.props.location.state.searchKeyword
-        //     : undefined;
-        // const courses = keyword
-        //     ? this.props.location.state.searchedCourses
-        //     : this.props.courses
-        console.log(`inside updateState of SearchPage, keyword=`, keyword)
-        console.log("inside updateState of SearchPage, courses=", courses)
+
+        // console.log(`inside updateState of SearchPage, keyword=`, keyword)
+        // console.log("inside updateState of SearchPage, courses=", courses)
         return {
                 keyword: keyword,
                 courses: courses
@@ -169,12 +190,12 @@ class SearchPage extends React.Component{
         // const users = this.state.users;
         const courses = this.state.courses;
         // console.log(`inside render of SearchPage, courses = ${courses}`)
-        // const courses = this.props.searchedCourses;
+        console.log('the states of SearchPage comp are', this.state)
         const tab = this.state.tab;
         // const courseFilters = this.state.cfilters;
         let filter, results;
         // filter = (tab === "courses") ? <CourseFilter /> : <UserFilter />;
-        filter = (tab === "courses") ? <CourseFilter /> : undefined;
+        // filter = (tab === "courses") ? <CourseFilter /> : undefined;
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : undefined;
         // results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
         return(
@@ -189,8 +210,35 @@ class SearchPage extends React.Component{
                         )
                     }  */}
                 </p>
-                
-                {filter}
+                <Form>
+                    <div className="mb-3"> 
+                    <span> Level </span>
+                    {['beginner', 'intermediate', 'advanced', 'all level'].map( level => (
+                        <Form.Check inline label={level} type={'checkbox'} 
+                        id={`c1-${level}`} onClick={this.handleCfilterCheck}
+                         />
+                    ))}
+                    </div>
+                    <div className="mb-3"> 
+                    <span> Availability </span>
+                    {['past', 'upcoming'].map( a => (
+                        <Form.Check inline label={a} type={'checkbox'} 
+                        id={`c2-${a}`} onClick={this.handleCfilterCheck}/>
+                    ))}
+                    </div>
+                    <div className="mb-3"> 
+                    <span> Class Size </span>
+                    {['one-on-one', 'small (2-8)', 'medium (9-20)', 'large (20+)'].map( s => (
+                        <Form.Check inline label={s} type={'checkbox'}
+                        id={`c3-${s}`} onClick={this.handleCfilterCheck}/>
+                    ))}
+                    </div>
+                    <Button variant="success" id="apply-filter" onClick={this.handleClick}>
+                    Apply Filters</Button>
+                    <Button variant="secondary" id="clear-filter" onClick={this.handleClick}>
+                    Clear Filters</Button>
+                </Form>
+                {/* {filter} */}
                 {results}
             </div>
         )

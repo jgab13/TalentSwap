@@ -118,10 +118,10 @@ export const getSearchedCourses = async (searchBoxComp, keyword) => {
             //     keyword: keyword
             // })
             console.log("setting redirectObject for searchBox")
-            const url = keyword ? '/Search?query=' + keyword : '/Search';
             searchBoxComp.setState({
                 redirectObject: {
-                    pathname: url,
+                    pathname: '/Search',
+                    search: keyword ? '?query=' + keyword : '',
                     state: {
                         searchedCourses: json.searchedCourses,
                         searchKeyword: keyword
