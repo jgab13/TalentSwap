@@ -1,6 +1,5 @@
 import React from 'react';
 
-import User from "./../../users/user";
 import UserManager from "./../../users/user-manager";
 import { UserContext } from './../../react-contexts/user-context';
 

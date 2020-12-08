@@ -1,57 +1,79 @@
 import React from "react";
 import { uid } from "react-uid";
-import AdminUser from "./../../users/admin-user";
 import Header from "./../Header";
 import BannedUser from "./../BannedUser";
 import WebsiteStatus from './WebsiteStatus'
 import './styles.css';
 import { Button, Table } from 'react-bootstrap';
+import { UserContext } from "../../react-contexts/user-context";
+import { Redirect } from "react-router-dom";
 
 class AdminDashboard extends React.Component {
+    static contextType = UserContext;
     constructor(props) {
         super(props);
-        this.admin = new AdminUser();
         this.state = {
-            userIdToBan: "",
-            bannedUsers: this.admin.getBannedUsers()
+            usernameToBan: "",
+            bannedUsers: undefined
+        }
+    }
+
+    async componentDidMount() {
+        const {currentUser} = this.context;
+        if (currentUser && currentUser.userType === "admin") {
+            const bannedUsers = await currentUser.getBannedUsers();
+            console.log(bannedUsers)
+            this.setState({bannedUsers: bannedUsers});
         }
     }
 
     handleInputChange = (event) => {
         this.setState({
-            userIdToBan: event.target.value
+            usernameToBan: event.target.value
         });
     };
 
-    handleBan = (event) => {
-        this.admin.banUser(parseInt(this.state.userIdToBan));
+    handleBan = async (event) => {
+        const {currentUser} = this.context;
+        await currentUser.banUser(this.state.usernameToBan);
+        const bannedUsers = await currentUser.getBannedUsers();
         this.setState({
-            userIdToBan: "",
-            bannedUsers: this.admin.getBannedUsers()
+            usernameToBan: "",
+            bannedUsers: bannedUsers
         });
     }
 
-    handleUnban = (userId) => {
-        this.admin.unbanUser(userId);
+    handleUnban = async (username) => {
+        const {currentUser} = this.context;
+        await currentUser.unbanUser(username);
+        const bannedUsers = await currentUser.getBannedUsers();
         this.setState({
-            bannedUsers: this.admin.getBannedUsers()
+            usernameToBan: "",
+            bannedUsers: bannedUsers
         });
     }
 
     render() {
+        const {currentUser} = this.context;
+        if (currentUser === null || currentUser.userType !== "admin") {
+            return <Redirect to="/" />
+        }
+        if (!this.state.bannedUsers) {
+            return <div></div>
+        }
         return (
             <div>
                 <Header />
                 <div className="user-control">
                     <h4> User Control </h4>
-                    <input type="text" placeholder="User ID" value={this.state.userIdToBan} onChange={this.handleInputChange} />
+                    <input type="text" placeholder="Username" value={this.state.usernameToBan} onChange={this.handleInputChange} />
                     <Button variant="danger" type="button" onClick={this.handleBan}>BAN</Button>
                 </div>
                 <Table className="user-control">
                     <thead className="thead-dark">
                         <tr>
-                            <th>User ID</th>
-                            <th>User Name</th>
+                            <th>Username</th>
+                            <th>Name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

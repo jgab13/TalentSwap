@@ -5,6 +5,7 @@ const router = express.Router(); // Express Router
 
 // import the mongoose models
 const { User } = require("./../models/user");
+const { Ban } = require("./../models/ban");
 
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
@@ -23,23 +24,30 @@ const formatUser = (user) => {return {
 }}
 
 // A route to login and create a session
-router.post("/users/login", (req, res) => {
+router.post("/users/login", async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
     // Use the static method on the User model to find a user
     // by their username and password
-    User.findByUsernamePassword(username, password)
-        .then(user => {
-            // Add the user's id to the session.
-            // We can check later if this exists to ensure we are logged in.
-            req.session.user = user._id;
-            req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
-            res.send(formatUser(user));
-        })
-        .catch(error => {
-            res.status(400).send()
-        });
+    try {
+        const user = await User.findByUsernamePassword(username, password);
+
+        // Check if user is banned
+        const ban = await Ban.findOne({bannedUsername: username});
+        if (ban) {
+            res.status(400).send();
+            return;
+        }
+
+        // Add the user's id to the session.
+        // We can check later if this exists to ensure we are logged in.
+        req.session.user = user._id;
+        req.session.username = user.username; // we will later send the username to the browser when checking if someone is logged in through GET /check-session (we will display it on the frontend dashboard. You could however also just send a boolean flag).
+        res.send(formatUser(user));
+    } catch (error) {
+        res.status(400).send();
+    }
 });
 
 // A route to logout a user
@@ -68,6 +76,7 @@ router.post('/api/users', mongoChecker, async (req, res) => {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
+        userType: "admin",
         credits: 10
     })
 
