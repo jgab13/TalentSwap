@@ -6,7 +6,7 @@ import {uid} from "react-uid";
 
 import Header from "./../Header"
 import SearchTabs from "./../SearchTabs"
-import CourseFilter from "./../SearchCourseFilter"
+// import CourseFilter from "./../SearchCourseFilter"
 // import UserFilter from "./../SearchUserFilter"
 import CourseResults from "./../SearchCourseResults"
 import UserResults from "./../SearchUserResults"
@@ -18,41 +18,90 @@ const hardcodedUsers = ["user", "user2"].map(async username => await UserManager
 
 function FilterCourseLevels(curr_courses, filters){
     let r_courses = [];
-    for (let f of filters){
+    filters.forEach(f => {
         r_courses = r_courses.concat(curr_courses.filter(course =>
             course.level === f))
-    }
+    })
     return r_courses;
 }
 
 function FilterCourseDates(curr_courses, filters){
     let r_courses = [];
-    for (let f of filters){
-        r_courses = r_courses.concat(curr_courses.filter(course =>
-            f === "upcoming"
-            ? course.starttime > Date.now()
-            : course.starttime <= Date.now()))
-    }
+    filters.forEach(f => {
+        r_courses = r_courses.concat(curr_courses.filter(course => {
+            // console.log(course.starttime)
+            let conv = new Date(course.starttime)
+            // console.log(conv > Date.now())
+            return f === "upcoming"
+            ? conv > Date.now()
+            : conv <= Date.now()
+        }))
+           
+    })
+        
     return r_courses;
 }
 
 function FiltersCourseSizes(curr_courses, filters){
     let r_courses = [];
-    for (let f of filters){
-        r_courses = r_courses.concat(curr_courses.filter(course =>
+    // let conds
+    // for (let f of filters) {
+    //     switch(f) {
+    //         case 'one': 
+    //             conds = conds || course.capacity === 1
+    //             break 
+            
+    //     }
+    // }
+    // for (let f of filters){
+        // , , , 
+    filters.forEach(f => {
+        let match = curr_courses.filter(course => 
             {switch(f){
-                case 'one': 
+                case 'one-on-one': 
                     return course.capacity === 1
-                case 'small':
+                    // break
+                case 'small (2-8)':
                     return 1 < course.capacity && course.capacity < 9
-                case 'medium':
+                    // return 1 < course.capacity && course.capacity < 9
+                    // break
+
+                case 'medium (9-20)':
+                    // 8 < course.capacity && course.capacity < 20
+                    // break
                     return 8 < course.capacity && course.capacity < 21
-                case 'large':
+                case 'large (20+)':
+                    // course.capacity > 19
+                    // break
                     return course.capacity > 20
-                default:
-                    return course
-            }}))
-    }
+                // default:
+                //     return course
+            }
+        })
+        console.log("matched", match)
+        r_courses = r_courses.concat(match)
+    })
+        
+        // r_courses = r_courses.concat(curr_courses.filter(course => {
+        //     console.log("course.capacity type", typeof course.capacity)
+        //     console.log("course capacity is ", course.capacity)
+        //     {switch(f){
+        //         case 'one': 
+        //             return course.capacity === 1
+        //         case 'small':
+        //             return 1 < course.capacity && course.capacity < 9
+        //         case 'medium':
+        //             return 8 < course.capacity && course.capacity < 21
+        //         case 'large':
+        //             return course.capacity > 20
+        //         default:
+        //             return course
+        //     }}
+        // }
+            // )
+            // )
+        
+    
     return r_courses;
 }
 
@@ -71,6 +120,53 @@ class SearchPage extends React.Component{
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.updateState = this.updateState.bind(this);
         this.handleCfilterCheck = this.handleCfilterCheck.bind(this);
+        this.applyCfilters = this.applyCfilters.bind(this);
+        this.clearCfilters = this.clearCfilters.bind(this);
+    }
+
+    applyCfilters = () => {
+        // console.log("to be implemented")
+        const cfilters = this.state.cfilters
+        let displayedCourses = this.state.courses
+        if (cfilters.level.length) {
+            // displayedCourses = displayedCourses.concat(FilterCourseLevels(displayedCourses, cfilters.level))
+            displayedCourses = FilterCourseLevels(displayedCourses, cfilters.level)
+            console.log('displayedCourses after level filters ', displayedCourses)
+
+        }
+
+        if (cfilters.availability.length) {
+            // displayedCourses = displayedCourses.concat(FilterCourseDates(displayedCourses, cfilters.availability))
+            displayedCourses = FilterCourseDates(displayedCourses, cfilters.availability)
+            console.log('displayedCourses after availability filters', displayedCourses)
+
+        }
+
+        if (cfilters.size.length) {
+            // displayedCourses = displayedCourses.concat(FiltersCourseSizes(displayedCourses, cfilters.size))
+            displayedCourses = FiltersCourseSizes(displayedCourses, cfilters.size)
+            console.log('displayedCourses after size filters', displayedCourses)
+        }
+
+        this.setState({displayedCourses: displayedCourses})
+    }
+
+    clearCfilters = () => {
+        const dummy = {...this.state}
+        dummy.cfilters = {level: [], availability: [], size:[]}
+        dummy.displayedCourses = dummy.courses
+        this.setState(dummy)
+        const checkboxes = document.getElementsByClassName('cfilter')
+        // console.log(typeof checkboxes)
+        // console.log(checkboxes.length)
+        // console.log(checkboxes)
+        // checkboxes.forEach(cb => cb.checked= false)
+        // TODO: need a way to update DOM: uncheck all the boxes
+        for (let b of checkboxes) {
+            console.log('hi')
+            // b.setState({checked:false})
+            b.checked = false
+        }
     }
 
     handleCfilterCheck = (e) => {
@@ -78,7 +174,7 @@ class SearchPage extends React.Component{
         if (checkbox.checked) {
             console.log('checked')
         }
-        const arr = e.target.id.split('-')
+        const arr = e.target.id.split(':')
         const cat = arr[0], tag = arr[1]
         const dummy = {...this.state}
         let arrToChange
@@ -127,7 +223,8 @@ class SearchPage extends React.Component{
         // console.log("inside updateState of SearchPage, courses=", courses)
         return {
                 keyword: keyword,
-                courses: courses
+                courses: courses,
+                displayedCourses: courses
         }
     }
     // the function below is not used for phase 2
@@ -188,7 +285,7 @@ class SearchPage extends React.Component{
 
     render(){
         // const users = this.state.users;
-        const courses = this.state.courses;
+        const courses = this.state.displayedCourses;
         // console.log(`inside render of SearchPage, courses = ${courses}`)
         console.log('the states of SearchPage comp are', this.state)
         const tab = this.state.tab;
@@ -214,28 +311,28 @@ class SearchPage extends React.Component{
                     <div className="mb-3"> 
                     <span> Level </span>
                     {['beginner', 'intermediate', 'advanced', 'all level'].map( level => (
-                        <Form.Check inline label={level} type={'checkbox'} 
-                        id={`c1-${level}`} onClick={this.handleCfilterCheck}
+                        <Form.Check inline label={level} type={'checkbox'} className={'cfilter'}
+                        id={`c1:${level}`} onClick={this.handleCfilterCheck}
                          />
                     ))}
                     </div>
                     <div className="mb-3"> 
                     <span> Availability </span>
                     {['past', 'upcoming'].map( a => (
-                        <Form.Check inline label={a} type={'checkbox'} 
-                        id={`c2-${a}`} onClick={this.handleCfilterCheck}/>
+                        <Form.Check inline label={a} type={'checkbox'} className={'cfilter'}
+                        id={`c2:${a}`} onClick={this.handleCfilterCheck}/>
                     ))}
                     </div>
                     <div className="mb-3"> 
                     <span> Class Size </span>
                     {['one-on-one', 'small (2-8)', 'medium (9-20)', 'large (20+)'].map( s => (
-                        <Form.Check inline label={s} type={'checkbox'}
-                        id={`c3-${s}`} onClick={this.handleCfilterCheck}/>
+                        <Form.Check inline label={s} type={'checkbox'} className={'cfilter'}
+                        id={`c3:${s}`} onClick={this.handleCfilterCheck}/>
                     ))}
                     </div>
-                    <Button variant="success" id="apply-filter" onClick={this.handleClick}>
+                    <Button variant="success" id="apply-filter" onClick={this.applyCfilters}>
                     Apply Filters</Button>
-                    <Button variant="secondary" id="clear-filter" onClick={this.handleClick}>
+                    <Button variant="secondary" id="clear-filter" onClick={this.clearCfilters}>
                     Clear Filters</Button>
                 </Form>
                 {/* {filter} */}
