@@ -5,6 +5,7 @@ export const UserContext = React.createContext(
         changeUser: () => {},
         login: async (username, password) => {},
         logout: async () => {},
-        register: async (username, password) => {} 
+        register: async (username, password) => {},
+        checkSession: async () => {}
     }
 );

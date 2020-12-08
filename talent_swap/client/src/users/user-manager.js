@@ -44,7 +44,15 @@ class UserManager {
         try {
             const res = await fetch(request);
             if (res.status === 200) {
-                return new User(await res.json())
+                const json = await res.json();
+                switch(json.userType) {
+                    case "admin":
+                        return new AdminUser(json);
+                    case "user":
+                        return new User(json);
+                    default:
+                        return new User(json);
+                }
             }
         } catch (error) {
             console.log(error);
@@ -103,7 +111,15 @@ class UserManager {
         try {
             const res = await fetch(request);
             if (res.status === 200) {
-                return new User(await res.json())
+                const json = await res.json();
+                switch(json.userType) {
+                    case "admin":
+                        return new AdminUser(json);
+                    case "user":
+                        return new User(json);
+                    default:
+                        return new User(json);
+                }
             }
         } catch (error) {
             console.log(error);

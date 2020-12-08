@@ -8,7 +8,7 @@ import '../AuthSystem/styles.css';
 
 class AddCourseReview extends React.Component {
   state = {
-    date: new Date(this.props.curDate).toLocaleDateString("en-US"),
+    date: this.props.curDate !== "" ? new Date(this.props.curDate).toLocaleDateString("en-US") : "",
     rating: this.props.stars,
     desc: this.props.description
   }

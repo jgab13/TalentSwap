@@ -1,37 +1,65 @@
 import UserManager from "./user-manager";
+import User from "./user";
 
-const bannedUsers = [];
-
-class AdminUser {
+class AdminUser extends User {
     constructor(json=null) {
+        super(json);
         this.userType = "admin";
-        Object.assign(
-            this,
-            typeof json === "string" ? JSON.parse(json) : json
-        );
     }
 
-    banUser = (username) => {
-        // Needs server call
-        const userToBan = UserManager.getUserFromUsername(username);
-        if (userToBan) {
-            bannedUsers.push(userToBan);
+    banUser = async (username) => {
+        const request = new Request("/api/banned", {
+            method: "POST",
+            body: JSON.stringify({username: username}),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        });
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return res.json();
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
-    unbanUser = (username) => {
-        // Needs server call
-        bannedUsers.splice(
-            bannedUsers.indexOf(
-                UserManager.getUserFromUsername(username)
-            ),
-            1
-        );
+    unbanUser = async (username) => {
+        const request = new Request("/api/banned", {
+            method: "DELETE",
+            body: JSON.stringify({username: username}),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        });
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                return res.json();
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    getBannedUsers = () => {
-        // Needs server call
-        return bannedUsers;
+    getBannedUsers = async () => {
+        const request = new Request("/api/banned", {
+            method: "GET"
+        });
+        try {
+            const res = await fetch(request);
+            if (res.status === 200) {
+                const json = await res.json();
+                return await Promise.all(
+                    json.map(async ban => await UserManager.getUserFromUsername(ban.bannedUsername))
+                );
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

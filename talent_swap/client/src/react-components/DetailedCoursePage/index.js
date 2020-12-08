@@ -12,14 +12,17 @@ import { Redirect } from 'react-router-dom';
 class DetailedCoursePage extends React.Component {
   constructor(props){
     super(props)
-    checkSession(this)
-    getCourse(this, "5fcd09b2b110aa2200f0768a")
     this.state = {
       id: this.props.location.state.course.id,
       course: null,
       currentUser: null
     }
   }
+
+    async componentDidMount() {
+      await checkSession(this)
+      getCourse(this, "5fcd09aab110aa2200f07689")
+    }
 
   	render() {
     

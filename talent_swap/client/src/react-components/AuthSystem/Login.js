@@ -43,7 +43,6 @@ class Login extends React.Component {
 			if (currentUser.userType === "admin") { //usertype
 				this.setState({redirect:"admin"});
 			}  else {
-				this.context.changeUser(currentUser);
 				this.setState({redirect:"user"});
 			}
 			//functionality

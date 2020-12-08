@@ -52,6 +52,8 @@ app.use(require('./routes/courses'))
 
 app.use(require('./routes/enrollment'))
 
+app.use(require('./routes/banned'))
+
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
     // send index.html
