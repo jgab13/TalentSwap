@@ -7,7 +7,9 @@ class ContextComponent extends React.Component {
     changeUser = (user) => {this.setState({currentUser: user})}
     login = async (username, password) => {
         const user = await UserManager.login(username, password);
-        this.changeUser(user);
+        if (user) {
+            this.changeUser(user);
+        }
         return user;
     }
     logout = async () => {
