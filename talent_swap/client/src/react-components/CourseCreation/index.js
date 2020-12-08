@@ -25,10 +25,12 @@ class CourseCreation extends React.Component {
     	date: new Date(this.props.location.state.course.course.endtime).toLocaleDateString("fr-CA",{year: "numeric",
 																		   		month: "2-digit",
 																		   		day: "2-digit"}),
+    	level: this.props.location.state.course.course.level,
     	credit: this.props.location.state.course.course.credit,
     	capacity: this.props.location.state.course.course.capacity,
     	area: this.props.location.state.course.course.area,
-    	description: this.props.location.state.course.course.description    	}
+    	description: this.props.location.state.course.course.description,
+    	savedCredit : this.props.location.state.course.course.credit}
 	}
     else{
     	this.state = {
@@ -37,6 +39,7 @@ class CourseCreation extends React.Component {
     	starttime: "",
     	endtime: "",
     	date: "",
+    	level: "",
     	credit: 0,
     	capacity: 0,
     	area: "",
@@ -63,14 +66,18 @@ class CourseCreation extends React.Component {
 	    	window.location.href='/DetailedCoursePageTeacher/' + newCourse._id;
 	    	}
 		else {
-			console.log(this.props.location.state)
-			let starttime = new Date(this.state.date + " " + this.state.starttime)
-			let endtime = new Date(this.state.date + " " + this.state.endtime)
-			let  attributes = ["topic", "currentUser", "starttime", "endtime", "credit", "capacity", "area", "description"]
-			let values = [this.state.topic, this.state.currentUser, starttime, endtime, this.state.credit, this.state.capacity, this.state.area, this.state.description]
-			updateCourse(attributes, values, this.props.location.state.course.courseid)
-			alert('Changes has been made to your course.')
-			window.location.href='/DetailedCoursePageTeacher/' + this.props.location.state.course.courseid;
+			if (this.state.credit != this.state.savedCredit) {
+				alert("Course credit can't be modified once it is created.")
+			}
+			else {
+				let starttime = new Date(this.state.date + " " + this.state.starttime)
+				let endtime = new Date(this.state.date + " " + this.state.endtime)
+				let attributes = ["topic", "currentUser", "starttime", "endtime", "level", "credit", "capacity", "area", "description"]
+				let values = [this.state.topic, this.state.currentUser, starttime, endtime, this.state.level, this.state.credit, this.state.capacity, this.state.area, this.state.description]
+				updateCourse(attributes, values, this.props.location.state.course.courseid)
+				alert('Changes has been made to your course.')
+				window.location.href='/DetailedCoursePageTeacher/' + this.props.location.state.course.courseid;
+			}
 		}
 	}
 
@@ -129,6 +136,24 @@ class CourseCreation extends React.Component {
 			    		name="date"
 			      	value={this.state.date}
 			      	onChange={this.handleChange}/>
+			    </Col>  	
+			  </Form.Group>
+
+			  <Form.Group as={Row}>
+			    <Form.Label column sm="3">
+			      Difficulty *
+			    </Form.Label>
+			    <Col sm="9">
+			    		<Form.Control required
+			    		as="select"
+			    		name="level"
+			      	value={this.state.level}
+			      	onChange={this.handleChange}>
+			      	<option>Beginner</option>
+			      	<option>Intermediate</option>
+			      	<option>Advanced</option>
+			      	<option>All Level</option>
+			      	</Form.Control>
 			    </Col>  	
 			  </Form.Group>
 

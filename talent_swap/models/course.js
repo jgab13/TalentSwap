@@ -16,6 +16,7 @@ const Course = mongoose.model('Course', {
 	teacher: String,
 	starttime: Date,
 	endtime: Date,
+	level: String,
 	credit: Number,
 	capacity: Number,
 	enrollment: Number,

@@ -7,6 +7,7 @@ export const CreateCourse = (userInput) => {
             teacher: userInput.currentUser,
             starttime: new Date(userInput.date + " " + userInput.starttime),
             endtime: new Date(userInput.date + " " + userInput.endtime),
+            level: userInput.level,
             credit: userInput.credit,
             capacity: userInput.capacity,
             area: userInput.area,
