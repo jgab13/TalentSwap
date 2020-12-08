@@ -60,6 +60,19 @@ class User {
         await fetchPatch({development: newDevelopment});
     };
 
+    changePicture = async (newPicture) => {
+        // newPicture is of type File (from input type="file")
+        const reader = new FileReader();
+        reader.onload = async () => {
+            const result = reader.result;
+            const base64string = btoa(result);
+            await fetchPatch({pic: base64string});
+            window.location.reload();
+        };
+        reader.onerror = error => console.log(error);
+        reader.readAsBinaryString(newPicture);
+    }
+
     getContactUsernames = async () => {
         const request = new Request("/api/message-contacts", {
             method: "GET"

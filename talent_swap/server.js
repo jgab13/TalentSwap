@@ -20,7 +20,11 @@ const { User } = require("./models/user");
 app.use(express.static(path.join(__dirname, "/client/build")));
 
 const bodyParser = require('body-parser') 
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
+// Need for profile pictures
+const limit = "50mb"
+app.use(bodyParser.json({limit: limit, extended: true}))
+app.use(bodyParser.urlencoded({limit: limit, extended: true}))
 
 // express-session for managing user sessions
 const session = require("express-session");
