@@ -6,7 +6,7 @@ import CourseResults from "./../SearchCourseResults"
 
 // prepare hardcoded user and course data to render on the search page
 import { getCourses } from "../../actions/course.js"
-import { checkSession, getUserId } from "../../actions/user.js";
+import { checkSession } from "../../actions/user.js";
 import AuthSystem from "./../AuthSystem";
 
 
@@ -16,16 +16,14 @@ class PersonalCourses extends React.Component{
         this.state = {
             courses: null,
             filter: '',
-            currentUser: "",
-            currentUserId: ""
+            currentUser: ""
         }
         this.findCourse = this.findCourse.bind(this);
     }
 
     async componentDidMount(){
         await getCourses(this);
-        await checkSession(this);
-        await getUserId(this);
+        await checkSession(this)
     }
 
     findCourse(filter) {
@@ -48,14 +46,14 @@ class PersonalCourses extends React.Component{
             return courseList;
           case "sp":
             for (let i in courses) {
-                if (courses[i].enrolledUsers.includes(this.state.currentUserId) && new Date(courses[i].endtime).getTime() < Date.now()) {
+                if (courses[i].enrolledUsers.includes(this.state.currentUser) && new Date(courses[i].endtime).getTime() < Date.now()) {
                     courseList.push(courses[i]);
                 }
             }
             return courseList;
           case "sf":
             for (let i in courses) {
-                if (courses[i].enrolledUsers.includes(this.state.currentUserId) && new Date(courses[i].endtime).getTime() > Date.now()) {
+                if (courses[i].enrolledUsers.includes(this.state.currentUser) && new Date(courses[i].endtime).getTime() > Date.now()) {
                     courseList.push(courses[i]);
                 }
             }

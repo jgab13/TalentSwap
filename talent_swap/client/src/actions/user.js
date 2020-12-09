@@ -20,25 +20,6 @@ export const checkSession = async (app) => {
         });
 };
 
-export const getUserId = async (app) => {
-    const url = "/users/getid";
-
-    await fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            }
-        })
-        .then(json => {
-            if (json && json.currentUserId) {
-                app.setState({ currentUserId: json.currentUserId });
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
-
 export const CheckUsername = (userInput) => {
     const url = "api/users/get/"+userInput.username
 

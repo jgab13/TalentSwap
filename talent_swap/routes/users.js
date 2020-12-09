@@ -72,15 +72,6 @@ router.get("/users/check-session", (req, res) => {
     }
 });
 
-// A route to get user id
-router.get("/users/getid", (req, res) => {
-    if (req.session.user) {
-        res.send({ currentUserId: req.session.user });
-    } else {
-        res.status(401).send();
-    }
-});
-
 router.post('/api/users', mongoChecker, async (req, res) => {
     // Create a new user
     const user = new User({
