@@ -26,7 +26,7 @@ class UserProfileCourses extends React.Component {
                 <h1>{header}</h1>
                 {courses.map(course => 
                     <div className="row row-cols-1" key={uid(course)}>
-                        <CourseThumbnail key={course.id.toString()} course={course} />
+                        <CourseThumbnail key={course._id.toString()} course={course} />
                     </div>
                 )}
             </div>

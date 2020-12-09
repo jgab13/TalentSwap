@@ -7,21 +7,26 @@ import ImageUploader from "./../../react-components/ImageUploader";
 import UserProfileCourses from "./../UserProfileCourses";
 
 import UserManager from "./../../users/user-manager";
-import {hardcodedCourses} from "./../../courses/testcourses.js";
+import { getCourses } from "../../actions/course.js";
+// import {hardcodedCourses} from "./../../courses/testcourses.js";
 
 class UserProfile extends React.Component {
     static contextType = UserContext;
     state = {
         currentUser: undefined,
-        canEdit: false
+        canEdit: false,
+        courses: null
     }
     async componentDidMount() {
         let currentUser;
         let canEdit;
+        await getCourses(this)
+        console.log(this.state.courses)
         if (this.props.match) {
             const {match: {params}} = this.props;
             const {username} = params;
             currentUser = await UserManager.getUserFromUsername(username);
+            
             canEdit = false;
         } else {
             currentUser = this.context.currentUser;
@@ -30,9 +35,10 @@ class UserProfile extends React.Component {
         this.setState({currentUser: currentUser, canEdit: canEdit});
     }
     render() {
-        if (!this.state.currentUser) {
+        if (!this.state.currentUser || this.state.courses === undefined || this.state.courses === null) {
             return <div></div>
         }
+        console.log(this.state.courses)
         return (
             <div>
                 <Header />
@@ -62,10 +68,10 @@ class UserProfile extends React.Component {
                             </ListGroup>
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Teaching Courses" courses={hardcodedCourses.filter(courses => courses.teacher === this.state.currentUser.name)} />
+                            <UserProfileCourses header="Teaching Courses" courses={this.state.courses.filter(course => course.teacher === this.state.currentUser.username)} />
                         </Col>
                         <Col>
-                            <UserProfileCourses header="Learning Courses" courses={hardcodedCourses.filter(courses => courses.teacher !== this.state.currentUser.name)} />
+                            <UserProfileCourses header="Learning Courses" courses={this.state.courses.filter(course => course.enrolledUsers.includes(this.state.currentUser.username))} />
                         </Col>
                     </Row>
                 </Container>
