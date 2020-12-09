@@ -120,9 +120,9 @@ class CourseContainer extends React.Component {
     })
    } else {
       if (!this.state.enrolled){
-        await enroll(this, this.state.currUser, this.state.course._id)  
+        await enroll(this, this.state.course._id)  
       } else {
-        await unenroll(this, this.state.currUser, this.state.course._id)  
+        await unenroll(this, this.state.course._id)  
       }
     }
   

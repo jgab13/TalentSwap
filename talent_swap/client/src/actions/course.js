@@ -279,14 +279,13 @@ export const deleteReview = (id, user) => {
 };
 
 //Use the enrollment API for enroll in course
-export const enroll = (app, user, courseID) => {
+export const enroll = (app, courseID) => {
     // the URL for the request
     const url = "/api/enrollment";
 
     const request = new Request(url, {
         method: "post",
         body: JSON.stringify({
-            username: user,
             courseId: courseID
         }),
         headers: {
@@ -322,14 +321,13 @@ export const enroll = (app, user, courseID) => {
 };
 
 //Use the enrollment API for enroll in course
-export const unenroll = (app, user, courseID) => {
+export const unenroll = (app, courseID) => {
     // the URL for the request
     const url = "/api/unenroll";
 
     const request = new Request(url, {
         method: "post",
         body: JSON.stringify({
-            username: user,
             courseId: courseID
         }),
         headers: {
