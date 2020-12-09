@@ -86,7 +86,7 @@ router.post('/api/users', mongoChecker, async (req, res) => {
     const user = new User({
         username: req.body.username,
         password: req.body.password,
-        userType: "admin",
+        userType: "user",
         credits: 10
     })
 
