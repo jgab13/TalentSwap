@@ -82,3 +82,26 @@ The route returns the course object. The review of the user will not be in the r
 
 #### User routes
 
+##### Login: POST '/users/login'
+
+This api route is used for users to login and create the session. Request body should be:
+```
+{
+	"username": "user",
+	"password": "user"
+}
+```
+
+##### Logout: GET '/users/logout'
+
+This api route is used to logout users and delete the session.
+
+##### Check Session: GET '/users/check-session'
+
+This api route is used to check the session. Response if successful is:
+
+```
+{
+	"currentUser": "username"
+}
+```
