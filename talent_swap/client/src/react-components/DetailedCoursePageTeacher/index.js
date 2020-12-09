@@ -76,6 +76,7 @@ class DetailedCoursePageTeacher extends React.Component {
       <Header/>
       <div className="courseDescrip">
       <h1 className="title">{topic}</h1>
+      <div id="coursepic"><img src={picture} /></div>
       <div id="desc">{description}</div>
       <div id="detail">
         <h5>Course Details:</h5>
@@ -86,7 +87,6 @@ class DetailedCoursePageTeacher extends React.Component {
         <span>Difficulty: {level}</span><br/>
         <span>Credit: {credit}</span><br/>
         <span>Status: {new Date(endtime) < Date.now()? "Completed" : "Upcoming"}</span><br/>
-        <img src={picture} /><br />
         <Button className="edit" onClick={this.setRedirect} variant="success"> Edit</Button>
       </div>
         <span title="You can not enroll in your own course.">

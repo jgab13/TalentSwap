@@ -52,6 +52,7 @@ class CourseList extends React.Component {
     return (
     <div className="courseDescrip"> 
       <h1 className="title">{course.topic}</h1>
+      <div  id="coursepic"><img src={course.picture} /> </div>
       <div id="desc">{course.description}</div>
       <div id="detail">
         <h5>Course Details:</h5>

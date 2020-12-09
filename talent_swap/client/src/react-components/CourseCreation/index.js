@@ -42,7 +42,7 @@ class CourseCreation extends React.Component {
     	starttime: "",
     	endtime: "",
     	date: "",
-    	level: "",
+    	level: "Beginner",
     	credit: 0,
     	capacity: 0,
     	area: "",
