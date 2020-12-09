@@ -60,9 +60,16 @@ class Header extends React.Component {
 		{this.renderRedirect()}
 		{/* {console.log(this.props.loginStatus)} */}
         <Navbar bg="light">
-        	<a href="/">
-		      	<img alt="logo" src={logoImg} className="message-icon" />
-		    </a>
+		    <Navbar.Brand href="/">
+		      <img
+		        alt=""
+		        src={logoImg}
+		        width="30"
+		        height="30"
+		        className="d-inline-block align-top"
+		      />{' '}
+		      Talent Swap
+		    </Navbar.Brand>
 		  {/* <SearchBox handleSearch={this.handleSearch}/> */}
 		  <SearchBox />
 	      {this.state.currentUser ? 
