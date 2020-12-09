@@ -110,12 +110,15 @@ class SearchPage extends React.Component{
     constructor(props){
         super(props);
         this.state = Object.assign({
-            tab : "courses", 
-            cfilters: {
-                level: [],
-                availability: [],
-                size: []
-            }
+            tab : "courses"
+
+            // tab : "courses", 
+
+            // cfilters: {
+            //     level: [],
+            //     availability: [],
+            //     size: []
+            // }
         }, this.updateState()); 
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.updateState = this.updateState.bind(this);
@@ -225,11 +228,20 @@ class SearchPage extends React.Component{
         if (newState.keyword !== prevState.keyword 
             // || (newState.courses.length !== prevState.courses.length
             //     || !newState.courses.every((value, index) => value === prevState.courses[index]))
-                // || newState.cfilters !== prevState.cfilters
+                && newState.cfilters !== prevState.cfilters
             )
         {
             this.setState(newState);
             // this.clearCfilters();
+            // const cb1 = document.getElementById("c1:Beginner")
+            // cb1.checked = false
+            const idList = ["c1:Beginner", "c1:Intermediate", "c1:Advanced", "c1:All Level",
+            "c2:Past", "c2:Upcoming", 
+            'c3:One-on-One', 'c3:Small (2-8)', 'c3:Medium (9-20)', 'c3:Large (20+)']
+            idList.forEach(id => {
+                let cb = document.getElementById(id)
+                cb.checked = false
+            })
         }
     }
     
@@ -246,7 +258,14 @@ class SearchPage extends React.Component{
         return {
                 keyword: keyword,
                 courses: courses,
-                displayedCourses: courses
+                // displayedCourses: courses
+                displayedCourses: courses,
+                
+                cfilters: {
+                    level: [],
+                    availability: [],
+                    size: []
+                }
         }
     }
     // // the function below is not used for phase 2
