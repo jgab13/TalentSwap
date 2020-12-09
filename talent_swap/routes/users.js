@@ -155,6 +155,24 @@ router.patch('/api/users', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
+// get all users
+router.get('/api/users', mongoChecker, async (req, res) => {
+    try {
+        const users = await User.find({});
+        if (users) {
+            res.send(users.map(user => formatUser(user)));
+        } else {
+            res.send(undefined);
+        }
+    } catch (error) {
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
+            res.status(500).send('Internal server error');
+        } else {
+            res.status(400).send('Bad Request'); // bad request for changing the user
+        }
+    }
+});
+
 router.get('/api/users/:username', mongoChecker, async (req, res) => {
     const username = req.params.username;
 

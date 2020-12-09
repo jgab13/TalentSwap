@@ -1,19 +1,25 @@
 import React from "react";
-import { hardcodedCourses } from "./../../courses/testcourses.js"
-import { hardCodedUsers } from "./../../users/user-manager.js"
 
 import { Table, Tab, Tabs } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getCourses } from "../../actions/course.js";
-
-const user = hardCodedUsers;
-const course = hardcodedCourses;
+import UserManager from "./../../users/user-manager";
 
 export class UserTable extends React.Component {
+  state = {
+    users: null
+  }
+  async componentDidMount() {
+    const users = await UserManager.getAllUsers();
+    this.setState({users: users});
+  }
   render() {
+    if (!this.state.users) {
+      return <div></div>
+    }
     return(
       <tbody>
-      {user.map((user) => (
+      {this.state.users.map((user) => (
       <tr>
         <td>{user.username}</td>
         <td><Link to= {{pathname:`/UserProfile/${user.username}`}} >
