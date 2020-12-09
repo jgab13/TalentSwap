@@ -228,8 +228,8 @@ class SearchPage extends React.Component{
                 // || newState.cfilters !== prevState.cfilters
             )
         {
+            this.clearCfilters();
             this.setState(newState);
-            // this.clearCfilters();
         }
     }
     
