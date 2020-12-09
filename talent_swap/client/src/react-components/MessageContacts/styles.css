@@ -1,0 +1,20 @@
+.contacts-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 90vh;
+}
+
+.contacts-container > .contacts {
+    overflow-y: scroll;
+}
+
+.contacts-container > .contacts > div {
+    background-color: lightblue;
+    border: 1px black solid;
+    padding: 1em;
+}
+
+.contacts-container > .contacts > div:hover {
+    cursor: pointer;
+}

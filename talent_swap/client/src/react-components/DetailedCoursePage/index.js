@@ -13,7 +13,7 @@ class DetailedCoursePage extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      id: this.props.location.state.course.id,
+      id: this.props.location.state.course._id,
       course: null,
       currentUser: null
     }
@@ -21,7 +21,7 @@ class DetailedCoursePage extends React.Component {
 
     async componentDidMount() {
       await checkSession(this)
-      getCourse(this, "5fcd09aab110aa2200f07689")
+      getCourse(this, this.state.id)
     }
 
   	render() {
@@ -47,7 +47,7 @@ class DetailedCoursePage extends React.Component {
         else {
           return (
           <div>
-            <Redirect to={"/DetailedCoursePageTeacher/" + "5fcd9f74c44ed34ee4b41b01" /*this.state.id*/} />
+            <Redirect to={"/DetailedCoursePageTeacher/" + this.state.id /*this.state.id*/} />
             }
           </div>
           );  

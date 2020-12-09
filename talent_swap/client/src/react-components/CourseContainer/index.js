@@ -12,7 +12,7 @@ import Button from "react-bootstrap/Button";
 // import {hardCodedUsers} from "./../../users/user-manager.js";
 import UserManager from "./../../users/user-manager.js";
 // import {getCourse} from "./../../courses/courseManager.js";
-import { deleteCourse, editReview, addReview, deleteReview, enroll, getCourse, updateCourse } from "../../actions/course.js";
+import { deleteCourse, editReview, addReview, deleteReview, enroll, getCourse, updateCourse, unenroll } from "../../actions/course.js";
 
 class CourseContainer extends React.Component {
 
@@ -119,7 +119,11 @@ class CourseContainer extends React.Component {
       enrolled: !this.state.enrolled,
     })
    } else {
-      await enroll(this, this.state.currUser, this.state.course._id)
+      if (!this.state.enrolled){
+        await enroll(this, this.state.currUser, this.state.course._id)  
+      } else {
+        await unenroll(this, this.state.currUser, this.state.course._id)  
+      }
     }
   
   }
