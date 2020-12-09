@@ -28,6 +28,7 @@ class MessageCenter extends React.Component {
             messages: messages
         })
     }
+
     render() {
         const {currentUser} = this.context;
         if (currentUser === null) {
@@ -40,7 +41,7 @@ class MessageCenter extends React.Component {
             <div>
                 <Header />
                 <Container>
-                    <Row><h1>Currently Messaging:{this.state.selectedContact}</h1></Row>
+                    <Row><h1>Currently Messaging: {this.state.selectedContact}</h1></Row>
                     <Row>
                         <Col><MessageContacts contactUsernames={this.state.contactUsernames} messageCenter={this} /></Col>
                         <Col><MessageContents selectedContact={this.state.selectedContact} messages={this.state.messages} sendMessageHandler={(message) => {currentUser.sendMessage(this.state.selectedContact, message)}} /></Col>

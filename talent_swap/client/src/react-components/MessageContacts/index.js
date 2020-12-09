@@ -14,6 +14,15 @@ class MessageContacts extends React.Component {
             selectedContact: null
         };
     }
+    changeSelection = async (event) => {
+        const {currentUser} = this.context;
+        const newContactUsername = event.target.textContent;
+        const messages = await currentUser.getMessagesFromContact(newContactUsername);
+        this.props.messageCenter.setState({
+            selectedContact: newContactUsername,
+            messages: messages
+        });
+    };
     getContacts = async () => {
         if (this.props.contactUsernames) {
             const contacts = await Promise.all(
@@ -24,7 +33,7 @@ class MessageContacts extends React.Component {
                 selectedContact: contacts[0]
             })
         }
-    }
+    };
     async componentDidMount() {
         this.getContacts();
     }
@@ -40,12 +49,8 @@ class MessageContacts extends React.Component {
             return <div></div>
         }
         return (
-            // <ListGroup>
-            //     {this.state.contacts
-            //     .map(contact => (<ListGroupItem key={uid(contact)}>{contact.name}</ListGroupItem>))}
-            // </ListGroup>
             <div className="contacts-container">
-                <div className="contacts">
+                <div className="contacts" onClick={this.changeSelection}>
                     {this.state.contacts
                     .map(contact => (<div key={uid(contact)}>{contact.username}</div>))}
                 </div>
