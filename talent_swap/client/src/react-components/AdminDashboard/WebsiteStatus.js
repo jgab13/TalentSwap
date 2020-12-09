@@ -4,6 +4,7 @@ import { hardCodedUsers } from "./../../users/user-manager.js"
 
 import { Table, Tab, Tabs } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { getCourses } from "../../actions/course.js";
 
 const user = hardCodedUsers;
 const course = hardcodedCourses;
@@ -29,12 +30,24 @@ export class UserTable extends React.Component {
 }
 
 export class CourseTable extends React.Component {
+  state = {
+    courses: null
+  }
+
+  async componentDidMount() {
+    await getCourses(this)
+  }
+
   render() {
+    const cur = new Date(Date.now());
+    if (this.state.courses === null) {
+      return <div></div>
+    }
     return(
       <tbody>
-      {course.map((course) => (
+      {this.state.courses.map((course) => (
       <tr>
-        <td>{course.id}</td>
+        <td>{course._id}</td>
         <td><Link to= {{
                         pathname: '/DetailedCoursePage',
                         state: {
@@ -44,7 +57,7 @@ export class CourseTable extends React.Component {
             </Link></td>
         <td>{course.teacher}</td>
         <td>{course.credit}</td>
-        <td>{course.status}</td>
+        <td>{new Date(course.endtime) < cur ? "Completed" : "Upcoming"}</td>
       </tr>      
       ))}
       </tbody>
