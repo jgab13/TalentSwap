@@ -15,7 +15,7 @@ class CourseThumbnail extends React.Component{
         return(
             <div className="col">
                 <Card id="courseCard">
-                    <Card.Img id="coursePic" variant="top" src={pic0}/>
+                    <Card.Img id="coursePic" variant="top" src={course.picture ? course.picture : pic0}/>
                     <Card.Body id="body">
                         <Card.Title>
                             {course.topic}

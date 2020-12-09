@@ -32,7 +32,8 @@ class DetailedCoursePageTeacher extends React.Component {
         level: "",
         credit: "",
         starttime: "",
-        endtime: ""
+        endtime: "",
+        picture: ""
       },
       courseid: this.props.match.params.id
     }
@@ -68,7 +69,7 @@ class DetailedCoursePageTeacher extends React.Component {
   }
 
   render() {
-    const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime, level} = this.state.course;
+    const {topic, description, enrollment, capacity, teacher, credit, starttime, endtime, level, picture} = this.state.course;
     return (
       <div>
       {this.renderRedirect()}
@@ -85,6 +86,7 @@ class DetailedCoursePageTeacher extends React.Component {
         <span>Difficulty: {level}</span><br/>
         <span>Credit: {credit}</span><br/>
         <span>Status: {new Date(endtime) < Date.now()? "Completed" : "Upcoming"}</span><br/>
+        <img src={picture} /><br />
         <Button className="edit" onClick={this.setRedirect} variant="success"> Edit</Button>
       </div>
         <span title="You can not enroll in your own course.">

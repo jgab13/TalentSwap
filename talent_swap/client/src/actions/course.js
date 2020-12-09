@@ -11,7 +11,8 @@ export const CreateCourse = (userInput) => {
             credit: userInput.credit,
             capacity: userInput.capacity,
             area: userInput.area,
-            description: userInput.description
+            description: userInput.description,
+            picture: userInput.picture
         }),
         headers: {
             Accept: "application/json, text/plain, */*",

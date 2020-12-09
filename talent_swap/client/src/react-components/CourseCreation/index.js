@@ -3,10 +3,10 @@ import Header from "./../Header";
 import "./styles.css";
 import { hardcodedCourses } from "./../../courses/testcourses"
 import { CreateCourse, updateCourse } from "../../actions/course";
-import { Button, Row, Col, Form }from "react-bootstrap";
+import { Button, Row, Col, Form, Image }from "react-bootstrap";
 import { checkSession } from "./../../actions/user";
 import AuthSystem from "./../AuthSystem";
-
+import ImageUploader from "./../../react-components/ImageUploader";
 
 /* The CourseCreation Component */
 class CourseCreation extends React.Component {
@@ -16,6 +16,8 @@ class CourseCreation extends React.Component {
     checkSession(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeImg = this.handleChangeImg.bind(this);
+
     if (this.props.location.state) {
     	this.state = {
 		topic: this.props.location.state.course.course.topic,
@@ -30,6 +32,7 @@ class CourseCreation extends React.Component {
     	capacity: this.props.location.state.course.course.capacity,
     	area: this.props.location.state.course.course.area,
     	description: this.props.location.state.course.course.description,
+    	picture: this.props.location.state.course.course.picture,
     	savedCredit : this.props.location.state.course.course.credit}
 	}
     else{
@@ -43,6 +46,7 @@ class CourseCreation extends React.Component {
     	credit: 0,
     	capacity: 0,
     	area: "",
+    	picture: "",
     	description: ""
     	}
     }    
@@ -72,8 +76,8 @@ class CourseCreation extends React.Component {
 			else {
 				let starttime = new Date(this.state.date + " " + this.state.starttime)
 				let endtime = new Date(this.state.date + " " + this.state.endtime)
-				let attributes = ["topic", "currentUser", "starttime", "endtime", "level", "credit", "capacity", "area", "description"]
-				let values = [this.state.topic, this.state.currentUser, starttime, endtime, this.state.level, this.state.credit, this.state.capacity, this.state.area, this.state.description]
+				let attributes = ["topic", "currentUser", "starttime", "endtime", "level", "credit", "capacity", "area", "description", "picture"]
+				let values = [this.state.topic, this.state.currentUser, starttime, endtime, this.state.level, this.state.credit, this.state.capacity, this.state.area, this.state.description, this.state.picture]
 				updateCourse(attributes, values, this.props.location.state.course.courseid)
 				alert('Changes has been made to your course.')
 				window.location.href='/DetailedCoursePageTeacher/' + this.props.location.state.course.courseid;
@@ -85,10 +89,26 @@ class CourseCreation extends React.Component {
 		const target = event.target;
     	const value = target.value;
     	const name = target.name;
-	  	this.setState({
+    	this.setState({
 	  		[name]: value
 	  	});
+	  	console.log(this.state)
   };
+
+  handleChangeImg(event) {
+	const img = document.getElementById("picture").files;
+	const fileToLoad = img[0];
+	const fileReader = new FileReader();
+	fileReader.onload = this.fileConvert.bind(this);
+	fileReader.readAsDataURL(fileToLoad);
+  }
+
+  fileConvert(e) {
+  	const src = e.target.result;
+	this.setState({
+		["picture"]: src
+	});
+  }
 
   render() {
     return (
@@ -210,12 +230,27 @@ class CourseCreation extends React.Component {
 			    </Col>
 			  </Form.Group>
 
+			  <Form.Group as={Row}>
+			    <Form.Label column sm="3">
+			      Picture
+			    </Form.Label>
+			    <Col sm="9">
+			    <img id='img' src={this.state.picture} />
+			      <Form.File
+			      id='picture'
+			      rows={3}
+			      name="picture"
+			      onChange={this.handleChangeImg}/>
+			    </Col>
+			  </Form.Group>
+
 			  <Button
 			  	variant="success"
 			  	type="submit"
 			  	className="submit">
 			    Submit
 			  </Button>
+
 				</Form>
 				</div>
       </div>

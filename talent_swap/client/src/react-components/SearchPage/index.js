@@ -231,6 +231,7 @@ class SearchPage extends React.Component{
                 && newState.cfilters !== prevState.cfilters
             )
         {
+            this.clearCfilters();
             this.setState(newState);
             // this.clearCfilters();
             // const cb1 = document.getElementById("c1:Beginner")
