@@ -156,17 +156,38 @@ class SearchPage extends React.Component{
         dummy.cfilters = {level: [], availability: [], size:[]}
         dummy.displayedCourses = dummy.courses
         this.setState(dummy)
-        const checkboxes = document.getElementsByClassName('cfilter')
+        // const divs = Array.from(document.getElementsByClassName('cfilter'))
+        // const checkboxes = document.getElementsByClassName('cfilter')
+
         // console.log(typeof checkboxes)
         // console.log(checkboxes.length)
+        // console.log(divs[0])
+        
+        // const checkboxes = Array.from(divs, x =>x.Input)
         // console.log(checkboxes)
+        // console.log(checkboxes[0])
+        // console.log(typeof checkboxes[0])
+
         // checkboxes.forEach(cb => cb.checked= false)
         // TODO: need a way to update DOM: uncheck all the boxes
-        for (let b of checkboxes) {
-            console.log('hi')
-            // b.setState({checked:false})
-            b.checked = false
-        }
+        // for (let b of checkboxes) {
+        //     console.log('hi')
+        //     // b.setState({checked:false})
+        //     b.checked = false
+        // }
+        // checkboxes[0].checked = false
+        // checkboxes.forEach((cb) => cb.checked = false)
+        const idList = ["c1:Beginner", "c1:Intermediate", "c1:Advanced", "c1:All Level",
+            "c2:Past", "c2:Upcoming", 
+            'c3:One-on-One', 'c3:Small (2-8)', 'c3:Medium (9-20)', 'c3:Large (20+)']
+        idList.forEach(id => {
+            let cb = document.getElementById(id)
+            cb.checked = false
+        })
+        // const cb1 = document.getElementById("c1:Beginner")
+        // cb1.checked = false
+        // console.log('cb1 got by id', cb1)
+        // console.log(typeof cb1)
     }
 
     handleCfilterCheck = (e) => {
@@ -208,6 +229,7 @@ class SearchPage extends React.Component{
             )
         {
             this.setState(newState);
+            // this.clearCfilters();
         }
     }
     
@@ -227,57 +249,57 @@ class SearchPage extends React.Component{
                 displayedCourses: courses
         }
     }
-    // the function below is not used for phase 2
-    updateState2 = () => {
-        console.log(this.props);
-        const keyword = this.props.location.state
-            ? this.props.location.state.searchInput
-            : undefined; // unnecessary, will only open search page via redirection from any other pages 
-        let users = keyword // server call
-            ? hardcodedUsers.filter((user) => // unnecessary, server response has searched users based on keyword 
-                 (user.name.toLowerCase().match(keyword.toLowerCase())) 
-                 || (user.development.toLowerCase().match(keyword.toLowerCase())) 
-                 || (user.expertise.toLowerCase().match(keyword.toLowerCase())) 
-            )
-            : hardcodedUsers; 
-        let courses = keyword // server call
-            ? hardcodedCourses.filter((course) =>  // unnecessary, server respond with searched courses based on keyword
-                course.topic.toLowerCase().match(keyword.toLowerCase())
-            )
-            : hardcodedCourses;
-        // apply course level filters, if any
-        console.log("after search input changes to ", keyword, "courses include ", courses);
-        const clfilters = this.props.location.state 
-            ? this.props.location.state.levelFilters
-            : undefined;
-        // console.log("level filters include ", clfilters);
-        courses = clfilters
-            ? FilterCourseLevels(courses, clfilters)
-            : courses;
-        console.log("after applying level filters ", clfilters, "courses include ", courses);
-        // apply course date filters, if any
-        const cdfilters = this.props.location.state
-            ? this.props.location.state.dateFilters
-            : undefined;
-        courses = cdfilters
-            ? FilterCourseDates(courses, cdfilters)
-            : courses;
-        console.log("after applying date filters ", cdfilters, "courses include ", courses);
-        // apply course size filters, if any
-        const csfilters = this.props.location.state
-            ? this.props.location.state.sizeFilters
-            : undefined;
-        courses = csfilters 
-            ? FiltersCourseSizes(courses, csfilters)
-            : courses
-        console.log("after applying size filters ", csfilters, "courses include ", courses);
-        return {
-            keyword: keyword,
-            users: users,
-            courses: courses,
-            cfilters: [].concat(clfilters).concat(cdfilters).concat(csfilters)
-        };
-    }
+    // // the function below is not used for phase 2
+    // updateState2 = () => {
+    //     console.log(this.props);
+    //     const keyword = this.props.location.state
+    //         ? this.props.location.state.searchInput
+    //         : undefined; // unnecessary, will only open search page via redirection from any other pages 
+    //     let users = keyword // server call
+    //         ? hardcodedUsers.filter((user) => // unnecessary, server response has searched users based on keyword 
+    //              (user.name.toLowerCase().match(keyword.toLowerCase())) 
+    //              || (user.development.toLowerCase().match(keyword.toLowerCase())) 
+    //              || (user.expertise.toLowerCase().match(keyword.toLowerCase())) 
+    //         )
+    //         : hardcodedUsers; 
+    //     let courses = keyword // server call
+    //         ? hardcodedCourses.filter((course) =>  // unnecessary, server respond with searched courses based on keyword
+    //             course.topic.toLowerCase().match(keyword.toLowerCase())
+    //         )
+    //         : hardcodedCourses;
+    //     // apply course level filters, if any
+    //     console.log("after search input changes to ", keyword, "courses include ", courses);
+    //     const clfilters = this.props.location.state 
+    //         ? this.props.location.state.levelFilters
+    //         : undefined;
+    //     // console.log("level filters include ", clfilters);
+    //     courses = clfilters
+    //         ? FilterCourseLevels(courses, clfilters)
+    //         : courses;
+    //     console.log("after applying level filters ", clfilters, "courses include ", courses);
+    //     // apply course date filters, if any
+    //     const cdfilters = this.props.location.state
+    //         ? this.props.location.state.dateFilters
+    //         : undefined;
+    //     courses = cdfilters
+    //         ? FilterCourseDates(courses, cdfilters)
+    //         : courses;
+    //     console.log("after applying date filters ", cdfilters, "courses include ", courses);
+    //     // apply course size filters, if any
+    //     const csfilters = this.props.location.state
+    //         ? this.props.location.state.sizeFilters
+    //         : undefined;
+    //     courses = csfilters 
+    //         ? FiltersCourseSizes(courses, csfilters)
+    //         : courses
+    //     console.log("after applying size filters ", csfilters, "courses include ", courses);
+    //     return {
+    //         keyword: keyword,
+    //         users: users,
+    //         courses: courses,
+    //         cfilters: [].concat(clfilters).concat(cdfilters).concat(csfilters)
+    //     };
+    // }
 
     handleTabSelect = (eventKey) => {
         this.setState({tab: eventKey});
