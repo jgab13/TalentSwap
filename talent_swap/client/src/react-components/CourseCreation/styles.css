@@ -18,3 +18,7 @@
 .help-date {
 	margin-left: 150px;
 }
+
+img {
+	max-height: 200px;
+}

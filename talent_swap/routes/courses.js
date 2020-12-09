@@ -27,6 +27,7 @@ courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
         enrollment: 0,
         rate: 0,
         description: req.body.description,
+        picture: req.body.picture,
         level: req.body.level,
         enrolledUsers: req.body.enrolledUsers, //are these necessary?
         ratings: req.body.ratings //are these necessary?

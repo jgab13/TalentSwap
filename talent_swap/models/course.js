@@ -22,6 +22,7 @@ const Course = mongoose.model('Course', {
 	enrollment: Number,
 	rate: Number,
 	description: String,
+	picture: String,
 	level: String,
 	enrolledUsers: [String],
 	ratings: [RatingSchema]
