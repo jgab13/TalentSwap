@@ -21,7 +21,7 @@ export const checkSession = async (app) => {
 };
 
 export const CheckUsername = (userInput) => {
-    const url = "api/users/get/"+userInput.username
+    const url = "api/users/"+userInput.username
 
     return fetch(url)
          .then(res => {

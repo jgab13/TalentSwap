@@ -169,23 +169,5 @@ router.get('/api/users/:username', mongoChecker, async (req, res) => {
     }
 });
 
-//get a user
-router.get('/api/users/get/:username', async (req, res) => {
-    const username = req.params.username;
-
-    try {
-        const user = await User.findOne({ username: username });
-        res.send({
-            user: user
-        });
-    } catch (error) {
-        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
-            res.status(500).send('Internal server error');
-        } else {
-            res.status(400).send('Bad Request'); // bad request for changing the user
-        }
-    }
-});
-
 // export the router
 module.exports = router;
