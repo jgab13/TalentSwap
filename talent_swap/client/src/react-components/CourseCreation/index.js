@@ -205,19 +205,6 @@ class CourseCreation extends React.Component {
 
 			  <Form.Group as={Row}>
 			    <Form.Label column sm="3">
-			      Area
-			    </Form.Label>
-			    <Col sm="9">
-			      <Form.Control
-			      type="text"
-			      name="area"
-			      value={this.state.area}
-			      onChange={this.handleChange}/>
-			    </Col>
-			  </Form.Group>
-
-			  <Form.Group as={Row}>
-			    <Form.Label column sm="3">
 			      Description
 			    </Form.Label>
 			    <Col sm="9">
