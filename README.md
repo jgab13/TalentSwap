@@ -84,11 +84,30 @@ The route returns the course object. The review of the user will not be in the r
 
 ##### Login: POST '/users/login'
 
-This api route is used for users to login and create the session. Request body should be:
+This api route is used for users to login and create the session.
+
+Request body should be:
 ```
 {
 	"username": "user",
 	"password": "user"
+}
+```
+
+Response: User object if successful:
+
+```
+{
+    username: "user",
+    userType: "user",
+    name: "User 1",
+    credits: 10,
+    bio: "I am a user!",
+    expertise: "Python Javascript",
+    development: "React Rust",
+    coursesTeaching: [],
+    coursesLearning: [],
+    pic: "some image encoded as base 64"
 }
 ```
 
@@ -98,10 +117,129 @@ This api route is used to logout users and delete the session.
 
 ##### Check Session: GET '/users/check-session'
 
-This api route is used to check the session. Response if successful is:
+This api route is used to check the session.
+
+Response if successful is:
 
 ```
 {
 	"currentUser": "username"
+}
+```
+
+##### Login: POST '/api/users'
+
+This api route is used to register new accounts.
+
+Request body should be:
+```
+{
+	"username": "user",
+	"password": "user"
+}
+```
+
+Response: User object if successful:
+
+```
+{
+    username: "user",
+    userType: "user",
+    name: "User 1",
+    credits: 10,
+    bio: "I am a user!",
+    expertise: "Python Javascript",
+    development: "React Rust",
+    coursesTeaching: [],
+    coursesLearning: [],
+    pic: "some image encoded as base 64"
+}
+```
+
+##### Login: PATCH '/api/users'
+
+This api route is used to change account properties. User must already be logged in with a session.
+
+Request can include any number of parameters to change with the new values.
+```
+{
+	"name": "New name",
+	"bio": "New bio",
+	"expertise": "New expertise",
+	"development": "New development",
+	"pic": "New base64 encoded picture"
+}
+```
+
+Response: Updated user object if successful:
+
+```
+{
+    username: "user",
+    userType: "user",
+    name: "New name",
+    credits: 10,
+    bio: "New bio",
+    expertise: "New expertise",
+    development: "New development",
+    coursesTeaching: [],
+    coursesLearning: [],
+    pic: "New base64 encoded picture"
+}
+```
+
+##### Login: GET '/api/users'
+
+This api route is used to get all users.
+
+Response: List of all user object if successful:
+
+```
+[
+	{
+		username: "user",
+		userType: "user",
+		name: "User 1",
+		credits: 10,
+		bio: "I am a user!",
+		expertise: "Python Javascript",
+		development: "React Rust",
+		coursesTeaching: [],
+		coursesLearning: [],
+		pic: "some image encoded as base 64"
+	},
+	{
+		username: "user2",
+		userType: "user",
+		name: "User 2",
+		credits: 10,
+		bio: "I am another user!",
+		expertise: "Java C#",
+		development: "Python",
+		coursesTeaching: [],
+		coursesLearning: [],
+		pic: "some image encoded as base 64"
+	}
+]
+```
+
+##### Login: GET '/api/users/:username'
+
+This route is used to get a specific User from the specified username.
+
+Response: Updated user object if successful (for example if we do `GET '/api/users/user'`):
+
+```
+{
+    username: "user",
+    userType: "user",
+    name: "New name",
+    credits: 10,
+    bio: "New bio",
+    expertise: "New expertise",
+    development: "New development",
+    coursesTeaching: [],
+    coursesLearning: [],
+    pic: "New base64 encoded picture"
 }
 ```
