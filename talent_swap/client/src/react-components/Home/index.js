@@ -14,11 +14,11 @@ class Home extends React.Component {
     super(props);
     this.state = {
       loginStatus: this.props.location.state === undefined ? true : false,
-      //Jonathan change
       courses: null
     }
+    
   }
-  //Jonathan change
+
   async componentDidMount(){
     await getCourses(this)
   }

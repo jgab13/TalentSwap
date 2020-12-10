@@ -29,11 +29,8 @@ class CourseThumbnail extends React.Component{
                             </span> <br></br>
                             <span className="text">
                                 {start.toLocaleDateString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false})} - 
-                                    {end.toLocaleDateString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false})} {start.toLocaleDateString("en-US")}
+                                    {end.toLocaleDateString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false})}
                             </span> <br></br>
-                            {/* <Button id="courseButton" variant="success" href={`/DetailedCoursePage/${course.id}`}>
-                                    view course details
-                                </Button> */}
                             <Link to=
                             {{
                                 pathname: '/DetailedCoursePage',
