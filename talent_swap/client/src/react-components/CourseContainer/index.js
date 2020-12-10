@@ -8,10 +8,7 @@ import Header from "./../Header";
 import AuthSystem from "./../AuthSystem";
 import AddCourseReview from "./../AddCourseReview";
 import Button from "react-bootstrap/Button";
-// import {hardcodedCourses} from "./../../courses/testcourses.js";
-// import {hardCodedUsers} from "./../../users/user-manager.js";
 import UserManager from "./../../users/user-manager.js";
-// import {getCourse} from "./../../courses/courseManager.js";
 import { deleteCourse, editReview, addReview, deleteReview, enroll, getCourse, updateCourse, unenroll } from "../../actions/course.js";
 
 class CourseContainer extends React.Component {
@@ -34,9 +31,8 @@ class CourseContainer extends React.Component {
   //check if the current user is enrolled in the course.
   checkEnrollment = () => {
     if (this.state.course !== null && this.state.currUser !== null){
-      // console.log(this.state.currUser)
       const enrollUser = this.state.enrollment.filter(user => {
-        return user === this.state.currUser; // Need to change review users
+        return user === this.state.currUser; 
       });
       const enrolled = enrollUser.length === 0 ? false: true;
       this.setState({
@@ -49,9 +45,7 @@ class CourseContainer extends React.Component {
   checkCourseCompl = () => {
     if (this.state.course !== null){
       const cur = new Date(Date.now());
-      // console.log(cur)
       const courseDate = new Date(this.state.course.endtime)
-      // console.log(courseDate)
       let compl = false;
       if (courseDate < cur){
         compl = true;
@@ -67,12 +61,9 @@ class CourseContainer extends React.Component {
   checkIfReviewed = () => {
     if (this.state.course !== null && this.state.currUser !== null){
       const checkReview = this.state.review.filter(rev => {
-        // console.log(this.state.currUser);
-        // console.log(rev.user);
-        return rev.user === this.state.currUser; //need to change user to username - change the api route
+        return rev.user === this.state.currUser;
       });
       const check = checkReview.length !== 0 ? true : false
-      // console.log(check)
       this.setState({
         reviewed: check,
         edit: check
@@ -82,20 +73,11 @@ class CourseContainer extends React.Component {
 
   setAdminFlag = () => {
     const user = this.state.currUser
-    // console.log("This is the user " + user)
     if (user !== null && user.includes("admin")){
-      // console.log("userType is " + user.userType)
       this.setState({
         adminUser: user
       })   
-      console.log(user.includes("admin"))
-    }
-      console.log("The admin user is now " + this.state.adminUser)
-      console.log("This current user is now " + this.state.currUser)
-      console.log("Are they equal?")
-      console.log(this.state.adminUser === this.state.currUser)
-
-      
+    } 
   }
 
   /////On change and other functions
@@ -139,7 +121,6 @@ class CourseContainer extends React.Component {
   //Sets currReview to not null to trigger edit pop up
   editReview = event => {
     event.preventDefault()
-    console.log(event.target.name);
     const getReview = this.state.review.filter(rev => {
       return rev.description === event.target.name;
     });
@@ -156,9 +137,7 @@ class CourseContainer extends React.Component {
     const reviewToDelete = this.state.review.filter(rev => {
       return rev.description === reviewName
     })
-    console.log("this is the review to delete ")
-    console.log(reviewToDelete[0])
-    //server call to delete review
+
     await deleteReview(this.state.course._id, this.state.currUser)
     
     const remainingReview = this.state.review.filter(rev => {
@@ -166,7 +145,6 @@ class CourseContainer extends React.Component {
     })
     //calculation of new rating using only the remaining reviews
     const newRating = this.calcReviewRating(remainingReview);
-    console.log(newRating)
     //update course rating in db
     await updateCourse(["rate"], [newRating], this.state.course._id)
 
@@ -217,8 +195,6 @@ class CourseContainer extends React.Component {
     //if the length of getReview and checkReview is the same, then the current user has
     //not reviewed the course and the course should be added to the db.
     if (getReview.length === checkReview.length){
-      console.log(newReview)
-      console.log(this.state.course._id)
       await addReview(this.state.course._id, newReview)
       
     }
@@ -230,15 +206,12 @@ class CourseContainer extends React.Component {
       getReview = getReview.filter(rev => {
         return rev.user !== newReview.user
       })  
-      console.log(editThisReview[0])
       await editReview(this.state.course._id, newReview)
       
     }
     getReview.push(newReview)
-    console.log(getReview)
     //Calculate the new rating
     const newRating = this.calcReviewRating(getReview);
-    console.log(newRating)
     //update the course rating in the db and update the front end
     await updateCourse(["rate"], [newRating], this.state.course._id)
     const curCourse = this.state.course
@@ -275,11 +248,6 @@ class CourseContainer extends React.Component {
 
   render() {
     const {courseID, userID, reviews, admin} = this.props;
-    // console.log("the course is completed " + this.state.compl)
-    // console.log("the user is enrolled " + this.state.enrolled)
-    // console.log("the user has reveiwed " + this.state.reviewed)
-    // console.log("this review should edittable " + this.state.edit)
-
 
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
   	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser !== this.state.course.teacher ?
