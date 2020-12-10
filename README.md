@@ -94,6 +94,60 @@ The route returns the user and course objects as properties.
 
 #### Message routes
 
+##### Send Message: POST '/api/messages'
+
+This route sends a message. User should already be logged in with session.
+
+Request body should be:
+```
+{
+	"target": "user2",
+	"contents": "Hello world!!!"
+}
+```
+
+Response is the newly created message:
+
+```
+{
+    "_id": "5fd1869f551af90d3e15f7c6",
+    "senderName": "user",
+    "receiverName": "user2",
+    "contents": "Hmm",
+    "timestamp": 1607567007916,
+    "__v": 0
+}
+```
+
+##### Get Message For Specific User: GET '/api/messages/:target'
+
+This route gets all messages to and from a corresponding user. User sending request should be logged in with session.
+
+Response (if target is user2 and you are user):
+```
+[
+	{
+		"_id": "5fd1869f551af90d3e15f7c6",
+		"senderName": "user",
+		"receiverName": "user2",
+		"contents": "Hmm",
+		"timestamp": 1607567007916,
+		"__v": 0
+	}
+]
+```
+
+##### Get All Contacts GET '/api/message-contacts'
+
+Gets a list of usernames of the people you have sent messages to or received messages from.
+
+Response:
+```
+[
+    "admin",
+    "user2"
+]
+```
 
 #### User routes
 
