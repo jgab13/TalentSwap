@@ -137,7 +137,7 @@ class SearchPage extends React.Component{
                     <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} /> 
                     <Form id="userFilters">
                         <div className="mb-3"> 
-                            <Form.Check inline label={"Check to show only the users who're teaching relavent courses"} type={'radio'} className={'ufilter'}
+                            <Form.Check inline label={"Check to show only the users who're teaching relevant courses"} type={'radio'} className={'ufilter'}
                             id={`u1`} onClick={this.handleUfilterCheck}/>
                         </div>
                     </Form>
