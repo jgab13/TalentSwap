@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import '../AuthSystem/styles.css';
@@ -35,7 +34,7 @@ class AddCourseReview extends React.Component {
 
   render() {
 
-    const {curDate, stars, description, addReview, cancelForm} = this.props;
+    const {stars, description, addReview, cancelForm} = this.props;
 
     return (
       <div className='popup_inner auth-system'>

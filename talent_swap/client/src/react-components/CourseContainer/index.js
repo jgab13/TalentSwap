@@ -1,15 +1,12 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 import "./../DetailedCoursePageTeacher/styles.css";
 import CourseList from "./../CourseList";
 import CourseReview from "./../CourseReview"
-import Container from "react-bootstrap/Container";
 import Header from "./../Header";
 import AuthSystem from "./../AuthSystem";
 import AddCourseReview from "./../AddCourseReview";
 import Button from "react-bootstrap/Button";
-import UserManager from "./../../users/user-manager.js";
-import { deleteCourse, editReview, addReview, deleteReview, enroll, getCourse, updateCourse, unenroll } from "../../actions/course.js";
+import { deleteCourse, editReview, addReview, deleteReview, enroll, updateCourse, unenroll } from "../../actions/course.js";
 
 class CourseContainer extends React.Component {
 
@@ -133,10 +130,6 @@ class CourseContainer extends React.Component {
   deleteReview = async (event) => {
     event.preventDefault()
     const reviewName = event.target.name;
-    
-    const reviewToDelete = this.state.review.filter(rev => {
-      return rev.description === reviewName
-    })
 
     await deleteReview(this.state.course._id, this.state.currUser)
     
@@ -197,9 +190,6 @@ class CourseContainer extends React.Component {
     }
     //Otherwise get the review that matches the current user and call the edit review route.
     else {
-      const editThisReview = getReview.filter(rev => {
-        return rev.user === newReview.user;
-      });
       getReview = getReview.filter(rev => {
         return rev.user !== newReview.user
       })  
@@ -244,7 +234,7 @@ class CourseContainer extends React.Component {
     }
 
   render() {
-    const {courseID, userID, reviews, admin} = this.props;
+    // const {courseID, userID, reviews, admin} = this.props;
 
   	const completedCourse = this.state.compl? <span id="completed">Course completed!</span> : null;
   	const addReview = (this.state.compl && this.state.enrolled && !this.state.reviewed && !this.state.edit && this.state.currUser !== this.state.course.teacher ?

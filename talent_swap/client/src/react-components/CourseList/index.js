@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./styles.css";
-// import { uid } from "react-uid";
 import CourseRating from "./../CourseRating";
 import Button from "react-bootstrap/Button";
 

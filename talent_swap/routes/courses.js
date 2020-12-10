@@ -30,8 +30,8 @@ courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
         description: req.body.description,
         picture: req.body.picture,
         level: req.body.level,
-        enrolledUsers: req.body.enrolledUsers, //are these necessary?
-        ratings: req.body.ratings //are these necessary?
+        enrolledUsers: req.body.enrolledUsers, 
+        ratings: req.body.ratings 
     })
 
     try {
@@ -62,7 +62,7 @@ courseRouter.patch('/api/courses/update/:id', mongoChecker, async (req, res) => 
      try {
         let course = await Course.findById(id)
         if (!course) {
-            res.status(404).send('Resource not found')  // could not find this student
+            res.status(404).send('Resource not found')  
         } else { 
             for (let i in attrs) {
                 course[attrs[i]] = newValues[i]
@@ -82,7 +82,7 @@ courseRouter.get('/api/courses', mongoChecker, async (req, res) => {
     try {
         const course = await Course.find()
         if (!course) {
-            res.status(404).send('Resource not found')  // could not find this student
+            res.status(404).send('Resource not found')  
         } else { 
             console.log("searching database found these courses: ", course)
 
@@ -101,7 +101,6 @@ courseRouter.get('/api/courses', mongoChecker, async (req, res) => {
 // retrieve courses related to the given search keyword
 courseRouter.get('/api/courses/search/:key', mongoChecker, async (req, res) => {
     const keyword = req.params.key.toLowerCase()
-    // console.log(`seaching for "${keyword}" in courses`)
     try {
         const courses = await Course.find({
             $or: [
@@ -112,7 +111,6 @@ courseRouter.get('/api/courses/search/:key', mongoChecker, async (req, res) => {
             res.status(404).send(`No courses found for "${req.params.key}"`) 
             return
         } 
-        // console.log("searching database found these courses: ", courses)
         res.send({
             "searchedCourses": courses
         })
@@ -126,7 +124,6 @@ courseRouter.get('/api/courses/search/:key', mongoChecker, async (req, res) => {
 //retrieve a course route
 courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
     const id = req.params.id
-    console.log(id)
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -136,7 +133,7 @@ courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
     try {
         const course = await Course.findById(id)
         if (!course) {
-            res.status(404).send('Resource not found')  // could not find this student
+            res.status(404).send('Resource not found')  
         } else { 
             res.send({ course })
         }
@@ -150,7 +147,6 @@ courseRouter.get('/api/courses/:id', mongoChecker, async (req, res) => {
 //delete a course route
 courseRouter.delete('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id
-    console.log(id)
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -160,7 +156,7 @@ courseRouter.delete('/api/courses/:id', mongoChecker, authenticate, async (req, 
     try {
         const course = await Course.findByIdAndRemove(id)
         if (!course) {
-            res.status(404).send('Resource not found')  // could not find this student
+            res.status(404).send('Resource not found')  
         } else { 
             res.send(course)
         }
@@ -173,7 +169,6 @@ courseRouter.delete('/api/courses/:id', mongoChecker, authenticate, async (req, 
 // Create a review for a course
 courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id
-    console.log(req.body)
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -183,9 +178,8 @@ courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, re
     try {
         const course = await Course.findById(id)
         if (!course) {
-            res.status(404).send('Resource not found')  // could not find this student
+            res.status(404).send('Resource not found')  
         } else { 
-            // Adds reservation to the restaurant reservation object
             course.ratings.push({
                 user: req.body.user,
                 date: req.body.date,
@@ -214,8 +208,6 @@ courseRouter.post('/api/courses/:id', mongoChecker, authenticate, async (req, re
 //Edit a review route
 courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id;
-    console.log(id)
-    console.log(req.body)
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -224,11 +216,9 @@ courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, r
 
     try {
         const course = await Course.findById(id);
-        console.log('This is the course')
         if (!course) {
             res.status(404).send('Internal server error');
         } else {
-            console.log(course)
             let index = -1
             for (let i = 0; i < course.ratings.length; i++){
                 if (String(course.ratings[i].user) === (String(req.body.user))){
@@ -236,7 +226,6 @@ courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, r
                 }
             }
             if (index === -1){
-                console.log('index is invalid')
                 res.status(404).send('Resource not found')
                 return
             }
@@ -252,7 +241,6 @@ courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, r
             if (req.body.rating !== undefined){
                 course.ratings[index].rating = req.body.rating   
             }
-            console.log(course.ratings[index])
             await course.save()
             res.send({course: course})
         }
@@ -261,7 +249,6 @@ courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, r
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request
             res.status(500).send('Internal server error');
         } else {
-            console.log('Fuck here I am')
             res.status(400).send('Bad Request'); // bad request for changing the user
         }
     }
@@ -270,8 +257,6 @@ courseRouter.patch('/api/courses/:id', mongoChecker, authenticate, async (req, r
 //delete a review route
 courseRouter.delete('/api/courses/review/:id', mongoChecker, authenticate, async (req, res) => {
     const id = req.params.id;
-    console.log(id)
-    console.log(req.body.user)
 
     if (!ObjectID.isValid(id)) {
         res.status(404).send()  // if invalid id, definitely can't find resource, 404.
@@ -290,12 +275,9 @@ courseRouter.delete('/api/courses/review/:id', mongoChecker, authenticate, async
                 }
             }
             if (index === -1){
-                console.log('index is invalid')
                 res.status(404).send('Resource not found')
                 return
             }
-
-            console.log(course.ratings[index])
             const revisedCourse = course.ratings.splice(index,1)
             try {
                 const result = await course.save()  

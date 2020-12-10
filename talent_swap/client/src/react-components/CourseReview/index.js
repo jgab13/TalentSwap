@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// import { uid } from "react-uid";
 import StarRatings from 'react-star-ratings';
 import "./styles.css";
 import Button from "react-bootstrap/Button";
@@ -17,11 +15,7 @@ class CourseReview extends React.Component {
       (!compl ? null:
         edit && review.user===user ? (<div className="starRating"><Button variant="outline-success" name={review.description} onClick={editLink}> Edit</Button><Button onClick={deleteLink} className="modify" name={review.description} variant="outline-success"> Delete </Button></div>)  :
         null));
-      console.log(sign)
-      console.log(compl)
-      console.log(edit)
-      console.log(review.user === user)
-      console.log(reviewButton);
+
     return (
         <div className="reviewContainer">
           <div className="userContainer">  
