@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 /* Connnect to our database */
 // Get the URI of the local database, or the one specified on deployment.
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/TalentSwapAPI'
+// const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://dev:4PJDWYrGfhxlCYaa@csc309.ngat3.mongodb.net/test'
+//mongodb+srv://dev:4PJDWYrGfhxlCYaa@csc309.ngat3.mongodb.net/TalentSwapAPI?retryWrites=true&w=majority
 
 mongoose.connect(mongoURI, 
 	{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true})
