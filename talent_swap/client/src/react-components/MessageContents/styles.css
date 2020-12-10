@@ -13,19 +13,21 @@
     text-align: right;
 }
 
-.message-container > .message-contents > .self > span {
+.message-container > .message-contents > .self > div {
     background-color: lightgray;
+    overflow-wrap: anywhere;
 }
 
 .message-container > .message-contents > .other {
     text-align: left;
 }
 
-.message-container > .message-contents > .other > span {
+.message-container > .message-contents > .other > div {
     background-color: lightgreen;
+    overflow-wrap: anywhere;
 }
 
-.message-container > .message-contents div, .message-container > .message-contents span {
+.message-container > .message-contents div, .message-container > .message-contents div {
     padding: 1em;
     border-radius: 30%;
 }
