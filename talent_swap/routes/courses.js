@@ -101,7 +101,7 @@ courseRouter.get('/api/courses', mongoChecker, async (req, res) => {
 // retrieve courses related to the given search keyword
 courseRouter.get('/api/courses/search/:key', mongoChecker, async (req, res) => {
     const keyword = req.params.key.toLowerCase()
-    console.log(`seaching for "${keyword}" in courses`)
+    // console.log(`seaching for "${keyword}" in courses`)
     try {
         const courses = await Course.find({
             $or: [
@@ -112,7 +112,7 @@ courseRouter.get('/api/courses/search/:key', mongoChecker, async (req, res) => {
             res.status(404).send(`No courses found for "${req.params.key}"`) 
             return
         } 
-        console.log("searching database found these courses: ", courses)
+        // console.log("searching database found these courses: ", courses)
         res.send({
             "searchedCourses": courses
         })

@@ -2,7 +2,6 @@ import React from "react";
 import Nav from "react-bootstrap/Nav";
 
 class SearchTabs extends React.Component{
-// function SearchTabs(props){
     constructor(props){
         super(props);
         this.handleSelect = this.handleSelect.bind(this);

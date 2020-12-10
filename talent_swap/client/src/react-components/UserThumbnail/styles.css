@@ -36,15 +36,8 @@
     color: white;
     border: white;
     opacity: 1;
-    
-    /* transform: translate(-50%, -50%); */
-    /* margin-top: auto;
-    margin-left: auto; */
+ 
 }
-/* 
-#card:hover{
-    opacity: 0.3;
-} */
 
 .userButton:hover{
     background-color:  #71ee8e;

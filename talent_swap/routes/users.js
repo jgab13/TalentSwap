@@ -137,7 +137,7 @@ router.get('/api/users', mongoChecker, async (req, res) => {
     try {
         const users = await User.find({});
         if (users) {
-            console.log("searching database found these users: ", users)
+            // console.log("searching database found these users: ", users)
             res.send(users.map(user => formatUser(user)));
         } else {
             res.send(undefined);
@@ -173,7 +173,7 @@ router.get('/api/users/:username', mongoChecker, async (req, res) => {
 // retrieve users related to the given search keyword
 router.get('/api/users/search/:key', mongoChecker, async (req, res) => {
     const keyword = req.params.key.toLowerCase()
-    console.log(`seaching for "${keyword}" in users`)
+    // console.log(`seaching for "${keyword}" in users`)
     try {
         const users = await User.find({
             $or: [
@@ -185,7 +185,7 @@ router.get('/api/users/search/:key', mongoChecker, async (req, res) => {
             res.status(404).send(`No users found for "${req.params.key}"`) 
             return
         } 
-        console.log("searching database found these users: ", users)
+        // console.log("searching database found these users: ", users)
         res.send(
             users.map(user => formatUser(user))
         )

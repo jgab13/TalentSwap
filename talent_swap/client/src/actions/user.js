@@ -34,7 +34,6 @@ export const CheckUsername = (userInput) => {
         });
 }
 
-// export const getSearchedUsers = async (searchBoxComp, keyword) => {
 export const getSearchResults = async (searchBoxComp, keyword) => {
     let url_user, url_course
     if (keyword){
@@ -44,7 +43,6 @@ export const getSearchResults = async (searchBoxComp, keyword) => {
         url_user = "/api/users"
         url_course = "/api/courses"
     }
-    console.log(url_user, url_course)
     Promise.all([
 
         fetch(url_course),
@@ -59,14 +57,10 @@ export const getSearchResults = async (searchBoxComp, keyword) => {
         } else {
             alert(`No results found for "${keyword}". Please try another keyword.`);
         }
-        
-        // return [res_courses.json(), res_users.json()]
       }).then((json_list)=>{
-        console.log("setting redirectObject for searchBox")
+        // console.log("setting redirectObject for searchBox")
         const users = json_list[1] ? json_list[1] : undefined
         const courses= json_list[0] ? json_list[0].searchedCourses : undefined
-        // console.log("parsed users are ", users)
-        // console.log("parsed courses are ", courses)
         searchBoxComp.setState({
             redirectObject: {
                 pathname: '/Search',

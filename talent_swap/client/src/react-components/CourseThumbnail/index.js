@@ -8,7 +8,6 @@ import pic0 from "./course0pic.jpg"
 class CourseThumbnail extends React.Component{
     render(){
         const course = this.props.course;
-        // console.log(course)
         const start = new Date(course.starttime)
         const end = new Date(course.endtime)
 

@@ -84,41 +84,6 @@ export const getCourses = (app) => {
         });
 };
 
-export const getSearchedCourses = async (searchBoxComp, keyword) => {
-    let url
-    if (keyword)
-        url = "/api/courses/keyword="+keyword
-    else 
-        url = "/api/courses"
-    console.log("searching the database for courses...")
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            } else {
-                alert(`No courses found for "${keyword}". Please try another keyword.`);
-            }
-        })
-        .then(json => {
-            console.log("setting redirectObject for searchBox")
-            searchBoxComp.setState({
-                redirectObject: {
-                    pathname: '/Search',
-                    search: keyword ? '?query=' + keyword : '',
-                    state: {
-                        searchedCourses: json.searchedCourses,
-                        searchKeyword: keyword
-                    }
-                }
-            });
-            
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
-
 export const getCourse = (course, id) => {
     // the URL for the request
     const url = "/api/courses/" + id;

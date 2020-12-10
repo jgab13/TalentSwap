@@ -2,11 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Redirect } from 'react-router-dom';
-// import {getSearchedCourses} from './../../actions/course.js';
-// import {getSearchedUsers} from './../../actions/user.js';
 import {getSearchResults} from './../../actions/user.js';
-
-
 
 class SearchBox extends React.Component{
     constructor(props){
@@ -14,7 +10,6 @@ class SearchBox extends React.Component{
         this.state = {
             input: "",
             redirectObject: undefined
-            // redirectURL: ""
         };
         this.handleClick = this.handleClick.bind(this);
         this.renderRedirect = this.renderRedirect.bind(this);
@@ -25,15 +20,10 @@ class SearchBox extends React.Component{
         await getSearchResults(this, this.state.input);
     }
 
-
     renderRedirect() {
-        if (this.state.redirectObject 
-            // && this.state.redirectObject.state.searchedCourses
-            // && this.state.redirectObject.state.searchKeyword
-            // && this.state.redirectObject.pathname
-            ) {
-            console.log('redirecting to /Search')
-            console.log('searchBox:', this)
+        if (this.state.redirectObject) {
+            // console.log('redirecting to /Search')
+            // console.log('searchBox:', this)
             return <Redirect to={this.state.redirectObject} />
         }
     };

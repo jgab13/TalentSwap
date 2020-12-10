@@ -1,19 +1,30 @@
-/* 
-#tab {
-    position: relative;
-    left: 50px;
-} */
 #filterHeader{
     padding: 1em;
     font-size: small;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     position: relative;
     left: 50px;
-    /* top: 40px; */
 }
 
-.filterLabel{
+#courseFilters{
     margin-right: 5px;
     position: relative;
     left: 50px;
+}
+
+.filterLabel{
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#applyFilter{
+    margin-right: 20px;
+}
+
+#userFilters{
+    padding: 1em;
+    margin-right: 5px;
+    position: relative;
+    left: 50px;
+    font-weight: bold;
 }

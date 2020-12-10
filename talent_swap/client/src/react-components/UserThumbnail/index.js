@@ -5,15 +5,8 @@ import Button from "react-bootstrap/Button";
 
 
 function UserThumbnail(props){
-// class UserThumbnail extends React.Component{
-    // constructor(props){
-    //     super(props);
-    // }
-    // render(){
-        // const user = this.props.user;
         const user = props.user;
         return(
-                // <div>
                 <Card id="card">
                     <Card.Img id="userPic" variant="top" src= {`data:;base64,${user.pic}`} />
                     <Card.Body id="body">
@@ -30,11 +23,7 @@ function UserThumbnail(props){
                         </Button>
                     </Card.Body>
                 </Card>
-                
-                // </div>
         );
     }
-// }
-
 
 export default UserThumbnail;

@@ -14,16 +14,8 @@ class SearchPage extends React.Component{
     constructor(props){
         super(props);
         this.state = Object.assign({
-            // tab : "courses"
-
             tab : "courses", 
             cfilters: {level: [], availability: [], size:[]}
-            // teachers_only: false
-            //  {
-            //     level: [],
-            //     availability: [],
-            //     size: []
-            // }
         }, this.updateState()); 
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.updateState = this.updateState.bind(this);
@@ -81,9 +73,6 @@ class SearchPage extends React.Component{
 
     handleCfilterCheck = (e) => {
         const checkbox = document.getElementById(e.target.id)
-        // if (checkbox.checked) {
-        //     console.log('checked')
-        // }
         const arr = e.target.id.split(':')
         const cat = arr[0], tag = arr[1]
         const dummy = {...this.state}
@@ -105,34 +94,19 @@ class SearchPage extends React.Component{
             arrToChange.splice(arrToChange.indexOf(tag), 1)
         }
         this.setState(dummy)
-
     }
+    
     componentDidUpdate(prevProps, prevState, snapshot) {
         const newState = this.updateState();
-        // console.log("prevState", prevState);
-        // console.log("newState", newState);
-        if (newState.keyword !== prevState.keyword 
-            // || (newState.courses.length !== prevState.courses.length
-            //     || !newState.courses.every((value, index) => value === prevState.courses[index]))
-                // && newState.cfilters !== prevState.cfilters
-            )
+        if (newState.keyword !== prevState.keyword)
         {
             this.clearCfilters();
             this.setState(newState);
-            // const idList = ["c1:Beginner", "c1:Intermediate", "c1:Advanced", "c1:All Level",
-            // "c2:Past", "c2:Upcoming", 
-            // 'c3:One-on-One', 'c3:Small (2-8)', 'c3:Medium (9-20)', 'c3:Large (20+)']
-            // idList.forEach(id => {
-            //     let cb = document.getElementById(id)
-            //     cb.checked = false
-            // })
         }
     }
-    
 
     updateState = () => {
-        
-        console.log('updating search page...')
+        // console.log('updating search page...')
         const keyword = this.props.location.state.searchKeyword
         const courses = this.props.location.state.searchedCourses
         const users = this.props.location.state.searchedUsers
@@ -142,12 +116,6 @@ class SearchPage extends React.Component{
                 displayedCourses: courses,
                 users: users,
                 displayedUsers: users
-                // displayedCourses: courses,
-                // cfilters: {
-                //     level: [],
-                //     availability: [],
-                //     size: []
-                // }
         }
     }
   
@@ -158,7 +126,7 @@ class SearchPage extends React.Component{
     render(){
         const users = this.state.displayedUsers;
         const courses = this.state.displayedCourses;
-        console.log('the states of SearchPage comp are', this.state)
+        // console.log('the states of SearchPage comp are', this.state)
         const tab = this.state.tab;
         let results;
         results = (tab === "courses") ? <CourseResults courses = {courses}/> : <UserResults users = {users}/>;
@@ -167,9 +135,9 @@ class SearchPage extends React.Component{
                 <div className="SearchPage">
                     <Header />
                     <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} /> 
-                    <Form>
+                    <Form id="userFilters">
                         <div className="mb-3"> 
-                            <Form.Check inline label={"only show teachers"} type={'radio'} className={'ufilter'}
+                            <Form.Check inline label={"Check to show only the users who're teaching relavent courses"} type={'radio'} className={'ufilter'}
                             id={`u1`} onClick={this.handleUfilterCheck}/>
                         </div>
                     </Form>
@@ -182,33 +150,33 @@ class SearchPage extends React.Component{
                     <Header />
                     <SearchTabs id="tab" handleTabSelect = {this.handleTabSelect} /> 
                     <p id="filterHeader"> Filter by<br></br></p>
-                    <Form>
+                    <Form id="courseFilters">
                     <div className="mb-3"> 
-                    <span> Level </span>
-                    {['Beginner', 'Intermediate', 'Advanced', 'All Level'].map( level => (
-                        <Form.Check inline label={level} type={'checkbox'} className={'cfilter'}
-                        id={`c1:${level}`} onClick={this.handleCfilterCheck}/>
-                    ))}
+                        <span className="filterLabel"> Level: </span>
+                        {['Beginner', 'Intermediate', 'Advanced', 'All Level'].map( level => (
+                            <Form.Check inline label={level} type={'checkbox'} className={'cfilter'}
+                            id={`c1:${level}`} onClick={this.handleCfilterCheck}/>
+                        ))}
+                        </div>
+                        <div className="mb-3"> 
+                        <span className="filterLabel"> Availability: </span>
+                        {['Past', 'Upcoming'].map( a => (
+                            <Form.Check inline label={a} type={'checkbox'} className={'cfilter'}
+                            id={`c2:${a}`} onClick={this.handleCfilterCheck}/>
+                        ))}
+                        </div>
+                        <div className="mb-3"> 
+                        <span className="filterLabel"> Class Size: </span>
+                        {['One-on-One', 'Small (2-8)', 'Medium (9-20)', 'Large (20+)'].map( s => (
+                            <Form.Check inline label={s} type={'checkbox'} className={'cfilter'}
+                            id={`c3:${s}`} onClick={this.handleCfilterCheck}/>
+                        ))}
                     </div>
-                    <div className="mb-3"> 
-                    <span> Availability </span>
-                    {['Past', 'Upcoming'].map( a => (
-                        <Form.Check inline label={a} type={'checkbox'} className={'cfilter'}
-                        id={`c2:${a}`} onClick={this.handleCfilterCheck}/>
-                    ))}
-                    </div>
-                    <div className="mb-3"> 
-                    <span> Class Size </span>
-                    {['One-on-One', 'Small (2-8)', 'Medium (9-20)', 'Large (20+)'].map( s => (
-                        <Form.Check inline label={s} type={'checkbox'} className={'cfilter'}
-                        id={`c3:${s}`} onClick={this.handleCfilterCheck}/>
-                    ))}
-                    </div>
-                    <Button variant="success" id="apply-filter" onClick={this.applyCfilters}>
-                    Apply Filters</Button>
-                    <Button variant="secondary" id="clear-filter" onClick={this.clearCfilters}>
-                    Clear Filters</Button>
-                </Form>
+                        <Button variant="success" id="applyFilter" onClick={this.applyCfilters}>
+                        Apply Filters</Button>
+                        <Button variant="secondary" id="clearFilter" onClick={this.clearCfilters}>
+                        Clear Filters</Button>
+                    </Form>
                     {results}
             </div>
             )
