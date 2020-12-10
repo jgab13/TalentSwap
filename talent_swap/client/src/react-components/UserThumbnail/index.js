@@ -15,7 +15,7 @@ function UserThumbnail(props){
         return(
                 // <div>
                 <Card id="card">
-                    <Card.Img id="userPic" variant="top" src= {user.pic} />
+                    <Card.Img id="userPic" variant="top" src= {`data:;base64,${user.pic}`} />
                     <Card.Body id="body">
                         <Card.Title>{user.name}</Card.Title>
                         <Card.Subtitle>{user.bio}</Card.Subtitle>
