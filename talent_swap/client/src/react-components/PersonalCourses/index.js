@@ -4,7 +4,6 @@ import "./styles.css";
 import Header from "./../Header"
 import CourseResults from "./../SearchCourseResults"
 
-// prepare hardcoded user and course data to render on the search page
 import { getCourses } from "../../actions/course.js"
 import { checkSession } from "../../actions/user.js";
 import AuthSystem from "./../AuthSystem";

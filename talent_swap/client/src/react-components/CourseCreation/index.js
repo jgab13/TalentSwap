@@ -53,13 +53,15 @@ class CourseCreation extends React.Component {
   }
 
 	async handleSubmit(event) {
-		event.preventDefault(); //testing
-		//Push new course to database
+		event.preventDefault();
 		if (new Date(this.state.date + " " + this.state.endtime).getTime() < Date.now()) {
 			alert("Course end time can not be earlier than now.")
 		}
 		else if (this.state.capacity < 1) {
 			alert("Capacity can not be smaller than 1.")
+		}
+		else if (this.state.endtime < this.state.starttime) {
+			alert("Course end time can not be earlier than start time.")
 		}
 		else if (this.state.credit < 0) {
 			alert("Credit can not be smaller than 0.")
@@ -199,19 +201,6 @@ class CourseCreation extends React.Component {
 			      type="number"
 			      name="credit"
 			      value={this.state.credit}
-			      onChange={this.handleChange}/>
-			    </Col>
-			  </Form.Group>
-
-			  <Form.Group as={Row}>
-			    <Form.Label column sm="3">
-			      Area
-			    </Form.Label>
-			    <Col sm="9">
-			      <Form.Control
-			      type="text"
-			      name="area"
-			      value={this.state.area}
 			      onChange={this.handleChange}/>
 			    </Col>
 			  </Form.Group>

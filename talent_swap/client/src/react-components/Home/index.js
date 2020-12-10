@@ -14,11 +14,11 @@ class Home extends React.Component {
     super(props);
     this.state = {
       loginStatus: this.props.location.state === undefined ? true : false,
-      //Jonathan change
       courses: null
     }
+    
   }
-  //Jonathan change
+
   async componentDidMount(){
     await getCourses(this)
   }
@@ -54,7 +54,7 @@ class Home extends React.Component {
             <h1 className="ltitle">Popular Courses</h1>
             {/* server call */}
             <CourseResutls courses = {this.state.courses.sort((a, b) => 
-              a.enrollment/a.capacity - b.enrollment/b.capacity)}/>
+              b.enrollment/b.capacity - a.enrollment/a.capacity).slice(0,3)}/>
           </div>
         </div>
       );  

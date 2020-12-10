@@ -42,7 +42,6 @@ class Signup extends React.Component {
 
 	async handleSignup(event) {	
 		event.preventDefault();
-		//input shown in address bar need to be salted?
 		if (this.validate()) {
 			let user = await CheckUsername(this.state.input)
 			if (user == undefined) {
@@ -53,16 +52,6 @@ class Signup extends React.Component {
 			else {
 				alert("This username is taken, please change another username!")
 			}		
-			//Push new user to database
-			/*
-			let currentUser = new User({
-				//user id could be userList length
-				//should we save list as react context too?
-				name: this.state.input.username;
-				password: 
-				credit: 10; //inital credit?
-			});
-			*/
 		}
 		else {
 			alert("Passwords are not the same, please check your password input.");

@@ -44,7 +44,7 @@ class MessageCenter extends React.Component {
                     <Row><h1>Currently Messaging: {this.state.selectedContact}</h1></Row>
                     <Row>
                         <Col><MessageContacts contactUsernames={this.state.contactUsernames} messageCenter={this} /></Col>
-                        <Col><MessageContents selectedContact={this.state.selectedContact} messages={this.state.messages} sendMessageHandler={(message) => {currentUser.sendMessage(this.state.selectedContact, message)}} /></Col>
+                        <Col><MessageContents selectedContact={this.state.selectedContact} messages={this.state.messages} sendMessageHandler={async (message) => {await currentUser.sendMessage(this.state.selectedContact, message)}} /></Col>
                     </Row>
                 </Container>
             </div>

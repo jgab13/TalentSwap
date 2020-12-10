@@ -47,8 +47,8 @@ Request body should be:
 Response: Course object if successful:
 ```
 {
-    topic: "some topic",
-    teacher: "a teacher",
+    "topic": "some topic",
+    "teacher": "a teacher",
     ... // it is a long list, so not all fields are included
 }
 ```
@@ -67,79 +67,307 @@ Request body should be:
 Response: New course object if successful:
 ```
 {
-    topic: "new topic",
-    teacher: "a teacher",
+    "topic": "new topic",
+    "teacher": "a teacher",
     ... // it is a long list, so not all fields are included
 }
 ```
 
 ##### Get all courses: GET '/api/courses'
-This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns all of the course objects from the db in the form ```{"courses": {"course document"}, {"course document"}}```.
-
-##### Get courses by keyword: GET '/api/courses/keyword=:key'
-This API route is used by the search components to retrieve all the courses related to the keyword. This route does not require a request body and it returns all the matched course objects from the db in the form ```{"courses": {"course document"}, {"course document"}}```.
-
-##### Get a course: GET '/api/courses/:id'
-This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form ```{"course": "course document"}```.
-
-##### Delete a course: DELETE '/api/courses/:id'
-This API is used by admin users to delete courses. The route does not require a request body, but it requires a request parameter of a valid course object id. In order to use this route, a user must be logged in. Post a login request user the route describe in users below. Once a cookie has been created, this API route can be used. The route returns the deleted course.
-
-##### Create a review: POST '/api/courses/:id'
-This API route is used by regular users who have enrolled in a completed course to add a review. This route requires a request parameter of a valid course object id, a request body as follows.
+This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns a all of the course objects
+from the db in the form 
 ```
 {
-	"user": "username",
-	"date": "MM-DD-YYYY",
-	"description": "description",
-	"rating": "number"
+    "courses": 
+        {
+            "topic": "new topic",
+            "teacher": "a teacher",
+            ... // it is a long list, so not all fields are included
+        }, 
+        {
+            "topic": "new topic",
+            "teacher": "a teacher",
+            ... // it is a long list, so not all fields are included
+        }
+}
+```
+
+##### Get courses by keyword: GET '/api/courses/keyword=:key'
+This API route is used by the search components to retrieve all the courses related to the keyword. This route does not require a request body and it returns all the matched course objects from the db in the form. 
+```
+{"courses": {"course document"}, {"course document"}}
+```
+
+##### Get a course: GET '/api/courses/:id'
+This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form.
+
+```
+{
+    "course": {
+        "enrolledUsers": [],
+        "_id": "5fd0e788ad623a0a64e7a992",
+        "topic": "JG's courses",
+        "teacher": "JG",
+        "starttime": "2020-12-01T05:00:00.000Z",
+        "endtime": "2020-12-10T05:00:00.000Z",
+        "credit": 10,
+        "level": "beginner",
+        "capacity": 1,
+        "enrollment": 0,
+        "rate": 0,
+        "description": "Do not use",
+        "ratings": [],
+        "__v": 13
+    }
+}
+```
+
+##### Delete a course: DELETE '/api/courses/:id'
+This API is used by admin users to delete courses. The route does not require a request body, but it requires a request parameter of a valid course object id. In order to use this route, a user must be logged in. Post a login request in the user routes section described below. Once a cookie has been created, this API route can be used. The route returns the deleted course as shown below.
+
+```
+{
+    "enrolledUsers": [],
+    "_id": "5fd0e788ad623a0a64e7a992",
+    "topic": "JG's courses",
+    "teacher": "JG",
+    "starttime": "2020-12-01T05:00:00.000Z",
+    "endtime": "2020-12-10T05:00:00.000Z",
+    "credit": 10,
+    "level": "beginner",
+    "capacity": 1,
+    "enrollment": 0,
+    "rate": 0,
+    "description": "Do not use",
+    "ratings": [],
+    "__v": 13
+}
+```
+
+##### Create a review: POST '/api/courses/:id'
+This API route is used by regular users who have enrolled in a completed course to add a review. This route requires a request parameter of a valid course object id, a request body as follows. In order to use this route, a user must be logged in. Post a login request in the user routes section described below.
+```
+{
+    "user": "MG",
+    "date": "10-12-2020",
+    "description": "Loved the course",
+    "rating": 4
 }
 ```
 The route returns the course object with the new review in the ratings property of the course.
-
-##### Edit a review: PATCH '/api/courses/:id'
-This API route is used by regular users who have enrolled in a completed course and already reviewed the course, to edit their existing review. This route requires a request parameter of a valid course object id, a request body as follows.
 ```
 {
-	"user": "username",
-	"date": "MM-DD-YYYY",
-	"description": "description",
-	"rating": number
+    "course": {
+        "enrolledUsers": [
+            "JG"
+        ],
+        "_id": "5fd177a4e1cada33681c7042",
+        "topic": "MG's test",
+        "teacher": "MG",
+        "starttime": "2020-12-10T01:19:00.000Z",
+        "endtime": "2020-12-10T01:24:00.000Z",
+        "credit": 2,
+        "level": "Intermediate",
+        "capacity": 10,
+        "enrollment": 1,
+        "rate": 5,
+        "description": "klasdlkklafsdf",
+        "picture": "",
+        "ratings": [
+            {
+                "_id": "5fd185a44999ed2c60bec186",
+                "user": "JG",
+                "date": "2020-12-10T05:00:00.000Z",
+                "description": "lkfglslkgfdgdg",
+                "rating": 5
+            },
+            {
+                "_id": "5fd237dfc62a4b16accc0434",
+                "user": "MG",
+                "date": "2020-10-12T04:00:00.000Z",
+                "description": "Loved the course",
+                "rating": 4
+            }
+        ],
+        "__v": 5
+    }
+}
+```
+
+##### Edit a review: PATCH '/api/courses/:id'
+This API route is used by regular users who have enrolled in a completed course and already reviewed the course, to edit their existing review. This route requires a request parameter of a valid course object id, a request body as follows. Post a login request in the user routes section described below to use this route. The user must match a user who has reviewed the course already.
+```
+{
+    "user": "MG",
+    "description": "test",
+    "rating": 2,
+    "date": "2020-10-11"
 }
 ```
 The route returns the course object with the editted review in the ratings property of the course.
-
-##### Delete a review: DELETE '/api/courses/review/:id'
-This API route is used by regular users who have enrolled in a completed course and already reviewed the course, to delete their existing review. This route requires a request parameter of a valid course object id, a request body as follows.
 ```
 {
-	"user": "username"
+    "course": {
+        "enrolledUsers": [
+            "JG",
+            "MG"
+        ],
+        "_id": "5fd177a4e1cada33681c7042",
+        "topic": "MG's test",
+        "teacher": "MG",
+        "starttime": "2020-12-10T01:19:00.000Z",
+        "endtime": "2020-12-10T01:24:00.000Z",
+        "credit": 2,
+        "level": "Intermediate",
+        "capacity": 10,
+        "enrollment": 1,
+        "rate": 5,
+        "description": "klasdlkklafsdf",
+        "picture": "",
+        "ratings": [
+            {
+                "_id": "5fd185a44999ed2c60bec186",
+                "user": "JG",
+                "date": "2020-12-10T05:00:00.000Z",
+                "description": "lkfglslkgfdgdg",
+                "rating": 5
+            },
+            {
+                "_id": "5fd237dfc62a4b16accc0434",
+                "user": "MG",
+                "date": "2020-10-11T00:00:00.000Z",
+                "description": "test",
+                "rating": 2
+            }
+        ],
+        "__v": 5
+    }
+}
+```
+
+##### Delete a review: DELETE '/api/courses/review/:id'
+This API route is used by regular users who have enrolled in a completed course and already reviewed the course, to delete their existing review. This route requires a request parameter of a valid course object id, a request body as follows. Post a login request in the user routes section described below to use this route. The user must match a user who has reviewed the course already.
+```
+{
+	"user": "MG"
 }
 ```
 
 The route returns the course object. The review of the user will not be in the ratings property of the course.
+```
+{
+    "enrolledUsers": [
+        "JG",
+        "MG"
+    ],
+    "_id": "5fd177a4e1cada33681c7042",
+    "topic": "MG's test",
+    "teacher": "MG",
+    "starttime": "2020-12-10T01:19:00.000Z",
+    "endtime": "2020-12-10T01:24:00.000Z",
+    "credit": 2,
+    "level": "Intermediate",
+    "capacity": 10,
+    "enrollment": 1,
+    "rate": 5,
+    "description": "klasdlkklafsdf",
+    "picture": "",
+    "ratings": [
+        {
+            "_id": "5fd185a44999ed2c60bec186",
+            "user": "JG",
+            "date": "2020-12-10T05:00:00.000Z",
+            "description": "lkfglslkgfdgdg",
+            "rating": 5
+        }
+    ],
+    "__v": 6
+}
+```
 
 #### Enrollment routes
 
 ##### Enrol in a course: POST '/api/enrollment'
-This API route is used by regular users to enroll in a course. The route requires a request body as follows.
+This API route is used by regular users to enroll in a course. The route requires a request body as follows. Post a login request in the user routes section described below to use this route. The user must have enough credits to pay the credit cost of the course and not already be enrolled.
 ```
 {
-	"courseId": "valid courseID"
+	"courseId": "5fd177a4e1cada33681c7042"
 }
 ```
-
 The route returns the user and course objects as properties.
+```
+{
+    "user": {
+        "coursesTeaching": [],
+        "coursesLearning": [],
+        "_id": "5fd0e76fad623a0a64e7a991",
+        "username": "JG",
+        "password": "$2a$10$XskI0gkxfWmjHeYOgTgHReNqksi47YSNB1Y3dGrUdgPDDfxhaVRoW",
+        "userType": "user",
+        "credits": 8,
+        "__v": 0
+    },
+    "course": {
+        "enrolledUsers": [
+            "JG"
+        ],
+        "_id": "5fd177a4e1cada33681c7042",
+        "topic": "MG's test",
+        "teacher": "MG",
+        "starttime": "2020-12-10T01:19:00.000Z",
+        "endtime": "2020-12-10T01:24:00.000Z",
+        "credit": 2,
+        "level": "Intermediate",
+        "capacity": 10,
+        "enrollment": 1,
+        "rate": 0,
+        "description": "klasdlkklafsdf",
+        "picture": "",
+        "ratings": [],
+        "__v": 7
+    }
+}
+```
 
 ##### Unenrol in a course: POST '/api/unenroll'
-This API route is used by regular users to unenroll in a course that has been previously enrolled in. The route requires a request body as follows.
+This API route is used by regular users to unenroll in a course that has been previously enrolled in. The route requires a request body as follows. Post a login request in the user routes section described below to use this route. The user must already be enrolled in the course to unenroll.
 ```
 {
-	"courseId": "valid courseID"
+	"courseId": "5fd177a4e1cada33681c7042"
 }
 ```
-
 The route returns the user and course objects as properties.
+```
+{
+    "user": {
+        "coursesTeaching": [],
+        "coursesLearning": [],
+        "_id": "5fd0e76fad623a0a64e7a991",
+        "username": "JG",
+        "password": "$2a$10$XskI0gkxfWmjHeYOgTgHReNqksi47YSNB1Y3dGrUdgPDDfxhaVRoW",
+        "userType": "user",
+        "credits": 10,
+        "__v": 0
+    },
+    "course": {
+        "enrolledUsers": [],
+        "_id": "5fd177a4e1cada33681c7042",
+        "topic": "MG's test",
+        "teacher": "MG",
+        "starttime": "2020-12-10T01:19:00.000Z",
+        "endtime": "2020-12-10T01:24:00.000Z",
+        "credit": 2,
+        "level": "Intermediate",
+        "capacity": 10,
+        "enrollment": 0,
+        "rate": 0,
+        "description": "klasdlkklafsdf",
+        "picture": "",
+        "ratings": [],
+        "__v": 6
+    }
+}
+```
 
 #### Message routes
 

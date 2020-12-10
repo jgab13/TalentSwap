@@ -40,14 +40,14 @@ class MessageContents extends React.Component {
                     {this.state.messages
                     .map(message => (
                         <div key={uid(message)} className={message.senderName === currentUser.username ? "self" : "other"}>
-                            <span>{message.contents}</span>
+                            <div>{message.contents}</div>
                         </div>
                     ))}
                 </div>
                 <div className="message-input">
                     <input type="text" onChange={this.handleInputChange} value={this.state.messageToSend} />
                     <Button variant="primary" type="button" onClick={async () => {
-                        this.sendMessageHandler(this.state.messageToSend);
+                        await this.sendMessageHandler(this.state.messageToSend);
                         const messages = await currentUser.getMessagesFromContact(this.state.selectedContact);
                         this.setState({
                             messages: messages,
