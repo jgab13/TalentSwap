@@ -22,9 +22,6 @@ class SearchBox extends React.Component{
 
     async handleClick(e){
         e.preventDefault();
-       
-        // await getSearchedCourses(this, this.state.input);
-        // await getSearchedUsers(this, this.state.input);
         await getSearchResults(this, this.state.input);
     }
 

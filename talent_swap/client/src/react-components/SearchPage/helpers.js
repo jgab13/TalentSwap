@@ -42,3 +42,8 @@ export const FiltersCourseSizes = (curr_courses, filters) => {
     })
     return r_courses;
 }
+
+export const FilterTeachers = (users, keyword) => {
+    if (!keyword) return users
+    return users.filter(user => user.expertise.toLowerCase().match(keyword))
+}

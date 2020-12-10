@@ -10,6 +10,7 @@ class CourseResults extends React.Component{
         const courses = this.props.courses;
         // const loginStatus = this.props.loginStatus;
         // console.log(courses);
+        if (!courses) return(<p>No matched courses.</p>)
         return(
             <div id="cardDeck" className="row row-cols-1 row-cols-md-3">
                 {courses.map( course => 

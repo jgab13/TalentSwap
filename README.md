@@ -92,7 +92,7 @@ from the db in the form
 }
 ```
 
-##### Get courses by keyword: GET '/api/courses/keyword=:key'
+##### Get courses by keyword: GET '/api/courses/search/:key'
 This API route is used by the search components to retrieve all the courses related to the keyword. This route does not require a request body and it returns all the matched course objects from the db in the form. 
 ```
 {"courses": {"course document"}, {"course document"}}
@@ -568,7 +568,7 @@ Response: List of all user object if successful:
 	}
 ]
 ```
-##### Get courses by keyword: GET '/api/users/keyword=:key'
+##### Get courses by keyword: GET '/api/users/search/:key'
 This API route is used by the search components to retrieve all the users related to the keyword. This route does not require a request body and it returns all the matched user objects from the db in the form ```{"users": {"user document"}, {"user document"}}```.
 
 ##### Get User: GET '/api/users/:username'

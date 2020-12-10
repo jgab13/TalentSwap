@@ -14,7 +14,7 @@ class UserResults extends React.Component {
     // }
     render(){
         const users = this.props.users;
-
+        if (!users) return <p> No matched users.</p>
         return(
             <CardDeck>
                 {users.map((user) => 

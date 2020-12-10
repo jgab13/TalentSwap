@@ -65,8 +65,8 @@ export const getSearchResults = async (searchBoxComp, keyword) => {
         console.log("setting redirectObject for searchBox")
         const users = json_list[1] ? json_list[1] : undefined
         const courses= json_list[0] ? json_list[0].searchedCourses : undefined
-        console.log("parsed users are ", users)
-        console.log("parsed courses are ", courses)
+        // console.log("parsed users are ", users)
+        // console.log("parsed courses are ", courses)
         searchBoxComp.setState({
             redirectObject: {
                 pathname: '/Search',
