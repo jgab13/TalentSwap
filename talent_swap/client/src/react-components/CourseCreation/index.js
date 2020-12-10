@@ -53,13 +53,15 @@ class CourseCreation extends React.Component {
   }
 
 	async handleSubmit(event) {
-		event.preventDefault(); //testing
-		//Push new course to database
+		event.preventDefault();
 		if (new Date(this.state.date + " " + this.state.endtime).getTime() < Date.now()) {
 			alert("Course end time can not be earlier than now.")
 		}
 		else if (this.state.capacity < 1) {
 			alert("Capacity can not be smaller than 1.")
+		}
+		else if (this.state.endtime < this.state.starttime) {
+			alert("Course end time can not be earlier than start time.")
 		}
 		else if (this.state.credit < 0) {
 			alert("Credit can not be smaller than 0.")
