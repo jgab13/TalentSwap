@@ -21,13 +21,7 @@ class DetailedCoursePage extends React.Component {
 
   	render() {
     
-    if (this.state.course === null || this.state.id === null ){
-      return (<div>
-          <Redirect to={"/"} />
-        </div>);  
-
-    } 
-    else {
+      if (this.state.course !== null){
         if ((this.state.course.teacher !== this.state.currentUser) || (new Date(this.state.course.endtime).getTime() < Date.now())){
           return (
             <div>
@@ -46,7 +40,14 @@ class DetailedCoursePage extends React.Component {
           );  
         }
         
+    } else if (this.state.id === null){
+      return (<div><Redirect to={"/"} /></div>);
     }
+    else {
+      return (<div></div>);  
+
+    } 
+
 
 	}
 
