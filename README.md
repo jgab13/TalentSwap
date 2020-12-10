@@ -3,7 +3,7 @@
 
 ## Instructions
 
-Please use this URL to access our web application xxxxx.
+Please use this URL to access our web application http://talent-swap-uoft.herokuapp.com/.
 
 ### Functionality
 
@@ -38,7 +38,7 @@ In addition to the visitor functionality, an admin user has access to the admin 
 
 ##### Get all courses: GET '/api/courses'
 This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns a all of the course objects
-from the db in the form '{"courses": "course document", "course document"}'.
+from the db in the form '{"courses": {"course document"}, {"course document"}}'.
 
 ##### Get a course: GET '/api/courses/:id'
 This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form '{"course": "course document"}'.
