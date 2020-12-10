@@ -39,14 +39,11 @@ class Login extends React.Component {
 		if (currentUser) {
 
 			//admin validation
-			//TODO pass userType to login component
-			if (currentUser.userType === "admin") { //usertype
+			if (currentUser.userType === "admin") {
 				this.setState({redirect:"admin"});
 			}  else {
 				this.setState({redirect:"user"});
 			}
-			//functionality
-			console.log(currentUser);
 		}
 		else {
 			alert("Validation failed! Please try again.");
@@ -65,9 +62,7 @@ class Login extends React.Component {
 		//validation
 		let input = this.state.input;
 		try{
-			//usermanager should fetch data from database
 			let currentUser = await this.context.login(input.username, input.password);
-			console.log(currentUser);
 			if (!currentUser) {
 				return false;
 			}

@@ -28,7 +28,6 @@ class Header extends React.Component {
 		this.logout = this.logout.bind(this);
 		this.togglePopup = this.togglePopup.bind(this);
 		this.renderRedirect = this.renderRedirect.bind(this);
-		// this.handleSearch = this.handleSearch.bind(this);
 	}
 
   renderRedirect() {
@@ -50,15 +49,11 @@ class Header extends React.Component {
 			redirectURL: "/"
 		});
 	}
-//   handleSearch(input){
-// 	  this.props.handleSearch(input);
-//   }
 
   render() {
     return (
       <div>
 		{this.renderRedirect()}
-		{/* {console.log(this.props.loginStatus)} */}
         <Navbar bg="light">
 		    <Navbar.Brand href="/">
 		      <img
