@@ -193,9 +193,8 @@ class CourseContainer extends React.Component {
 
   //Add or edit review from current user using details for addReview entry form.
   addReviewForm = async (date, rating, desc)  => {
-
-    if (date === ""){
-      alert('Date cannot be blank. Enter a valid date.');
+    if (date === "" || String(new Date(date)) === "Invalid Date"){
+      alert('Date cannot be blank, invalid or earlier than today. Please enter a valid date');
       return;
     } else if (desc === ""){
       alert('Description cannot be blank. Enter a valid date.');
