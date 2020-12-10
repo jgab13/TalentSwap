@@ -170,12 +170,9 @@ class CourseContainer extends React.Component {
   }
 
   //Add or edit review from current user using details for addReview entry form.
-  addReviewForm = async (date, rating, desc)  => {
-    if (date === "" || String(new Date(date)) === "Invalid Date"){
-      alert('Date cannot be blank, invalid or earlier than today. Please enter a valid date');
-      return;
-    } else if (desc === ""){
-      alert('Description cannot be blank. Enter a valid date.');
+  addReviewForm = async (rating, desc)  => {
+    if (desc === ""){
+      alert('Description cannot be blank. Enter a valid description.');
       return;
     } else if (rating > 5 || rating < 0){
       alert('Rating must be a number between 0 and 5. Enter a valid rating.');
@@ -183,7 +180,7 @@ class CourseContainer extends React.Component {
     }
     const newReview = {
         user: this.state.currUser,
-        date: date,
+        date: new Date(Date.now()),
         description: desc,
         rating: parseInt(rating)
     };
