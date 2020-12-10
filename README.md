@@ -209,7 +209,8 @@ The route returns the course object with the editted review in the ratings prope
 {
     "course": {
         "enrolledUsers": [
-            "JG"
+            "JG",
+            "MG"
         ],
         "_id": "5fd177a4e1cada33681c7042",
         "topic": "MG's test",
@@ -256,7 +257,8 @@ The route returns the course object. The review of the user will not be in the r
 ```
 {
     "enrolledUsers": [
-        "JG"
+        "JG",
+        "MG"
     ],
     "_id": "5fd177a4e1cada33681c7042",
     "topic": "MG's test",
