@@ -2,7 +2,10 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Redirect } from 'react-router-dom';
-import {getSearchedCourses} from './../../actions/course.js';
+// import {getSearchedCourses} from './../../actions/course.js';
+// import {getSearchedUsers} from './../../actions/user.js';
+import {getSearchResults} from './../../actions/user.js';
+
 
 
 class SearchBox extends React.Component{
@@ -14,38 +17,19 @@ class SearchBox extends React.Component{
             // redirectURL: ""
         };
         this.handleClick = this.handleClick.bind(this);
-        // this.handleChange = this.handleChange.bind(this);
         this.renderRedirect = this.renderRedirect.bind(this);
     }
 
     async handleClick(e){
         e.preventDefault();
        
-        await getSearchedCourses(this, this.state.input);
-        // await getSearchedUsers(this.props.app, this.state.input);
-        // const url = this.state.input ? '/Search?query='+this.state.input : '/Search';
-        // // setTimeout(console.log("After searching, app has the following states", this.props.app, 3000))
-        // this.setState({
-        //     redirectObject: {
-        //         pathname: url,
-        //         state: {searchKeyword: this.state.input},
-        //     }
-        // });
-        
-        // this.setState({
-        //     redirectObject: {
-        //         pathname: url,
-        //         state: {searchKeyword: this.state.input},
-        //     }
-        //     // redirectURL: url
-        // });
+        // await getSearchedCourses(this, this.state.input);
+        // await getSearchedUsers(this, this.state.input);
+        await getSearchResults(this, this.state.input);
     }
 
 
     renderRedirect() {
-        // if (this.state.redirectURL) {
-        //     return <Redirect to={this.state.redirectURL} />
-        // }
         if (this.state.redirectObject 
             // && this.state.redirectObject.state.searchedCourses
             // && this.state.redirectObject.state.searchKeyword

@@ -340,7 +340,7 @@ Response: List of all user object if successful:
 	}
 ]
 ```
-##### Get courses by keyword: GET '/api/useres/keyword=:key'
+##### Get courses by keyword: GET '/api/users/keyword=:key'
 This API route is used by the search components to retrieve all the users related to the keyword. This route does not require a request body and it returns all the matched user objects from the db in the form ```{"users": {"user document"}, {"user document"}}```.
 
 ##### Get User: GET '/api/users/:username'

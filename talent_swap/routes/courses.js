@@ -103,35 +103,15 @@ courseRouter.get('/api/courses/keyword=:key', mongoChecker, async (req, res) => 
     const keyword = req.params.key.toLowerCase()
     console.log(`seaching for "${keyword}"`)
     try {
-        // call find twice instead of call find once with a || filter since 
-        // I want topic matched courses (considered as the most relevant ones) displayed before 
-        // description matched courses
-
         const courses = await Course.find({
             $or: [
                 {topic: {$regex: keyword, $options: 'i'}},
                 {description: {$regex: keyword, $options: 'i'}}
             ]})
-
-        // const descMatch = await Course.find({description: {$regex: keyword, $options: 'i'}} 
-        //         )
-        // let courses
-        // if (!topicMatch && !descMatch) {
         if (!courses){
             res.status(404).send(`No courses found for "${req.params.key}"`) 
             return
         } 
-        // else if (!topicMatch){
-        //     courses = descMatch
-        // } else if (!descMatch) {
-        //     courses = topicMatch
-        // } else {
-        //     // courses = topicMatch.concat(descMatch)
-            
-        //     const noRepeat = descMatch.find(c => !topicMatch.includes(c))
-        //     courses = topicMatch.concat(noRepeat)
-
-        // }
         console.log("searching database found these courses: ", courses)
         res.send({
             "searchedCourses": courses

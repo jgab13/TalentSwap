@@ -33,3 +33,54 @@ export const CheckUsername = (userInput) => {
             console.log(error);
         });
 }
+
+// export const getSearchedUsers = async (searchBoxComp, keyword) => {
+export const getSearchResults = async (searchBoxComp, keyword) => {
+    let url_user, url_course
+    if (keyword){
+        url_user = '/api/users/keyword='+keyword
+        url_course = "/api/courses/keyword="+keyword
+    } else {
+        url_user = "/api/users"
+        url_course = "/api/courses"
+    }
+    console.log(url_user, url_course)
+    Promise.all([
+
+        fetch(url_course),
+        fetch(url_user)
+      ]).then(([res_courses, res_users]) => {
+        if (res_courses.status === 200 && res_users.status === 200) {
+            return Promise.all([res_courses.json(), res_users.json()])
+        } else if (res_courses.status === 200){
+            return Promise.all([res_courses.json(), undefined])
+        } else if (res_users.status === 200) {
+            return Promise.all([undefined, res_users.json()])
+        } else {
+            alert(`No results found for "${keyword}". Please try another keyword.`);
+        }
+        
+        // return [res_courses.json(), res_users.json()]
+      }).then((json_list)=>{
+        console.log("setting redirectObject for searchBox")
+        const users = json_list[1] ? json_list : undefined
+        const courses= json_list[0] ? json_list[0].searchedCourses : undefined
+        console.log("parsed users are ", users)
+        console.log("parsed courses are ", courses)
+        searchBoxComp.setState({
+            redirectObject: {
+                pathname: '/Search',
+                search: keyword ? '?query=' + keyword : '',
+                state: {
+                    searchedCourses: courses,
+                    searchedUsers: users,
+                    searchKeyword: keyword
+                }
+            }
+        })
+      }).catch((err) => {
+          console.log(err);
+      });
+  
+  
+};

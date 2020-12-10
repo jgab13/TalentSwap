@@ -137,6 +137,7 @@ router.get('/api/users', mongoChecker, async (req, res) => {
     try {
         const users = await User.find({});
         if (users) {
+            console.log("searching database found these users: ", users)
             res.send(users.map(user => formatUser(user)));
         } else {
             res.send(undefined);
@@ -168,6 +169,33 @@ router.get('/api/users/:username', mongoChecker, async (req, res) => {
         }
     }
 });
+
+// retrieve users related to the given search keyword
+router.get('/api/users/keyword=:key', mongoChecker, async (req, res) => {
+    const keyword = req.params.key.toLowerCase()
+    console.log(`seaching for "${keyword}" in users`)
+    try {
+        const users = await User.find({
+            $or: [
+                {name: {$regex: keyword, $options: 'i'}},
+                {expertise: {$regex: keyword, $options: 'i'}}, 
+                {development: {$regex: keyword, $options: 'i'}}
+            ]})
+        if (!users){
+            res.status(404).send(`No users found for "${req.params.key}"`) 
+            return
+        } 
+        console.log("searching database found these users: ", users)
+        res.send(
+            users.map(user => formatUser(user))
+        )
+        
+    } catch (err) {
+        console.log(err)
+        res.status(500).send('Internal Server Error')  
+    }
+})
+
 
 // export the router
 module.exports = router;

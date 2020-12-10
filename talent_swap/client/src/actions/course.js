@@ -85,40 +85,22 @@ export const getCourses = (app) => {
 };
 
 export const getSearchedCourses = async (searchBoxComp, keyword) => {
-    // the URL for the request
     let url
     if (keyword)
         url = "/api/courses/keyword="+keyword
     else 
         url = "/api/courses"
-    console.log("searching the database...")
+    console.log("searching the database for courses...")
 
-    // Since this is a GET request, simply call fetch on the URL
     fetch(url)
         .then(res => {
             if (res.status === 200) {
-                // return a promise that resolves with the JSON body
                 return res.json();
             } else {
                 alert(`No courses found for "${keyword}". Please try another keyword.`);
             }
         })
         .then(json => {
-            // the resolved promise with the JSON body
-            // console.log(json.courses)
-            // let allCourses = json.courses;
-            // if (keyword) {
-            //     console.log(`searching for ${keyword}`)
-            //     const topicMatch = allCourses.filter(course =>
-            //         course.topic.toLowerCase().match(keyword.toLowerCase()))
-            //     const descMatch = allCourses.filter(course =>
-            //         course.description.toLowerCase().match(keyword.toLowerCase()))
-            //     allCourses = topicMatch.concat(descMatch)
-            // }
-            // app.setState({
-            //     searchedCourses: allCourses,
-            //     keyword: keyword
-            // })
             console.log("setting redirectObject for searchBox")
             searchBoxComp.setState({
                 redirectObject: {
@@ -136,6 +118,7 @@ export const getSearchedCourses = async (searchBoxComp, keyword) => {
             console.log(error);
         });
 };
+
 export const getCourse = (course, id) => {
     // the URL for the request
     const url = "/api/courses/" + id;
