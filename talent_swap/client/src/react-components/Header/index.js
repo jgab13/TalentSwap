@@ -70,7 +70,6 @@ class Header extends React.Component {
 		      />{' '}
 		      Talent Swap
 		    </Navbar.Brand>
-		  {/* <SearchBox handleSearch={this.handleSearch}/> */}
 		  <SearchBox />
 	      {this.state.currentUser ? 
 	      <Nav className="ml-auto">
@@ -80,7 +79,6 @@ class Header extends React.Component {
 		        <NavDropdown.Item href="/PersonalCourses/tf">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>
 		      <NavDropdown title="Learn" id="basic-nav-dropdown">
-		        <NavDropdown.Item href="/Search">Find a Course</NavDropdown.Item>
 		        <NavDropdown.Item href="/PersonalCourses/sp">View Past Courses</NavDropdown.Item>
 		        <NavDropdown.Item href="/PersonalCourses/sf">View Upcoming Courses</NavDropdown.Item>
 		      </NavDropdown>

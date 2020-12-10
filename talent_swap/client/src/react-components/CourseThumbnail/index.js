@@ -28,8 +28,8 @@ class CourseThumbnail extends React.Component{
                                 {course.level} | {course.enrollment}/{course.capacity} enrolled
                             </span> <br></br>
                             <span className="text">
-                                {start.toLocaleDateString("en-US")} - 
-                                    {end.toLocaleDateString("en-US")} {start.toLocaleDateString("en-US")}
+                                {start.toLocaleDateString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false})} - 
+                                    {end.toLocaleDateString("en-US", {hour: '2-digit', minute:'2-digit', hour12:false})} {start.toLocaleDateString("en-US")}
                             </span> <br></br>
                             {/* <Button id="courseButton" variant="success" href={`/DetailedCoursePage/${course.id}`}>
                                     view course details
