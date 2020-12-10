@@ -12,13 +12,13 @@ The following functionality is applicable to all users (visitors, regular users 
 
 All users can click a course. This will direct the user to the detailed course page which includes a description of the course, course dates, enrollment data and credit cost to take the course. If the course has been completed, the user will be able to read reviews and see ratings of the course, If the course has not been completed and the course is not full, users can click the enabled enroll button. They will be prompted to log in or sign up. 
 
-All users can also use the search bar to filter courses based on keyword search. Once again, the filtered results can be clicked, which will redirect the user to the detailed course page.
+All users can also use the search bar to filter courses and users based on keyword search. Once again, the filtered results can be clicked, which will redirect the user to the detailed course page or another user's profile page.
 
 #### Regular user Functionality
 
 In addition to the functionality described above, a regular user (who has signed in after signing up for the application) has access to the user dashboard. A regular user can modify the user's profile information such as name, interests and expertise. The regular user can also view courses that the user is taking or teaching by clicking on the course thumbnail in the user dashboard.
 
-The regular user also has access to header pathways learn and teach. The learn pathway allows the user to search for new courses, view past courses taken and view upcoming courses that the user has enrolled in. The teach pathway allows a user to create a new course that the user will teach.
+The regular user also has access to header pathways learn and teach. The learn pathway allows the user to view past courses taken and view upcoming courses that the user has enrolled in. The teach pathway allows a user to create a new course that the user will teach.
 
 Users can enroll in courses if they have enough credits to pay the credit cost of the course. Once the course has completed, enrolled users can add, edit or delete reviews to the course. User who have created a course to teach can modify the details of the upcoming course. 
 

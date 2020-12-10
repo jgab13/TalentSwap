@@ -11,6 +11,7 @@ const { Course } = require("./../models/course");
 // helpers/middlewares
 const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
 const { authenticate } = require('./helpers/authentication');
+const course = require('./../models/course');
 
 courseRouter.post('/api/courses', mongoChecker, async (req, res) => {
 
@@ -106,19 +107,31 @@ courseRouter.get('/api/courses/keyword=:key', mongoChecker, async (req, res) => 
         // I want topic matched courses (considered as the most relevant ones) displayed before 
         // description matched courses
 
-        const topicMatch = await Course.find({topic: {$regex: keyword, $options: 'i'}})
-        const descMatch = await Course.find({description: {$regex: keyword, $options: 'i'}})
-        let courses
-        if (!topicMatch && !descMatch) {
+        const courses = await Course.find({
+            $or: [
+                {topic: {$regex: keyword, $options: 'i'}},
+                {description: {$regex: keyword, $options: 'i'}}
+            ]})
+
+        // const descMatch = await Course.find({description: {$regex: keyword, $options: 'i'}} 
+        //         )
+        // let courses
+        // if (!topicMatch && !descMatch) {
+        if (!courses){
             res.status(404).send(`No courses found for "${req.params.key}"`) 
             return
-        } else if (!topicMatch){
-            courses = descMatch
-        } else if (!descMatch) {
-            courses = topicMatch
-        } else {
-            courses = topicMatch.concat(descMatch)
-        }
+        } 
+        // else if (!topicMatch){
+        //     courses = descMatch
+        // } else if (!descMatch) {
+        //     courses = topicMatch
+        // } else {
+        //     // courses = topicMatch.concat(descMatch)
+            
+        //     const noRepeat = descMatch.find(c => !topicMatch.includes(c))
+        //     courses = topicMatch.concat(noRepeat)
+
+        // }
         console.log("searching database found these courses: ", courses)
         res.send({
             "searchedCourses": courses
