@@ -127,7 +127,7 @@ Response if successful is:
 }
 ```
 
-##### Login: POST '/api/users'
+##### Register: POST '/api/users'
 
 This api route is used to register new accounts.
 
@@ -156,7 +156,7 @@ Response: User object if successful:
 }
 ```
 
-##### Login: PATCH '/api/users'
+##### Update User: PATCH '/api/users'
 
 This api route is used to change account properties. User must already be logged in with a session.
 
@@ -188,7 +188,7 @@ Response: Updated user object if successful:
 }
 ```
 
-##### Login: GET '/api/users'
+##### Get All Users: GET '/api/users'
 
 This api route is used to get all users.
 
@@ -223,7 +223,7 @@ Response: List of all user object if successful:
 ]
 ```
 
-##### Login: GET '/api/users/:username'
+##### Get User: GET '/api/users/:username'
 
 This route is used to get a specific User from the specified username.
 
