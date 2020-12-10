@@ -74,11 +74,10 @@ Response: New course object if successful:
 ```
 
 ##### Get all courses: GET '/api/courses'
-This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns a all of the course objects
-from the db in the form ```{"courses": {"course document"}, {"course document"}}```.
+This API route is used by the home page and search components to retrieve all courses and display them in thumbnails. This route does not require a request body and it returns all of the course objects from the db in the form ```{"courses": {"course document"}, {"course document"}}```.
 
 ##### Get courses by keyword: GET '/api/courses/keyword=:key'
-
+This API route is used by the search components to retrieve all the courses related to the keyword. This route does not require a request body and it returns all the matched course objects from the db in the form ```{"courses": {"course document"}, {"course document"}}```.
 
 ##### Get a course: GET '/api/courses/:id'
 This API route is used when a course thumbnail is clicked. The id is passed to the detailed course page which retrieves the course from the db to populate course information. The route does not require a request body. The request parameters require a valid course object id. The route returns the course from the db in the form ```{"course": "course document"}```.
@@ -341,6 +340,8 @@ Response: List of all user object if successful:
 	}
 ]
 ```
+##### Get courses by keyword: GET '/api/useres/keyword=:key'
+This API route is used by the search components to retrieve all the users related to the keyword. This route does not require a request body and it returns all the matched user objects from the db in the form ```{"users": {"user document"}, {"user document"}}```.
 
 ##### Get User: GET '/api/users/:username'
 
