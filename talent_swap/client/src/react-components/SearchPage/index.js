@@ -1,77 +1,13 @@
 import React from "react";
 import "./styles.css";
-import {Badge, Form, Button} from "react-bootstrap";
-import {uid} from "react-uid";
-
+import {Form, Button} from "react-bootstrap";
 
 import Header from "./../Header"
 import SearchTabs from "./../SearchTabs"
-// import CourseFilter from "./../SearchCourseFilter"
-// import UserFilter from "./../SearchUserFilter"
 import CourseResults from "./../SearchCourseResults"
 import UserResults from "./../SearchUserResults"
 
-// prepare hardcoded user and course data to render on the search page
-import {hardcodedCourses} from "./../../courses/testcourses.js"
-import UserManager from "./../../users/user-manager.js"
-const hardcodedUsers = ["user", "user2"].map(async username => await UserManager.getUserFromUsername(username));
-
-function FilterCourseLevels(curr_courses, filters){
-    let r_courses = [];
-    filters.forEach(f => {
-        r_courses = r_courses.concat(curr_courses.filter(course =>
-            course.level === f))
-    })
-    return r_courses;
-}
-
-function FilterCourseDates(curr_courses, filters){
-    let r_courses = [];
-    filters.forEach(f => {
-        r_courses = r_courses.concat(curr_courses.filter(course => {
-            // console.log(course.starttime)
-            let conv = new Date(course.starttime)
-            // console.log(conv > Date.now())
-            return f === "Upcoming"
-            ? conv > Date.now()
-            : conv <= Date.now()
-        }))
-           
-    })
-        
-    return r_courses;
-}
-
-function FiltersCourseSizes(curr_courses, filters){
-    let r_courses = [];
-    filters.forEach(f => {
-        let match = curr_courses.filter(course => 
-            {switch(f){
-                case 'One-on-One': 
-                    return course.capacity === 1
-                    // break
-                case 'Small (2-8)':
-                    return 1 < course.capacity && course.capacity < 9
-                    // return 1 < course.capacity && course.capacity < 9
-                    // break
-
-                case 'Medium (9-20)':
-                    // 8 < course.capacity && course.capacity < 20
-                    // break
-                    return 8 < course.capacity && course.capacity < 21
-                case 'Large (20+)':
-                    // course.capacity > 19
-                    // break
-                    return course.capacity > 20
-                // default:
-                //     return course
-            }
-        })
-        // console.log("matched", match)
-        r_courses = r_courses.concat(match)
-    })
-    return r_courses;
-}
+const helpers = require("./helpers.js") 
 
 
 class SearchPage extends React.Component{
@@ -101,21 +37,21 @@ class SearchPage extends React.Component{
         let displayedCourses = this.state.courses
         if (cfilters.level.length) {
             // displayedCourses = displayedCourses.concat(FilterCourseLevels(displayedCourses, cfilters.level))
-            displayedCourses = FilterCourseLevels(displayedCourses, cfilters.level)
+            displayedCourses = helpers.FilterCourseLevels(displayedCourses, cfilters.level)
             console.log('displayedCourses after level filters ', displayedCourses)
 
         }
 
         if (cfilters.availability.length) {
             // displayedCourses = displayedCourses.concat(FilterCourseDates(displayedCourses, cfilters.availability))
-            displayedCourses = FilterCourseDates(displayedCourses, cfilters.availability)
+            displayedCourses = helpers.FilterCourseDates(displayedCourses, cfilters.availability)
             console.log('displayedCourses after availability filters', displayedCourses)
 
         }
 
         if (cfilters.size.length) {
             // displayedCourses = displayedCourses.concat(FiltersCourseSizes(displayedCourses, cfilters.size))
-            displayedCourses = FiltersCourseSizes(displayedCourses, cfilters.size)
+            displayedCourses = helpers.FiltersCourseSizes(displayedCourses, cfilters.size)
             console.log('displayedCourses after size filters', displayedCourses)
         }
 

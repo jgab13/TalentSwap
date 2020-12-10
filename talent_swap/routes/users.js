@@ -171,7 +171,7 @@ router.get('/api/users/:username', mongoChecker, async (req, res) => {
 });
 
 // retrieve users related to the given search keyword
-router.get('/api/users/keyword=:key', mongoChecker, async (req, res) => {
+router.get('/api/users/search/:key', mongoChecker, async (req, res) => {
     const keyword = req.params.key.toLowerCase()
     console.log(`seaching for "${keyword}" in users`)
     try {

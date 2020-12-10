@@ -38,8 +38,8 @@ export const CheckUsername = (userInput) => {
 export const getSearchResults = async (searchBoxComp, keyword) => {
     let url_user, url_course
     if (keyword){
-        url_user = '/api/users/keyword='+keyword
-        url_course = "/api/courses/keyword="+keyword
+        url_user = '/api/users/search/'+keyword
+        url_course = "/api/courses/search/"+keyword
     } else {
         url_user = "/api/users"
         url_course = "/api/courses"
@@ -63,7 +63,7 @@ export const getSearchResults = async (searchBoxComp, keyword) => {
         // return [res_courses.json(), res_users.json()]
       }).then((json_list)=>{
         console.log("setting redirectObject for searchBox")
-        const users = json_list[1] ? json_list : undefined
+        const users = json_list[1] ? json_list[1] : undefined
         const courses= json_list[0] ? json_list[0].searchedCourses : undefined
         console.log("parsed users are ", users)
         console.log("parsed courses are ", courses)
