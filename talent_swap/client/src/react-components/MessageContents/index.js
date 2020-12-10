@@ -47,7 +47,7 @@ class MessageContents extends React.Component {
                 <div className="message-input">
                     <input type="text" onChange={this.handleInputChange} value={this.state.messageToSend} />
                     <Button variant="primary" type="button" onClick={async () => {
-                        this.sendMessageHandler(this.state.messageToSend);
+                        await this.sendMessageHandler(this.state.messageToSend);
                         const messages = await currentUser.getMessagesFromContact(this.state.selectedContact);
                         this.setState({
                             messages: messages,
