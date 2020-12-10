@@ -16,12 +16,12 @@ class UserResults extends React.Component {
         const users = this.props.users;
         if (!users) return <p> No matched users.</p>
         return(
-            <CardDeck>
+            <div className="row row-cols-1 row-cols-md-3">
                 {users.map((user) => 
                     <UserThumbnail key={user.username.toString()}
                         user = {user} />
                 )}
-            </CardDeck>
+            </div>
         );
     }
 }

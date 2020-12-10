@@ -65,14 +65,18 @@ class SearchPage extends React.Component{
         dummy.cfilters = {level: [], availability: [], size:[]}
         dummy.displayedCourses = dummy.courses
         this.setState(dummy)
-        if (this.state.tab === "users") return;
-        const idList = ["c1:Beginner", "c1:Intermediate", "c1:Advanced", "c1:All Level",
-            "c2:Past", "c2:Upcoming", 
-            'c3:One-on-One', 'c3:Small (2-8)', 'c3:Medium (9-20)', 'c3:Large (20+)']
-        idList.forEach(id => {
-            let cb = document.getElementById(id)
-            cb.checked = false
-        })
+        if (this.state.tab === "users") {
+            const toggle = document.getElementById('u1')
+            toggle.checked = false
+        } else {
+            const idList = ["c1:Beginner", "c1:Intermediate", "c1:Advanced", "c1:All Level",
+                "c2:Past", "c2:Upcoming", 
+                'c3:One-on-One', 'c3:Small (2-8)', 'c3:Medium (9-20)', 'c3:Large (20+)']
+            idList.forEach(id => {
+                let cb = document.getElementById(id)
+                cb.checked = false
+            })
+        }
     }
 
     handleCfilterCheck = (e) => {
