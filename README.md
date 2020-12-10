@@ -229,7 +229,7 @@ Response: User object if successful:
 
 This api route is used to change account properties. User must already be logged in with a session.
 
-Request can include any number of parameters to change with the new values.
+Request body can include any number of parameters to change with the new values.
 ```
 {
 	"name": "New name",
@@ -311,4 +311,73 @@ Response: Updated user object if successful (for example if we do `GET '/api/use
     coursesLearning: [],
     pic: "New base64 encoded picture"
 }
+```
+
+#### Admin Routes
+
+##### Ban User: POST '/api/banned'
+
+This route is used by the admin to ban a user. Admin should be logged in with session.
+
+Request body should be:
+
+```
+{
+    username: "user2"
+}
+```
+
+Reponse is the new Ban object:
+
+```
+{
+    "_id": "5fd18e0e2e44e80f44afc39b",
+    "bannedUsername": "user2",
+    "timestamp": 1607568910873,
+    "adminUsername": "admin",
+    "__v": 0
+}
+```
+
+##### Unban User: DELETE '/api/banned'
+
+This route is used by the admin to unban a user. Admin should be logged in with session.
+
+Request body should be:
+
+```
+{
+    username: "user2"
+}
+```
+
+Reponse is the Ban object that was deleted:
+
+```
+{
+    "_id": "5fd18e0e2e44e80f44afc39b",
+    "bannedUsername": "user2",
+    "timestamp": 1607568910873,
+    "adminUsername": "admin",
+    "__v": 0
+}
+```
+
+##### Get All Banned Users: GET '/api/banned'
+
+
+This route is used by the admin to get all banned users. Admin should be logged in with session.
+
+Reponse is an array of Ban objects:
+
+```
+[
+    {
+        "_id": "5fd18e0e2e44e80f44afc39b",
+        "bannedUsername": "user2",
+        "timestamp": 1607568910873,
+        "adminUsername": "admin",
+        "__v": 0
+    }
+]
 ```
