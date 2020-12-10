@@ -21,10 +21,10 @@ export class UserTable extends React.Component {
       <tbody>
       {this.state.users.map((user) => (
       <tr>
-        <td>{user.username}</td>
         <td><Link to= {{pathname:`/UserProfile/${user.username}`}} >
-                  {user.name}
+                  {user.username}
             </Link></td>
+        <td>{user.name}</td>
         <td>{user.credits}</td>
         <td>{user.coursesTeaching}</td>
         <td>{user.coursesLearning}</td>
@@ -83,8 +83,8 @@ class WebsiteStatus extends React.Component {
               <Table>
                     <thead className="thead-dark">
                         <tr>
-                            <th>User ID</th>
                             <th>Username</th>
+                            <th>Name</th>
                             <th>Credits</th>
                             <th>Teaching</th>
                             <th>Learning</th>
