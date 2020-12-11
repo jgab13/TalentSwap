@@ -18,17 +18,19 @@ The users tab can be searched by keyword and by toggle to see who might teach th
 
 The regular users are user, user2, user3 and user4. However, user4 is banned and cannot log in unless the admin user unbans user4. Please try to log in as user4 to see this functionality.
 
-In addition to the functionality described above, a regular user (who has signed in after signing up for the application) has access to the user dashboard. A regular user can modify the user's profile information such as name, interests and expertise. The regular user can also view courses that the user is taking or teaching by clicking on the course thumbnail in the user dashboard.
+When a registered user logs in, the user will be directed to their user dashboad. The dashboard can be populated with a profile picture and user information, which can be editted. The user can also see the courses that the user is taking or is teaching. The user can click on the course thumbnails, which will navigate to the detailed course page. If the user was enrolled in the course and it has completed, then the user can add, edit or delete a review for the course. If the course has not completed, then the user can unenrol. If the user taught the course, then the user can edit the course from the detailed course page if it has not yet completed. If the course has completed, then the user can view the ratings and reviews of the course, if there are any.
 
-The regular user also has access to header pathways learn and teach. The learn pathway allows the user to view past courses taken and view upcoming courses that the user has enrolled in. The teach pathway allows a user to create a new course that the user will teach.
+The regular user also has access to header pathways learn and teach. The learn pathway allows the user to view past courses taken and view upcoming courses that the user has enrolled in. The teach pathway allows a user to create a new course that the user will teach. The user also has header pathways to the user profile and to logout by clicking the dropdown with the user's name. 
 
-Users can enroll in courses if they have enough credits to pay the credit cost of the course. Once the course has completed, enrolled users can add, edit or delete reviews to the course. User who have created a course to teach can modify the details of the upcoming course. 
+Users also have the ability to communicate via the messaging system. By clicking the envelope icon in the top right corner or the header, the user will have acesss to the messages sent and received to other users. At the bottom of the page, the user can start a conversation with another user and send messages within that conversation. 
 
-Users also have the ability to communicate via the messaging system. By clicking the envelope icon in the top right corner or the header, the user will have acesss to the messages sent and received to other users. 
+In addition to the functionalities described here, users can access courses to enroll, unenroll, review or view via the homepage and the search page.
 
 #### Admin user Functionality
 
-In addition to the visitor functionality, an admin user has access to the admin dashboard. The dashboard provides statistics about the application. An admin can ban a user or delete a course by clicking on the course page. A delete button will be present which the admin user can click. Admin users cannot create or enroll in courses.
+The admin user is admin. When the admin user logs in, this user is directed to the admin dashboard. You will see that user4 has been banned. The admin user can unban user4, in which case, user4 will be able to successfully log in again with full access to the application. In addition to banning users, the admin can delete courses. The admin dashboard contains a list of users and courses, with links to the user profiles and the detailed course pages. There will appear a large red delete button on the course page that only an admin user can select to remove the course from the app. The course User4 wants some cash can be deleted as a frivolous class.
+
+The admin user cannot enroll in classes, but has all other functionality of a regular user. 
 
 ### Overview of the Routes
 
