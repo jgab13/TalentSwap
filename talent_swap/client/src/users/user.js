@@ -11,9 +11,7 @@ async function fetchPatch(payload) {
     });
 
     try {
-        console.log("HI")
         const res = await fetch(request);
-        console.log(res)
         if (res.status === 200) {
             return res.json();
         }

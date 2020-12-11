@@ -22,7 +22,6 @@ class AdminDashboard extends React.Component {
         const {currentUser} = this.context;
         if (currentUser && currentUser.userType === "admin") {
             const bannedUsers = await currentUser.getBannedUsers();
-            console.log(bannedUsers)
             this.setState({bannedUsers: bannedUsers});
         }
     }

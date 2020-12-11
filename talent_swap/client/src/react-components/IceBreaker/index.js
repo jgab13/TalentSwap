@@ -20,7 +20,6 @@ class IceBreaker extends React.Component {
             const contactUsernames = [...this.props.messageCenter.state.contactUsernames, username];
             const selectedContact = username;
             const messages = [];
-            console.log(contactUsernames)
             this.props.messageCenter.setState({
                 selectedContact: selectedContact,
                 contactUsernames: contactUsernames,

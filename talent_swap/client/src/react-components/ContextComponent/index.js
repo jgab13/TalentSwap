@@ -30,7 +30,6 @@ class ContextComponent extends React.Component {
             if (res.status === 200) {
                 const jsonRes = await res.json();
                 const user = await UserManager.getUserFromUsername(jsonRes.currentUser);
-                console.log(user);
                 this.changeUser(user);
                 return user;
             }
