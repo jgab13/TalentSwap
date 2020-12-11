@@ -11,6 +11,10 @@ const { Ban } = require("./../models/ban");
 const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
 const { authenticate } = require('./helpers/authentication');
 
+const fs = require("fs");
+
+const defaultPic = fs.readFileSync("static/default_profile_pic.png").toString("base64");
+
 const formatUser = (user) => {return {
     username: user.username,
     userType: user.userType,
@@ -78,7 +82,8 @@ router.post('/api/users', mongoChecker, async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         userType: "user",
-        credits: 10
+        credits: 10,
+        pic: defaultPic
     })
 
     try {
