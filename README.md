@@ -161,7 +161,8 @@ The route returns the course object with the new review in the ratings property 
 {
     "course": {
         "enrolledUsers": [
-            "JG"
+            "JG",
+	    "MG"
         ],
         "_id": "5fd177a4e1cada33681c7042",
         "topic": "MG's test",
@@ -171,7 +172,7 @@ The route returns the course object with the new review in the ratings property 
         "credit": 2,
         "level": "Intermediate",
         "capacity": 10,
-        "enrollment": 1,
+        "enrollment": 2,
         "rate": 5,
         "description": "klasdlkklafsdf",
         "picture": "",
