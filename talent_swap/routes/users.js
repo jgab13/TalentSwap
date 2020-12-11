@@ -12,8 +12,9 @@ const { mongoChecker, isMongoError } = require('./helpers/mongo_helpers');
 const { authenticate } = require('./helpers/authentication');
 
 const fs = require("fs");
+const path = require("path");
 
-const defaultPic = fs.readFileSync("static/default_profile_pic.png").toString("base64");
+const defaultPic = fs.readFileSync(path.resolve(__dirname, "..", "static/default_profile_pic.png")).toString("base64");
 
 const formatUser = (user) => {return {
     username: user.username,
