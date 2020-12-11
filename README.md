@@ -8,13 +8,15 @@ Please use this URL to access our web application http://talent-swap-uoft.heroku
 ### Functionality
 
 #### Visitor Functionality 
-The following functionality is applicable to all users (visitors, regular users and admin users). The home page is accessible by all users. The header contains a search bar, a logo and a join now button. The home page displays basic information about our application as well as a list of popular courses. 
+The following functionality is applicable to all users (visitors, regular users and admin users). The home page is accessible by all users. The header contains a search bar, a logo and a join now button. The home page displays basic information about our application as well as a list of popular courses. Popularity is based on the percentage of enrollment. A visitor can click on a course to view the detailed course page. If the course has completed and been reviewed, a visitor can see the rating and reviews associated with the course. If a course has not yet completed and is not full, a visitor can click the enroll now button. They will be prompted to log in or sign up.
 
-All users can click a course. This will direct the user to the detailed course page which includes a description of the course, course dates, enrollment data and credit cost to take the course. If the course has been completed, the user will be able to read reviews and see ratings of the course, If the course has not been completed and the course is not full, users can click the enabled enroll button. They will be prompted to log in or sign up. 
+From this page, the visitor can navigate back to the home page by clicking the logo in the top left corner of the header or search for courses by clicking the search button or entering a keyword and then clicking the search button. The visitor will be directed to a search page with tabs for course and user. By default, the course tab is displayed. The course tab has several filters. Multiple filters can be selected. Click apply to filter and clear to show all of the courses. Keywords can be searched with multiple filters applied as well. As described abve, clicking on the button in the course thumbnail will direct the visitor to the detailed course page.
 
-All users can also use the search bar to filter courses and users based on keyword search. Once again, the filtered results can be clicked, which will redirect the user to the detailed course page or another user's profile page.
+The users tab can be searched by keyword and by toggle to see who might teach the keyword entered. To use this functionality, enter a keyword, click search and then select the toggle. To clear the search, click the search button again. clicking on the button in the user thumbnail will direct the visitor to the user's profile. 
 
 #### Regular user Functionality
+
+The regular users are user, user2, user3 and user4. However, user4 is banned and cannot log in unless the admin user unbans user4. Please try to log in as user4 to see this functionality.
 
 In addition to the functionality described above, a regular user (who has signed in after signing up for the application) has access to the user dashboard. A regular user can modify the user's profile information such as name, interests and expertise. The regular user can also view courses that the user is taking or teaching by clicking on the course thumbnail in the user dashboard.
 
