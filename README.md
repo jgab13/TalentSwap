@@ -43,17 +43,29 @@ Request body should be:
 ```
 {
     "topic": "some topic",
-    "teacher": "a teacher",
-    ... // it is a long list, so not all fields are included
+    "teacher": "user1",
+    "starttime": "2020-12-12T13:00:00.000+00:00",
+    "endtime": "2020-12-12T15:00:00.000+00:00",
+    "credit": 5,
+    "capacity": 20
 }
 ```
 
 Response: Course object if successful:
 ```
 {
+    "enrolledUsers": [],
+    "_id": "5fd2d6b39240165e2030c23a",
     "topic": "some topic",
-    "teacher": "a teacher",
-    ... // it is a long list, so not all fields are included
+    "teacher": "user1",
+    "starttime": "2020-12-12T13:00:00.000Z",
+    "endtime": "2020-12-12T15:00:00.000Z",
+    "credit": 5,
+    "capacity": 20,
+    "enrollment": 0,
+    "rate": 0,
+    "ratings": [],
+    "__v": 0
 }
 ```
 
@@ -63,17 +75,26 @@ This API is used to update a course. Course id is passed through request paramet
 Request body should be:
 ```
 {
-    "attr": [], // a list of fields that need to be updated
-    "newValue": [] // corresponding new values
+    "attr": ["topic", "credit"], //or other attributes
+    "newValue": ["New Topic", 10000]
 }
 ```
 
 Response: New course object if successful:
 ```
 {
-    "topic": "new topic",
-    "teacher": "a teacher",
-    ... // it is a long list, so not all fields are included
+    "enrolledUsers": [],
+    "_id": "5fd2d6b39240165e2030c23a",
+    "topic": "New Topic",
+    "teacher": "user1",
+    "starttime": "2020-12-12T13:00:00.000Z",
+    "endtime": "2020-12-12T15:00:00.000Z",
+    "credit": 10000,
+    "capacity": 20,
+    "enrollment": 0,
+    "rate": 0,
+    "ratings": [],
+    "__v": 0
 }
 ```
 
