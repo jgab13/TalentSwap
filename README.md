@@ -1,4 +1,3 @@
-# team15 
 # Talent Swap
 
 ## Instructions
